@@ -1,0 +1,234 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model JonLong.CRM.Web.Models.OrderStatisticsListViewModel
+@section head{
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.date.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-theme.min.css")" type="text/css" media="screen" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.legacy.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.date.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+}
+<div class="content-box-header">
+    <h3>
+        Order & Forecast
+    </h3>
+
+    <div class="clear">
+    </div>
+</div>
+<!-- End .content-box-header -->
+<div class="content-box-content">
+    <div class="tab-content default-tab" id="tab1">
+        <!-- This is the target div. id must match the href of this div's tab -->
+        <div class="tab-content default-tab">
+            @using (Html.BeginForm("Index", "Order", FormMethod.Post))
+            {
+                <div class="bulk-actions align-left">
+                    ETD &nbsp;&nbsp;
+                    <input id="ETDFrom" name="ETDFrom" class="datepicker" value="@Model.ETDFrom" type="text">
+                    &nbsp;&nbsp;To &nbsp;&nbsp;
+                    <input id="ETDTo" name="ETDTo" class="datepicker" value="@Model.ETDTo" type="text">
+                    &nbsp;&nbsp;Bundler.No &nbsp;&nbsp;
+                    <input  type="text" value="@Model.BundleNo" id="BundleNo" name="BundleNo" />
+                    &nbsp;Container.No
+                    <input type="text" value="@Model.ContainerNo" id="ContainerNo" name="ContainerNo" />
+                    &nbsp;&nbsp;
+                    <input type="submit" class="button" value="&nbsp;&nbsp;GO&nbsp;&nbsp;" />
+                    &nbsp;&nbsp;
+                    <a href="@Url.Action("Create")" class="button">New Bundle</a>
+                </div>
+            }
+
+            <div class="clear">
+                <p></p>
+            </div>
+            <table style="width: 80%; background: #f0f0f0 ">
+                <tr style="background: #f0f0f0">
+                    <td>Today(@DateTime.Now.ToLocalTime().ToShortDateString()</td>
+                    <td>1.5(@DateTime.Now.AddDays(45).ToLocalTime().ToShortDateString())</td>
+                    <td>2.5(@DateTime.Now.AddDays(75).ToLocalTime().ToShortDateString()</td>
+                    <td>4(@DateTime.Now.AddDays(120).ToLocalTime().ToShortDateString()</td>
+                </tr>
+                <tr style="background: #f0f0f0">
+                    <td style="border: 1px solid #696969; background-color: #d5ffc2;">ORDER(0-45 days)</td>
+                    <td style="border: 1px solid #696969; background-color: #ffd6d6;">PRE_ORDER (45-75 days)</tdstyle>
+                    <td style="border: 1px solid #696969; background-color: #fcf9db">FORECAST (75-120 days)</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>
+                        ETD
+                    </th>
+                    <th>
+                        Last Change Date
+                    </th>
+                    <th>
+                        Bundler No.
+                    </th>
+                    <th>
+                        Container
+                    </th>
+                    <th>
+                        Container No.
+                    </th>
+                    <th>
+                        % Filled
+                    </th>
+                    <th>
+                        Sum (pairs)
+                    </th>
+                    <th>
+                        Complete
+                    </th>
+                    <th>
+                        Contract No.
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int j = 0;
+                    string trclass = "";
+                    string style = "";
+                }
+                @foreach (var item in Model.Items)
+                {
+                    if (j % 2 == 0)
+                    {
+                        trclass = "alt-row";
+                    }
+                    else
+                    {
+                        trclass = "";
+                    }
+                    if (item.SendDate <= DateTime.Now.AddDays(45).ToLocalTime())
+                    {
+                        style = "background-color: #d5ffc2;border: 1px solid #778899;";
+                    }
+                    else if (item.SendDate <= DateTime.Now.AddDays(75).ToLocalTime())
+                    {
+                        style = "background-color: ##ffd6d6;border: 1px solid red;";
+                    }
+                    else if (item.SendDate <= DateTime.Now.AddDays(120).ToLocalTime())
+                    {
+                        style = "background-color: #fcf9db;";
+                    }
+                    else
+                    {
+                        style = "border: 1px solid #778899;";
+                    }
+
+                    if (item.SendDate <= DateTime.Now.ToLocalTime() && item.Complete == 0)
+                    {
+                        style += "color:red; font-weight:bold";
+                    }
+                    <tr class="@trclass" style="@style">
+                        <td>
+                            <button onclick="loadDetail('@item.SendDate.ToString("yyyy-MM-dd")', '@item.CustomerCode','@item.BanderNo','@item.ContainerType','@item.ContainerNo','@item.Id', this);"
+                                    class="button" title="Detail">
+                                +
+                            </button>
+                        </td>
+                        <td>
+                            @item.SendDate.ToShortDateString()
+                        </td>
+                        <td>
+                            @item.ChangeDate
+                        </td>
+                        <td>
+                            @item.BanderNo
+                        </td>
+                        <td>
+                            @item.ContainerType
+                        </td>
+                        <td>
+                            @item.ContainerNo
+                        </td>
+                        <td>
+                            @item.Filled%
+                        </td>
+                        <td>
+                            @item.ContainerSum
+                        </td>
+                        <td>
+                            @item.Complete%
+                        </td>
+                        <td>
+                            @item.ContractNo
+                        </td>
+                    </tr>
+                    <tr class="@item.Id" style="display:none">
+                        <td colspan="10">
+                            <div id="@item.Id"></div>
+                        </td>
+                    </tr>
+                    j++;
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-lg" style="top:10%; left:20%" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Detail</h4>
+            </div>
+            <div class="modal-body" id="detailDiv" style="overflow: auto; height:600px">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('[type=date], .datepicker').pickadate();
+        });
+
+        function loadDetail(sendDate, customerCode, bundlerNo, containerType, container, id, btn) {
+            var detailDiv = $("#" + id);
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("StatistscDetail")",
+                data: { "sendDate": sendDate, customerCode: customerCode, bundlerNo: bundlerNo, containerType: containerType, container: container },
+                success: function (data) {
+                    detailDiv.html('');
+                    detailDiv.html(data);
+                    $("." + id).toggle();
+
+                    if ($(btn).text() == "-") {
+                        $(btn).html("+");
+                    } else {
+                        $(btn).text("-");
+                    }
+
+                    //$('#myModal').modal({ keyboard: true });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve detail.');
+                }
+            });
+        }
+
+    </script>
+}
+

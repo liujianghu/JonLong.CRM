@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model JonLong.CRM.Web.Models.VarianceListViewModel
+@section head{
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-theme.min.css")" type="text/css" media="screen" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+}
+
+<div class="clear">
+</div>
+<div class="content-box">
+    <!-- Start Content Box -->
+    <div class="content-box-header">
+        <h3>
+            Order Variance Reconciliation
+        </h3>
+
+
+        <div class="clear">
+        </div>
+    </div>
+
+    <!-- End .content-box-header -->
+    <div class="content-box-content">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#sectionA">Variance</a></li>
+            <li><a data-toggle="tab" href="#Order">Order</a></li>
+            <li>
+                <a data-toggle="tab" href="#Shipments">Shipments</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="sectionA" class="tab-pane fade in active">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+
+                            </th>
+                            <th>
+                                ETD
+                            </th>
+
+                            <th>
+                                Bundler No.
+                            </th>
+                            <th>
+                                Container
+                            </th>
+                            <th>
+                                Container No.
+                            </th>
+                            <th>
+                                % Variance
+                            </th>
+                            <th>
+                                Sum (pairs)
+                            </th>
+                            <th>
+                                Contract No.
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int j = 0;
+                            string trclass = "";
+                            string style = "";
+                        }
+                        @foreach (var item in Model.Variances)
+                        {
+                            if (j % 2 == 0)
+                            {
+                                trclass = "alt-row";
+                            }
+                            else
+                            {
+                                trclass = "";
+                            }
+
+                            <tr class="@trclass" style="@style">
+                                <td>
+
+                                    <button onclick="loadDetail('@item.ETD.ToString("yyyy-MM-dd")', '@item.CustomerCode','@item.BundleNo','@item.ContainerType','@item.ContainerNo','@item.Id', this);"
+                                            class="button" title="Detail">
+                                        +
+                                    </button>
+                                </td>
+                                <td>
+                                    @item.ETD.ToShortDateString()
+                                </td>
+                                <td>
+                                    @item.BundleNo
+                                </td>
+                                <td>
+                                    @item.ContainerType
+                                </td>
+                                <td>
+                                    @item.ContainerNo
+                                </td>
+                                <td>
+                                    @item.Variance%
+                                </td>
+                                <td>
+                                    @item.SumPairs
+                                </td>
+                                <td>
+                                    @item.ContractNo
+                                </td>
+                            </tr>
+                            <tr class="@item.Id" style="display:none">
+                                <td colspan="10">
+                                    <div id="@item.Id"></div>
+                                </td>
+                            </tr>
+                            j++;
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div id="Order" class="tab-pane fade">
+                <h3>Section B</h3>
+                <p>Vestibulum nec erat eu nulla rhoncus fringilla ut non neque. Vivamus nibh urna, ornare id gravida ut, mollis a magna. Aliquam porttitor condimentum nisi, eu viverra ipsum porta ut. Nam hendrerit bibendum turpis, sed molestie mi fermentum id. Aenean volutpat velit sem. Sed consequat ante in rutrum convallis. Nunc facilisis leo at faucibus adipiscing.</p>
+            </div>
+            <div id="Shipments" class="tab-pane fade">
+                <h3>shipment 1</h3>
+                <p>WInteger convallis, nulla in sollicitudin placerat, ligula enim auctor lectus, in mollis diam dolor at lorem. Sed bibendum nibh sit amet dictum feugiat. Vivamus arcu sem, cursus a feugiat ut, iaculis at erat. Donec vehicula at ligula vitae venenatis. Sed nunc nulla, vehicula non porttitor in, pharetra et dolor. Fusce nec velit velit. Pellentesque consectetur eros.</p>
+            </div>
+
+        </div>
+    </div>
+    <!-- End .content-box-content -->
+</div>
+@section scripts{
+    <script type="text/javascript">
+        function loadDetail(sendDate, customerCode, bundlerNo, containerType, container, id, btn) {
+            var detailDiv = $("#" + id);
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("VarianceDetail")",
+                data: { customerCode: customerCode, "etd": sendDate, bundleNo: bundlerNo, containerType: containerType, containerNo: container },
+                success: function (data) {
+                    detailDiv.html('');
+                    detailDiv.html(data);
+                    $("." + id).toggle();
+
+                    if ($(btn).text() == "-") {
+                        $(btn).html("+");
+                    } else {
+                        $(btn).text("-");
+                    }
+
+                    //$('#myModal').modal({ keyboard: true });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve detail.');
+                }
+            });
+        }
+
+    </script>
+}
+
+

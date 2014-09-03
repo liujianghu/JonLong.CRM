@@ -1,0 +1,103 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model JonLong.CRM.Web.Models.UserListViewModel
+<div class="content-box">
+    <!-- Start Content Box -->
+    <div class="content-box-header">
+        <h3>
+            User list
+        </h3>
+
+        <div class="clear">
+        </div>
+    </div>
+    <!-- End .content-box-header -->
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <!-- This is the target div. id must match the href of this div's tab -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Login Name
+                        </th>
+                        <th>
+                            Customer Code
+                        </th>
+                        <th>
+                            Is Contract Customer
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{
+                        int j = 0;
+                        string trclass = "";
+                    }
+                    @foreach (var item in Model.Users)
+                    {
+                        if (j % 2 == 0)
+                        {
+                            trclass = "";
+                        }
+                        else
+                        {
+                            trclass = "alt-row";
+                        }
+                        <tr class="@trclass">
+                            <td>
+                                @item.UserId
+                            </td>
+                            <td>
+                                @item.LoginName
+                            </td>
+                            <td>
+                                @item.CustomerCode
+                            </td>
+                            <td>
+                                @if (item.IsContractCustomer)
+                                {
+                                    @:true
+                                }
+                                else
+                                {
+                                    @:false
+                                }
+                            </td>
+                            <td>
+                                @item.Email
+                            </td>
+                            <td>
+                                <!-- Icons -->
+                                <a href="@Url.Action("Edit", "User", new { id = @item.UserId })" title="Edit">
+                                    <img src="@Url.Content("~/Content/images/icons/pencil.png")" alt="Edit" />
+                                </a>
+                                <a href="javascript:;" onclick="deleteUser(@item.UserId)" title="Delete">
+                                    <img src="@Url.Content("~/Content/images/icons/cross.png")" alt="Delete" />
+                                </a>
+                            </td>
+                        </tr>
+                                j++;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- End #tab1 -->
+        <!-- End #tab2 -->
+    </div>
+    <!-- End .content-box-content -->
+</div>
+
+
