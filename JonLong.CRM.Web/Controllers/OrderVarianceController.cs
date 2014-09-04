@@ -50,7 +50,7 @@ namespace JonLong.CRM.Web.Controllers
                     sendDate,
                     bundleNo,
                     containerType,
-                    containerNo);
+                    containerNo.Trim(' '));
 
                 model.VarianceCount = model.VarianceDetails.Count;
 
@@ -95,6 +95,61 @@ namespace JonLong.CRM.Web.Controllers
                 return View("Error");
             }
 
+        }
+
+        [RoleAuthorize]
+        public ActionResult Edit(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                {
+                    TempData["Error"] = "The id paramater incorrect.";
+                    return View("Error");
+                }
+                var model = new VarianceEditViewModel();
+                model.Detail = OrderVarianceManager.Instance.LoadById(id);
+                if (model.Detail == null)
+                {
+                    TempData["Error"] = "This data is not exists.";
+                    return View("Error");
+                }
+                
+                var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
+                string customerCode = String.Empty;
+                if (AccountHelper.IsSuperAdmin(user))
+                {
+                    model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(Constants.SuperAdminDefaultCustomerCode);
+                }
+                else
+                {
+                    customerCode = user.CustomerCode;
+                    model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(user.CustomerCode);
+                }
+                model.Containers = Constants.Containers;
+                
+                var variances = OrderVarianceManager.Instance.LoadOrderVariance(AccountHelper.IsSuperAdmin(user), user.CustomerCode);
+
+                if (variances == null)
+                {
+                    TempData["Error"] = "This data is missing, please try again.";
+                    return View("Error");
+                }
+
+                model.BundleNos = new Dictionary<string, string>();
+
+                foreach (var item in variances)
+                {
+                    model.BundleNos.Add(item.BundleNo, item.ETD.ToString("yyyy-MM-dd"));
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.ToString();
+                return View("Error");
+            }
         }
 
     }

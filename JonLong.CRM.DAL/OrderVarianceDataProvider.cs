@@ -97,10 +97,11 @@ namespace JonLong.CRM.DAL
                         khys_s13,khys_s14,khys_s15,khys_s16,khys_s17,khys_s18,khys_s19,khys_s20,
                         khys_htbh,khys_bfb,1,khys_container,khys_fhrq as yfhrq,isnull(oldHtbh,'') as oldHtbh,isnull(cylx,0) as cylx
                         ,isnull(khdd,'') as khdd
-                        from t_tmp_ysyq where sta=1 and tGuid=(select top 1 tGuid from t_tmp_ysyq where khys_khh='" + customerCode +
-                        @"'order by rq desc) and khys_khh= '" + customerCode + @"' and datediff(d,khys_fhrq, ' " + sendDate.ToShortDateString() + @"')=0 and 
+                        from t_tmp_ysyq where sta=1 
+                        and tGuid=(select top 1 tGuid from t_tmp_ysyq where khys_khh='" + customerCode + @"'order by rq desc)"
+                        + @"and khys_khh= '" + customerCode + @"' and datediff(d,khys_fhrq, '" + sendDate.ToShortDateString() + @"')=0 and 
                         isnull(khys_banderNo,'')='" + bundleNo + @"' and isnull(khys_gz,'')='" + containerType + @"' 
-                        and isnull(khys_container,'')=' " + containerNo + @"'
+                        and isnull(khys_container,'')='" + containerNo + @"'
                         order by khys_xh";
 
             using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString
@@ -137,13 +138,66 @@ namespace JonLong.CRM.DAL
                     detail.Size19 = reader.GetInt32(24);
                     detail.Size20 = reader.GetInt32(25);
                     detail.OldHtbh = reader.GetString(26);
-                    detail.ContractNo = reader.GetString(28);
+                    detail.ContractNo = reader.GetString(33);
 
                     list.Add(detail);
                 }
             }
 
             return list;
+        }
+
+        public static VarianceDetail LoadById(int id)
+        {
+            string sql = @"select id,khys_xh,khys_fhrq,khys_banderNo,khys_gz,khys_sl,khys_s1,khys_s2,khys_s3,khys_s4,khys_s5
+                        ,khys_s6,khys_s7,khys_s8,khys_s9,khys_s10,khys_s11,khys_s12,
+                        khys_s13,khys_s14,khys_s15,khys_s16,khys_s17,khys_s18,khys_s19,khys_s20,
+                        khys_htbh,khys_bfb,1,khys_container,khys_fhrq as yfhrq,isnull(oldHtbh,'') as oldHtbh,isnull(cylx,0) as cylx
+                        ,isnull(khdd,'') as khdd
+                FROM dbo.t_tmp_ysyq
+                WHERE id = " + id;
+
+            using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString
+                , CommandType.Text
+                , sql))
+            {
+                if (reader.Read())
+                {
+                    var detail = new VarianceDetail();
+                    detail.Id = reader.GetInt32(0);
+                    detail.ModelNo = reader.GetString(1);
+                    detail.SendDate = reader.GetDateTime(2);
+                    detail.BundleNo = reader.GetString(3);
+                    detail.ContainerType = reader.GetString(4);
+                    detail.Total = reader.GetInt32(5);
+                    detail.Size1 = reader.GetInt32(6);
+                    detail.Size2 = reader.GetInt32(7);
+                    detail.Size3 = reader.GetInt32(8);
+                    detail.Size4 = reader.GetInt32(9);
+                    detail.Size5 = reader.GetInt32(10);
+                    detail.Size6 = reader.GetInt32(11);
+                    detail.Size7 = reader.GetInt32(12);
+                    detail.Size8 = reader.GetInt32(13);
+                    detail.Size9 = reader.GetInt32(14);
+                    detail.Size10 = reader.GetInt32(15);
+                    detail.Size11 = reader.GetInt32(16);
+                    detail.Size12 = reader.GetInt32(17);
+                    detail.Size13 = reader.GetInt32(18);
+                    detail.Size14 = reader.GetInt32(19);
+                    detail.Size15 = reader.GetInt32(20);
+                    detail.Size16 = reader.GetInt32(21);
+                    detail.Size17 = reader.GetInt32(22);
+                    detail.Size18 = reader.GetInt32(23);
+                    detail.Size19 = reader.GetInt32(24);
+                    detail.Size20 = reader.GetInt32(25);
+                    detail.OldHtbh = reader.GetString(26);
+                    detail.ContractNo = reader.GetString(33);
+
+                    return detail;
+                }
+            }
+            return null;
+
         }
         public static string Edit(VarianceEditModel model)
         {

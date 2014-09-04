@@ -29,5 +29,10 @@ namespace JonLong.CRM.BLL
             return OrderVarianceDataProvider.LoadDetail(customerCode, sendDate, bundleNo, containerType, containerNo);
         }
 
+        public VarianceDetail LoadById(int id)
+        {
+            return OrderVarianceDataProvider.LoadById(id);
+        }
+
     }
 }

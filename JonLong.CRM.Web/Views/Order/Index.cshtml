@@ -204,6 +204,10 @@
         });
 
         function loadDetail(sendDate, customerCode, bundlerNo, containerType, container, id, btn) {
+            if ($(btn).text() == "-") {
+                $("." + id).toggle();
+                return;
+            }
             var detailDiv = $("#" + id);
             $.ajax({
                 cache: false,

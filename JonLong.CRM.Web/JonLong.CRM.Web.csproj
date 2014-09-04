@@ -140,6 +140,7 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserRoleModel.cs" />
     <Compile Include="Models\VarianceDetailViewModel.cs" />
+    <Compile Include="Models\VarianceEditViewModel.cs" />
     <Compile Include="Models\VarianceListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -225,6 +226,7 @@
     <Content Include="Views\Order\Create.cshtml" />
     <Content Include="Views\OrderVariance\Index.cshtml" />
     <Content Include="Views\OrderVariance\VarianceDetail.cshtml" />
+    <Content Include="Views\OrderVariance\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
