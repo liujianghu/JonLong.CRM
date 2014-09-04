@@ -139,6 +139,7 @@
         function loadDetail(sendDate, customerCode, bundlerNo, containerType, container, id, btn) {
             if ($(btn).text() == "-") {
                 $("." + id).toggle();
+                $(btn).html("+");
                 return;
             }
             var detailDiv = $("#" + id);
