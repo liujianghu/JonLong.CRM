@@ -127,10 +127,14 @@ namespace JonLong.CRM.Web.Controllers
                     model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(user.CustomerCode);
                 }
                 model.Containers = Constants.Containers;
-                
-                var variances = OrderVarianceManager.Instance.LoadOrderVariance(AccountHelper.IsSuperAdmin(user), user.CustomerCode);
 
-                if (variances == null)
+                var statistics = OrderManager.Instance.LoadOrderStatistics(
+                    customerCode
+                    , null
+                    , null
+                    , String.Empty
+                    , String.Empty);
+                if (statistics == null)
                 {
                     TempData["Error"] = "This data is missing, please try again.";
                     return View("Error");
@@ -138,12 +142,37 @@ namespace JonLong.CRM.Web.Controllers
 
                 model.BundleNos = new Dictionary<string, string>();
 
-                foreach (var item in variances)
+                foreach (var item in statistics)
                 {
-                    model.BundleNos.Add(item.BundleNo, item.ETD.ToString("yyyy-MM-dd"));
+                    model.BundleNos.Add(item.BanderNo, item.SendDate.ToString("yyyy-MM-dd"));
                 }
 
                 return View(model);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.ToString();
+                return View("Error");
+            }
+        }
+
+        [RoleAuthorize]
+        [HttpPost]
+        public ActionResult Edit(VarianceEditModel model)
+        {
+            try
+            {
+                var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
+                model.LoginName = user.LoginName;
+                model.EditType = 0;
+
+                string message = OrderVarianceManager.Instance.Edit(model);
+                if (!String.IsNullOrEmpty(message))
+                {
+                    TempData["Error"] = message;
+                    return View("Error");
+                }
+                return RedirectToAction("index");
             }
             catch (Exception ex)
             {
