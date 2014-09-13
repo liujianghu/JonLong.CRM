@@ -203,7 +203,7 @@
             $('[type=date], .datepicker').pickadate();
         });
 
-        function loadDetail(sendDate, customerCode, bundlerNo, containerType, container, id, btn) {
+        function loadDetail(sendDate, customerCode, bundlerNo, containerNo, container, id, btn) {
             if ($(btn).text() == "-") {
                 $("." + id).toggle();
                 $(btn).html("+");
@@ -214,7 +214,7 @@
                 cache: false,
                 type: "GET",
                 url: "@Url.Action("StatistscDetail")",
-                data: { "sendDate": sendDate, customerCode: customerCode, bundlerNo: bundlerNo, containerType: containerType, container: container },
+                data: { "sendDate": sendDate, customerCode: customerCode, bundlerNo: bundlerNo, containerNo: containerNo, container: container },
                 success: function (data) {
                     detailDiv.html('');
                     detailDiv.html(data);

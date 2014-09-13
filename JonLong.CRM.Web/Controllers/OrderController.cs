@@ -104,7 +104,7 @@ namespace JonLong.CRM.Web.Controllers
               string sendDate
             , string customerCode
             , string bundlerNo
-            , string containerType
+            , string containerNo
             , string container)
         {
             try
@@ -119,14 +119,14 @@ namespace JonLong.CRM.Web.Controllers
                 {
                     SendDate = sendDate,
                     BundleNo = bundlerNo,
-                    ContainerType = containerType
+                    ContainerType = containerNo
                 };
 
                 model.Orders = OrderManager.Instance.LoadStatisticsDetail(
                     Convert.ToDateTime(sendDate)
                     , customerCode
                     , bundlerNo
-                    , containerType
+                    , containerNo
                     , container);
 
                 model.OrderCount = model.Orders.Count;
