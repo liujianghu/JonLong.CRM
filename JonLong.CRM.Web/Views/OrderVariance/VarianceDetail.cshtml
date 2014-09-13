@@ -53,8 +53,15 @@
         }
         <tr class="@trclass">
             <td>
-                <a href="@Url.Action("Edit", "OrderVariance", new { id = @item.Id, guid=@Model.Guid })">Deplay</a>&nbsp;&nbsp;
-                <a href="@Url.Action("Cancel", "OrderVariance", new { id = @item.Id, guid=@Model.Guid })">Cancel</a>
+                @if(item.CYLX ==1){
+                    <a href="@Url.Action("Confirm", "OrderVariance", new { id = @item.Id, guid=@Model.Guid })">Confirm</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Edit", "OrderVariance", new { id = @item.Id, guid=@Model.Guid })">Deplay</a>@:&nbsp;&nbsp;
+                    <a href="@Url.Action("Cancel", "OrderVariance", new { id = @item.Id, guid=@Model.Guid })">Cancel</a>
+                }
+                   
             </td>
             <td>@item.ModelNo</td>
             <td>@item.Total</td>
@@ -208,7 +215,7 @@
             data: ({ id: id }),
             datatype: 'json',
             success: function (data) {
-                if(data != 1){
+                if (data != 1) {
                     alert(data);
                     return;
                 } else {

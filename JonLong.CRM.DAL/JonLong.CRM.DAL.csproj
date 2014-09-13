@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnrouteDataProvider.cs" />
     <Compile Include="OrderDataProvider.cs" />
     <Compile Include="OrderVarianceDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

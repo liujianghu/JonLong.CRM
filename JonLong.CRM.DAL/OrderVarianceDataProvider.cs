@@ -138,8 +138,9 @@ namespace JonLong.CRM.DAL
                     detail.Size18 = reader.GetInt32(23);
                     detail.Size19 = reader.GetInt32(24);
                     detail.Size20 = reader.GetInt32(25);
-                    detail.OldHtbh = reader.GetString(31);
                     detail.ContractNo = reader.GetString(26);
+                    detail.OldHtbh = reader.GetString(31);
+                    detail.CYLX = reader.GetInt16(32);
 
                     list.Add(detail);
                 }

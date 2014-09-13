@@ -13,6 +13,11 @@ namespace JonLong.CRM.Models
 
         public string TGuid { get; set; }
 
+        /// <summary>
+        /// 差异类型
+        /// </summary>
+        public int CYLX { get; set; }
+
         public string CustomerCode { get; set; }
 
         public string ModelNo { get; set; }

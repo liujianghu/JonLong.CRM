@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Customer.cs" />
+    <Compile Include="Enroute.cs" />
+    <Compile Include="EnrouteDetail.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderStatistics.cs" />
     <Compile Include="OrderVarianceModel.cs" />

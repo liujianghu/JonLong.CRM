@@ -1,0 +1,331 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Globalization
+@model JonLong.CRM.Web.Models.VarianceEditViewModel
+
+@section head{
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.date.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-spinner.css")" type="text/css" media="screen" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.legacy.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.date.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.spinner.js")"></script>
+    <style>
+        .table_b td {
+            border: 1px solid #696969;
+        }
+
+        .table_b th {
+            border: 1px solid #696969;
+        }
+    </style>
+}
+
+<div class="content-box">
+    <!-- Start Content Box -->
+    <div class="content-box-header">
+        <h3>
+            Edit order
+        </h3>
+        <ul class="content-box-tabs">
+            <li><a href="@Url.Action("index")" class="button">Back to list</a></li>
+        </ul>
+        <div class="clear">
+        </div>
+    </div>
+    <!-- End .content-box-header -->
+    <div class="content-box-content">
+
+        <table class="table_b">
+            <tr class="alt-row">
+                @{
+                    int sizeTypeCount = 18;
+                    if (Model.ShoeSizes.Count < sizeTypeCount)
+                    {
+                        sizeTypeCount = Model.ShoeSizes.Count;
+                    }
+                }
+                <th>Model No.</th>
+                <th>Total</th>
+                @for (int i = 0; i < sizeTypeCount; i++)
+                {
+                    <th style="font-weight:200">
+                        @Model.ShoeSizes[i]
+                    </th>
+                }
+                <th>Original ETD</th>
+
+            </tr>
+            <tr>
+                <td>@Model.Detail.ModelNo</td>
+                <td>@Model.Detail.Total</td>
+                <td>
+                    @if (Model.Detail.Size1 > 0)
+                    {
+                        @Model.Detail.Size1
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size2 > 0)
+                    {
+                        @Model.Detail.Size2
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size3 > 0)
+                    {
+                        @Model.Detail.Size3
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size4 > 0)
+                    {
+                        @Model.Detail.Size4
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size5 > 0)
+                    {
+                        @Model.Detail.Size5
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size6 > 0)
+                    {
+                        @Model.Detail.Size6
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size7 > 0)
+                    {
+                        @Model.Detail.Size7
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size8 > 0)
+                    {
+                        @Model.Detail.Size8
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size9 > 0)
+                    {
+                        @Model.Detail.Size9
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size10 > 0)
+                    {
+                        @Model.Detail.Size10
+
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size11 > 0)
+                    {
+                        @Model.Detail.Size11
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size12 > 0)
+                    {
+                        @Model.Detail.Size12
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size13 > 0)
+                    {
+                        @Model.Detail.Size13
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size14 > 0)
+                    {
+                        @Model.Detail.Size14
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size15 > 0)
+                    {
+                        @Model.Detail.Size15
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size16 > 0)
+                    {
+                        @Model.Detail.Size16
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size17 > 0)
+                    {
+                        @Model.Detail.Size17
+                    }
+                </td>
+                <td>
+                    @if (Model.Detail.Size18 > 0)
+                    {
+                        @Model.Detail.Size18
+                    }
+                </td>
+                <td>@Model.Detail.SendDate.ToShortDateString()</td>
+            </tr>
+
+            @{
+                CultureInfo culture = new CultureInfo("en-US");
+            }
+        </table>
+        <div class="clear">
+            <p></p>
+        </div>
+        <div class="tab-content default-tab" id="tab2">
+            @using (Html.BeginForm("Confirm", "OrderVariance", FormMethod.Post, new { @class = "form" }))
+            {
+                @Html.Hidden("Id", Model.Detail.Id)
+                @Html.Hidden("CustomerCode", Model.Detail.CustomerCode)
+                @Html.Hidden("TGuid", Model.Guid)
+                @Html.Hidden("ModelTo", Model.Detail.ModelNo)
+                @Html.Hidden("OldHtbh", Model.Detail.OldHtbh)
+                @Html.Hidden("OldBundleNo", Model.Detail.BundleNo)
+                <table class="table_b">
+                    <tr class="alt-row">
+                        <th>ETD </th>
+                        <th><input id="SendDate" name="SendDate" disabled="disabled" class="datepicker" value="@Model.Detail.SendDate.ToString("dd MMM, yyyy", culture)" type="text"></th>
+                        <th>Bunlde No:</th>
+                        <th>
+                            <select id="BundleNo" name="BundleNo" disabled="disabled">
+                                @foreach (var pair in Model.BundleNos)
+                                {
+                                    if (Model.Detail.BundleNo.ToLower() == pair.Key.ToLower())
+                                    {
+                                        <option selected="selected" fhrq="@pair.Value" value="@pair.Key">@pair.Key @pair.Value</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@pair.Key" fhrq="@pair.Value">@pair.Key @pair.Value</option>
+                                    }
+                                }
+                            </select>
+                        </th>
+                        <th>Container</th>
+                        <th>
+                            <select id="ContainerType" disabled="disabled" name="ContainerType">
+                                @foreach (var item in Model.Containers)
+                                {
+                                    if (item.ToLower() == Model.Detail.ContainerType)
+                                    {
+                                        <option selected="selected" value="@item">@item</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item">@item</option>
+                                    }
+                                }
+                            </select>
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td colspan="8" style="background-color:yellow">
+                            Any changes done to a container, will result in changing of corresponding container
+                            numbers for all items in the container
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>@Model.ShoeSizes[0]</td>
+                        <td><input class="size" name="Size1" value="@Model.Detail.Size1" /></td>
+                        <td>@Model.ShoeSizes[1]</td>
+                        <td><input class="size" name="Size2" value="@Model.Detail.Size2" /></td>
+                        <td>@Model.ShoeSizes[2]</td>
+                        <td><input class="size" name="Size3" value="@Model.Detail.Size3" /></td>
+                        <td>@Model.ShoeSizes[3]</td>
+                        <td><input class="size" name="Size4" value="@Model.Detail.Size4" /></td>
+                    </tr>
+                    <tr class="alt-row">
+                        <td>@Model.ShoeSizes[4]</td>
+                        <td><input class="size" name="Size5" value="@Model.Detail.Size5" /></td>
+                        <td>@Model.ShoeSizes[5]</td>
+                        <td><input class="size" name="Size6" value="@Model.Detail.Size6" /></td>
+                        <td>@Model.ShoeSizes[6]</td>
+                        <td><input class="size" name="Size7" value="@Model.Detail.Size7" /></td>
+                        <td>@Model.ShoeSizes[7]</td>
+                        <td><input class="size" name="Size8" value="@Model.Detail.Size8" /></td>
+                    </tr>
+                    <tr class="alt-row">
+                        <td>@Model.ShoeSizes[8]</td>
+                        <td><input class="size" name="Size9" value="@Model.Detail.Size9" /></td>
+                        <td>@Model.ShoeSizes[9]</td>
+                        <td><input class="size" name="Size10" value="@Model.Detail.Size10" /></td>
+                        <td>@Model.ShoeSizes[10]</td>
+                        <td><input class="size" name="Size11" value="@Model.Detail.Size11" /></td>
+                        <td>@Model.ShoeSizes[11]</td>
+                        <td><input class="size" name="Size12" value="@Model.Detail.Size12" /></td>
+                    </tr>
+                    <tr class="alt-row">
+                        <td>@Model.ShoeSizes[12]</td>
+                        <td><input class="size" name="Size13" value="@Model.Detail.Size13" /></td>
+                        <td>@Model.ShoeSizes[13]</td>
+                        <td><input class="size" name="Size14" value="@Model.Detail.Size14" /></td>
+                        <td>@Model.ShoeSizes[14]</td>
+                        <td><input class="size" name="Size15" value="@Model.Detail.Size15" /></td>
+                        <td>@Model.ShoeSizes[15]</td>
+                        <td><input class="size" name="Size16" value="@Model.Detail.Size16" /></td>
+                    </tr>
+                    <tr class="alt-row">
+                        <td>@Model.ShoeSizes[16]</td>
+                        <td><input class="size" name="Size17" value="@Model.Detail.Size17" /></td>
+                        <td>@Model.ShoeSizes[17]</td>
+                        <td><input class="size" name="Size18" value="@Model.Detail.Size18" /></td>
+                        <td>Total</td>
+                        <td><input id="Total" name="Total" value="@Model.Detail.Total" /></td>
+                        <td>
+                            @Html.Hidden("Size19", @Model.Detail.Size19)
+                        </td>
+                        <td>
+                            @Html.Hidden("Size20", @Model.Detail.Size20)
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="clear">
+                    <p></p>
+                </div>
+                <div style="text-align:center">
+                    <p>
+                        <input class="button" type="submit" value="Save" />&nbsp;&nbsp;
+
+                        <a href="@Url.Action("index")" class="button">Cancel</a>
+                    </p>
+                </div>
+
+            }
+
+        </div>
+    </div>
+    <!-- End .content-box-content -->
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setETD('@Model.Detail.SendDate.ToString("yyyy-MM-dd")');
+            $('[type=date], .size').change(function () {
+                var total = 0;
+                $('[type=date], .size').each(function () {
+                    total += parseInt($(this).val());
+                });
+                $("#Total").val(total);
+            });
+        });
+        function setETD(selected) {
+            var $input = $('.datepicker').pickadate()
+            var picker = $input.pickadate('picker');
+            picker.set('select', selected, { format: 'yyyy-mm-dd' });
+        }
+    </script>
+}
+
+
