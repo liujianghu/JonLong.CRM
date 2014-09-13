@@ -10,6 +10,8 @@ namespace JonLong.CRM.Web.Models
     {
         public List<VarianceDetail> VarianceDetails { get; set; }
 
+        public string Guid { get; set; }
+
         public List<string> ShoeSizes { get; set; }
 
         public int VarianceCount { get; set; }

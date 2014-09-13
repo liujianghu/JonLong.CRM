@@ -15,10 +15,6 @@
 
 <table class="table_b">
     <tr class="alt-row">
-        <th>
-            Task
-        </th>
-
         @{
             int sizeTypeCount = 18;
             if (Model.ShoeSizes.Count < sizeTypeCount)
@@ -52,10 +48,6 @@
             trclass = "alt-row";
         }
         <tr class="@trclass">
-            <td>
-                <a href="@Url.Action("Edit", "OrderVariance", new { id = @item.Id, guid=@Model.Guid })">Deplay</a>&nbsp;&nbsp;
-                <a href="@Url.Action("Cancel", "OrderVariance", new { id = @item.Id, guid=@Model.Guid })">Cancel</a>
-            </td>
             <td>@item.ModelNo</td>
             <td>@item.Total</td>
             <td>
@@ -173,7 +165,6 @@
                 j++;
     }
     <tr style="background-color:#D3D3D3">
-        <td></td>
         <td id="orderCount">@Model.VarianceCount</td>
         <td id="total">@Model.Total</td>
         <td id="size1total">@Model.Size1Total</td>
@@ -197,27 +188,3 @@
         <td colspan="2"></td>
     </tr>
 </table>
-<script>
-    function deleteOrder(id) {
-        if (!confirm("This will delete this model from this bundle, are you sure?")) {
-            return;
-        }
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("Delete") ',
-            data: ({ id: id }),
-            datatype: 'json',
-            success: function (data) {
-                if(data != 1){
-                    alert(data);
-                    return;
-                } else {
-                    window.location.href = '@Url.Action("Index")';
-                }
-
-            }
-        });
-    }
-
-
-</script>

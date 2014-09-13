@@ -11,6 +11,8 @@ namespace JonLong.CRM.Web.Models
         public VarianceDetail Detail { get; set; }
         public List<string> ShoeSizes { get; set; }
 
+        public string Guid { get; set; }
+
         public List<string> Containers { get; set; }
 
         public Dictionary<string, string> BundleNos { get; set; }

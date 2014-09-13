@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using System.Globalization
@@ -183,7 +182,7 @@
             <p></p>
         </div>
         <div class="tab-content default-tab" id="tab2">
-            @using (Html.BeginForm("Edit", "OrderVariance", FormMethod.Post, new { @class = "form" }))
+            @using (Html.BeginForm("Cancel", "OrderVariance", FormMethod.Post, new { @class = "form" }))
             {
                 @Html.Hidden("Id", Model.Detail.Id)
                 @Html.Hidden("CustomerCode", Model.Detail.CustomerCode)
@@ -194,10 +193,10 @@
                 <table class="table_b">
                     <tr class="alt-row">
                         <th>ETD </th>
-                        <th><input id="SendDate" name="SendDate" class="datepicker" value="@Model.Detail.SendDate.ToString("dd MMM, yyyy", culture)" type="text"></th>
+                        <th><input id="SendDate" name="SendDate" disabled="disabled" class="datepicker" value="@Model.Detail.SendDate.ToString("dd MMM, yyyy", culture)" type="text"></th>
                         <th>Bunlde No:</th>
                         <th>
-                            <select id="BundleNo" name="BundleNo">
+                            <select id="BundleNo" name="BundleNo" disabled="disabled">
                                 @foreach (var pair in Model.BundleNos)
                                 {
                                     if (Model.Detail.BundleNo.ToLower() == pair.Key.ToLower())
@@ -213,7 +212,7 @@
                         </th>
                         <th>Container</th>
                         <th>
-                            <select id="ContainerType" name="ContainerType">
+                            <select id="ContainerType" disabled="disabled" name="ContainerType">
                                 @foreach (var item in Model.Containers)
                                 {
                                     if (item.ToLower() == Model.Detail.ContainerType)
@@ -326,14 +325,6 @@
             var picker = $input.pickadate('picker');
             picker.set('select', selected, { format: 'yyyy-mm-dd' });
         }
-        $('#customize-spinner').spinner('changed', function (e, newVal, oldVal) {
-            $('#old-val').text(oldVal);
-            $('#new-val').text(newVal);
-        });
-        $("#BundleNo").change(function () {
-            setETD($('#BundleNo option:selected').attr('fhrq'));
-            //alert(this.value + ',' + $('#bundlerno option:selected').attr('fhrq'));
-        });
     </script>
 }
 

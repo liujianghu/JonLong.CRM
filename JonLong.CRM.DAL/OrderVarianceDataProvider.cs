@@ -64,20 +64,20 @@ namespace JonLong.CRM.DAL
             {
                 while (reader.Read())
                 {
-                    var info = new OrderVarianceModel
-                        {
-                            ETD = reader.GetDateTime(0),
-                            BundleNo = reader.GetString(1),
-                            ContainerType = reader.GetString(2),
-                            ContainerNo = reader.GetString(3),
-                            Variance = reader.GetDecimal(4),
-                            SumPairs = reader.GetInt32(5),
-                            Id = reader.GetInt32(7),
-                            ContractNo = reader.GetString(8),
-                            TGuid = tGuid,
-                            KHJC = reader.GetString(9),
-                            CustomerCode = reader.GetString(10)
-                        };
+                    var info = new OrderVarianceModel();
+
+                    info.ETD = reader.GetDateTime(0);
+                    info.BundleNo = reader.GetString(1);
+                    info.ContainerType = reader.GetString(2);
+                    info.ContainerNo = reader.GetString(3);
+                    info.Variance = reader.GetDecimal(4);
+                    info.SumPairs = reader.GetInt32(5);
+                    info.Id = reader.GetInt32(7);
+                    info.ContractNo = reader.GetString(8);
+                    info.TGuid = tGuid;
+                    info.KHJC = reader.IsDBNull(9) ? "" : reader.GetString(9);
+                    info.CustomerCode = reader.GetString(10);
+
                     list.Add(info);
                 }
             }
@@ -89,8 +89,8 @@ namespace JonLong.CRM.DAL
             string customerCode,
             DateTime sendDate,
             string bundleNo,
-            string containerType,
-            string containerNo)
+            string containerNo,
+            string container)
         {
             var list = new List<VarianceDetail>();
             string sql = @"select id,khys_xh,khys_fhrq,khys_banderNo,khys_gz,khys_sl,khys_s1,khys_s2,khys_s3,khys_s4,khys_s5
@@ -101,8 +101,8 @@ namespace JonLong.CRM.DAL
                         from t_tmp_ysyq where sta=1 
                         and tGuid=(select top 1 tGuid from t_tmp_ysyq where khys_khh='" + customerCode + @"'order by rq desc)"
                         + @"and khys_khh= '" + customerCode + @"' and datediff(d,khys_fhrq, '" + sendDate.ToShortDateString() + @"')=0 and 
-                        isnull(khys_banderNo,'')='" + bundleNo + @"' and isnull(khys_gz,'')='" + containerType + @"' 
-                        and isnull(khys_container,'')='" + containerNo + @"'
+                        isnull(khys_banderNo,'')='" + bundleNo + @"' and isnull(khys_gz,'')='" + containerNo + @"' 
+                        and isnull(khys_container,'')='" + container + @"'
                         order by khys_xh";
 
             using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString
@@ -138,8 +138,8 @@ namespace JonLong.CRM.DAL
                     detail.Size18 = reader.GetInt32(23);
                     detail.Size19 = reader.GetInt32(24);
                     detail.Size20 = reader.GetInt32(25);
-                    detail.OldHtbh = reader.GetString(26);
-                    detail.ContractNo = reader.GetString(33);
+                    detail.OldHtbh = reader.GetString(31);
+                    detail.ContractNo = reader.GetString(26);
 
                     list.Add(detail);
                 }
@@ -283,9 +283,9 @@ namespace JonLong.CRM.DAL
             ,sum(khys_sl) as sumS,'',MIN(id) as id,
             max(isnull(khys_khdd,'')) as khdd,(select ISNULL(kh_jc,'') 
             from t_bas_kh where Kh_bh=t_sale_khys.khys_khh) as khjc,khys_khh 
-            from t_sale_khys where khys_khh= " + customerCode + @" and khys_banderno in (select khys_banderno from t_tmp_ysyq 
-            where tGuid=(select top 1 tGuid from t_tmp_ysyq where khys_khh=" + customerCode + @" order by rq desc)  
-            and khys_khh=" + customerCode + @")
+            from t_sale_khys where khys_khh= '" + customerCode + @"' and khys_banderno in (select khys_banderno from t_tmp_ysyq 
+            where tGuid=(select top 1 tGuid from t_tmp_ysyq where khys_khh='" + customerCode + @"' order by rq desc)  
+            and khys_khh='" + customerCode + @"')
             group by khys_khh,khys_fhrq,khys_banderno,khys_gz,khys_container order by khys_khh,khys_fhrq,khys_banderno
             ";
 
@@ -319,8 +319,8 @@ namespace JonLong.CRM.DAL
         public static List<VarianceDetail> LoadOrderDetail(string customerCode,
             DateTime sendDate,
             string bundleNo,
-            string containerType,
-            string containerNo)
+            string containerNo,
+            string container)
         {
             string sql = @"SELECT  id ,
                 khys_xh ,
@@ -356,11 +356,11 @@ namespace JonLong.CRM.DAL
                 ISNULL(khys_htbh, '') AS htbh ,
                 ISNULL(khys_khdd, '') AS khdd
         FROM    t_sale_khys
-        WHERE   khys_khh = " + customerCode + @"
-                AND DATEDIFF(d, khys_fhrq, " + sendDate.ToShortDateString() + @") = 0
-                AND ISNULL(khys_banderNo, '') = " + bundleNo + @"
-                AND ISNULL(khys_gz, '') = " + containerType + @"
-                AND ISNULL(khys_container, '') = " + containerNo + @"
+        WHERE   khys_khh = '" + customerCode + @"'
+                AND DATEDIFF(d, khys_fhrq, '" + sendDate.ToShortDateString() + @"') = 0
+                AND ISNULL(khys_banderNo, '') = '" + bundleNo + @"'
+                AND ISNULL(khys_gz, '') = '" + containerNo + @"'
+                AND ISNULL(khys_container, '') = '" + container + @"'
         ORDER BY khys_xh";
 
             var list = new List<VarianceDetail>();
@@ -399,7 +399,171 @@ namespace JonLong.CRM.DAL
                     detail.Size19 = reader.GetInt32(24);
                     detail.Size20 = reader.GetInt32(25);
                     detail.OldHtbh = reader.GetString(26);
-                    detail.ContractNo = reader.GetString(33);
+                    detail.ContractNo = reader.GetString(31);
+
+                    list.Add(detail);
+                }
+            }
+
+            return list;
+        }
+
+        public static List<Shipment> LoadShipments(string customerCode)
+        {
+            string sql = @"SELECT  khys_fhrq ,
+                        khys_banderno ,
+                        khys_gz ,
+                        khys_container ,
+                        CAST(( CASE WHEN SUM(khys_bfb) = 0 THEN 0
+                                    ELSE CAST(SUM(khys_sl) AS DECIMAL(12, 4)) / SUM(khys_bfb)
+                                         * 100
+                               END ) AS DECIMAL(12, 2)) ,
+                        SUM(khys_sl) AS sumS ,
+                        '' ,
+                        MIN(id) AS id ,
+                        MAX(ISNULL(khdd, '')) AS khdd ,
+                        ( SELECT    ISNULL(kh_jc, '')
+                          FROM      t_bas_kh
+                          WHERE     Kh_bh = t_tmp_ysyq.khys_khh
+                        ) AS khjc ,
+                        khys_khh
+                FROM    t_tmp_ysyq
+                WHERE   sta = 2
+                        AND tGuid = ( SELECT TOP 1
+                                                tGuid
+                                      FROM      t_tmp_ysyq
+                                      WHERE     khys_khh = '" + customerCode + @"'
+                                      ORDER BY  rq DESC
+                                    )
+                        AND khys_khh = '" + customerCode + @"'
+                GROUP BY khys_khh ,
+                        khys_fhrq ,
+                        khys_banderno ,
+                        khys_gz ,
+                        khys_container
+                ORDER BY khys_khh ,
+                        khys_fhrq ,
+                        khys_banderno";
+
+            var list = new List<Shipment>();
+
+            using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString
+               , CommandType.Text
+               , sql))
+            {
+                while (reader.Read())
+                {
+                    var model = new Shipment
+                    {
+                        ETD = reader.GetDateTime(0),
+                        BundleNo = reader.IsDBNull(1) ? "" : reader.GetString(1),
+                        ContainerType = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                        ContainerNo = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                        SumPairs = reader.GetInt32(5),
+                        Id = reader.GetInt32(7),
+                        ContractNo = reader.IsDBNull(8) ? "" : reader.GetString(8),
+                        CustomerCode = reader.IsDBNull(10) ? "" : reader.GetString(10)
+                    };
+
+                    list.Add(model);
+                }
+            }
+
+            return list;
+        }
+
+        public static List<VarianceDetail> LoadShipmentDetail(
+            string customerCode,
+            DateTime sendDate,
+            string bundleNo,
+            string containerNo,
+            string container)
+        {
+            string sql = @"SELECT  id ,
+                        khys_xh ,
+                        khys_fhrq ,
+                        khys_banderNo ,
+                        khys_gz ,
+                        khys_sl ,
+                        khys_s1 ,
+                        khys_s2 ,
+                        khys_s3 ,
+                        khys_s4 ,
+                        khys_s5 ,
+                        khys_s6 ,
+                        khys_s7 ,
+                        khys_s8 ,
+                        khys_s9 ,
+                        khys_s10 ,
+                        khys_s11 ,
+                        khys_s12 ,
+                        khys_s13 ,
+                        khys_s14 ,
+                        khys_s15 ,
+                        khys_s16 ,
+                        khys_s17 ,
+                        khys_s18 ,
+                        khys_s19 ,
+                        khys_s20 ,
+                        khys_htbh ,
+                        khys_bfb ,
+                        1 ,
+                        khys_container ,
+                        khys_khjq ,
+                        ISNULL(khys_htbh, '') ,
+                        ISNULL(khdd, '') AS khdd
+                FROM    t_tmp_ysyq
+                WHERE   sta = 2
+                        AND tGuid = ( SELECT TOP 1
+                                                tGuid
+                                      FROM      t_tmp_ysyq
+                                      WHERE     khys_khh = '" + customerCode + @"'
+                                      ORDER BY  rq DESC
+                                    )
+                        AND khys_khh = '" + customerCode + @"'
+                        AND DATEDIFF(d, khys_fhrq, '" + sendDate + @"') = 0
+                        AND ISNULL(khys_banderNo, '') = '" + bundleNo + @"'
+                        AND ISNULL(khys_gz, '') = '" + containerNo + @"'
+                        AND ISNULL(khys_container, '') = '" + container + @"'
+                ORDER BY khys_xh";
+
+            var list = new List<VarianceDetail>();
+
+            using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString
+                , CommandType.Text
+                , sql))
+            {
+                while (reader.Read())
+                {
+                    var detail = new VarianceDetail();
+                    detail.Id = reader.GetInt32(0);
+                    detail.ModelNo = reader.GetString(1);
+                    detail.SendDate = reader.GetDateTime(2);
+                    detail.BundleNo = reader.GetString(3);
+                    detail.ContainerType = reader.GetString(4);
+                    detail.Total = reader.GetInt32(5);
+                    detail.Size1 = reader.GetInt32(6);
+                    detail.Size2 = reader.GetInt32(7);
+                    detail.Size3 = reader.GetInt32(8);
+                    detail.Size4 = reader.GetInt32(9);
+                    detail.Size5 = reader.GetInt32(10);
+                    detail.Size6 = reader.GetInt32(11);
+                    detail.Size7 = reader.GetInt32(12);
+                    detail.Size8 = reader.GetInt32(13);
+                    detail.Size9 = reader.GetInt32(14);
+                    detail.Size10 = reader.GetInt32(15);
+                    detail.Size11 = reader.GetInt32(16);
+                    detail.Size12 = reader.GetInt32(17);
+                    detail.Size13 = reader.GetInt32(18);
+                    detail.Size14 = reader.GetInt32(19);
+                    detail.Size15 = reader.GetInt32(20);
+                    detail.Size16 = reader.GetInt32(21);
+                    detail.Size17 = reader.GetInt32(22);
+                    detail.Size18 = reader.GetInt32(23);
+                    detail.Size19 = reader.GetInt32(24);
+                    detail.Size20 = reader.GetInt32(25);
+                    detail.OldHtbh = reader.GetString(26);
+                    detail.ContractNo = reader.GetString(31);
 
                     list.Add(detail);
                 }

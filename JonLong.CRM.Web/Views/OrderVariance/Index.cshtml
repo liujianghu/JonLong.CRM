@@ -83,7 +83,7 @@
                             <tr class="@trclass" style="@style">
                                 <td>
 
-                                    <button onclick="loadDetail('@item.ETD.ToString("yyyy-MM-dd")', '@item.CustomerCode','@item.BundleNo','@item.ContainerType','@item.ContainerNo','@item.Id', this);"
+                                    <button onclick="loadDetail('@item.ETD.ToString("yyyy-MM-dd")', '@item.CustomerCode','@item.BundleNo','@item.ContainerType','@item.ContainerNo','@item.Id', this, '@item.TGuid');"
                                             class="button" title="Detail">
                                         +
                                     </button>
@@ -122,12 +122,170 @@
                 </table>
             </div>
             <div id="Order" class="tab-pane fade">
-                <h3>Section B</h3>
-                <p>Vestibulum nec erat eu nulla rhoncus fringilla ut non neque. Vivamus nibh urna, ornare id gravida ut, mollis a magna. Aliquam porttitor condimentum nisi, eu viverra ipsum porta ut. Nam hendrerit bibendum turpis, sed molestie mi fermentum id. Aenean volutpat velit sem. Sed consequat ante in rutrum convallis. Nunc facilisis leo at faucibus adipiscing.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+
+                            </th>
+                            <th>
+                                ETD
+                            </th>
+
+                            <th>
+                                Bundler No.
+                            </th>
+                            <th>
+                                Container
+                            </th>
+                            <th>
+                                Container No.
+                            </th>
+                            <th>
+                                Sum (pairs)
+                            </th>
+                            <th>
+                                Contract No.
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int m = 0;
+                            trclass = "";
+                            style = "";
+                        }
+                        @foreach (var item in Model.Orders)
+                        {
+                            if (m % 2 == 0)
+                            {
+                                trclass = "alt-row";
+                            }
+                            else
+                            {
+                                trclass = "";
+                            }
+
+                            <tr class="@trclass" style="@style">
+                                <td>
+
+                                    <button onclick="loadOrderDetail('@item.ETD.ToString("yyyy-MM-dd")', '@item.CustomerCode','@item.BundleNo','@item.ContainerType','@item.ContainerNo','@item.Id', this);"
+                                            class="button" title="Detail">
+                                        +
+                                    </button>
+                                </td>
+                                <td>
+                                    @item.ETD.ToShortDateString()
+                                </td>
+                                <td>
+                                    @item.BundleNo
+                                </td>
+                                <td>
+                                    @item.ContainerType
+                                </td>
+                                <td>
+                                    @item.ContainerNo
+                                </td>
+                                <td>
+                                    @item.SumPairs
+                                </td>
+                                <td>
+                                    @item.ContractNo
+                                </td>
+                            </tr>
+                            <tr class="@item.Id" style="display:none">
+                                <td colspan="10">
+                                    <div id="@("order" + item.Id)"></div>
+                                </td>
+                            </tr>
+                            m++;
+                        }
+
+                    </tbody>
+                </table>
             </div>
             <div id="Shipments" class="tab-pane fade">
-                <h3>shipment 1</h3>
-                <p>WInteger convallis, nulla in sollicitudin placerat, ligula enim auctor lectus, in mollis diam dolor at lorem. Sed bibendum nibh sit amet dictum feugiat. Vivamus arcu sem, cursus a feugiat ut, iaculis at erat. Donec vehicula at ligula vitae venenatis. Sed nunc nulla, vehicula non porttitor in, pharetra et dolor. Fusce nec velit velit. Pellentesque consectetur eros.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+
+                            </th>
+                            <th>
+                                ETD
+                            </th>
+
+                            <th>
+                                Bundler No.
+                            </th>
+                            <th>
+                                Container
+                            </th>
+                            <th>
+                                Container No.
+                            </th>
+                            <th>
+                                Sum (pairs)
+                            </th>
+                            <th>
+                                Contract No.
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            m = 0;
+                            trclass = "";
+                            style = "";
+                        }
+                        @foreach (var item in Model.Shipments)
+                        {
+                            if (m % 2 == 0)
+                            {
+                                trclass = "alt-row";
+                            }
+                            else
+                            {
+                                trclass = "";
+                            }
+
+                            <tr class="@trclass" style="@style">
+                                <td>
+
+                                    <button onclick="loadShipmentDetail('@item.ETD.ToString("yyyy-MM-dd")', '@item.CustomerCode','@item.BundleNo','@item.ContainerType','@item.ContainerNo','@item.Id', this);"
+                                            class="button" title="Detail">
+                                        +
+                                    </button>
+                                </td>
+                                <td>
+                                    @item.ETD.ToShortDateString()
+                                </td>
+                                <td>
+                                    @item.BundleNo
+                                </td>
+                                <td>
+                                    @item.ContainerType
+                                </td>
+                                <td>
+                                    @item.ContainerNo
+                                </td>
+                                <td>
+                                    @item.SumPairs
+                                </td>
+                                <td>
+                                    @item.ContractNo
+                                </td>
+                            </tr>
+                            <tr class="@item.Id" style="display:none">
+                                <td colspan="10">
+                                    <div id="@("shipment" + item.Id)"></div>
+                                </td>
+                            </tr>
+                            m++;
+                        }
+
+                    </tbody>
+                </table>
             </div>
 
         </div>
@@ -136,7 +294,7 @@
 </div>
 @section scripts{
     <script type="text/javascript">
-        function loadDetail(sendDate, customerCode, bundlerNo, containerType, container, id, btn) {
+        function loadDetail(sendDate, customerCode, bundlerNo, containerType, container, id, btn,guid) {
             if ($(btn).text() == "-") {
                 $("." + id).toggle();
                 $(btn).html("+");
@@ -147,6 +305,34 @@
                 cache: false,
                 type: "GET",
                 url: "@Url.Action("VarianceDetail")",
+                data: { customerCode: customerCode, "etd": sendDate, bundleNo: bundlerNo, containerType: containerType, containerNo: container, guid:guid },
+                success: function (data) {
+                    detailDiv.html('');
+                    detailDiv.html(data);
+                    $("." + id).toggle();
+
+                    if ($(btn).text() == "-") {
+                        $(btn).html("+");
+                    } else {
+                        $(btn).text("-");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve detail.');
+                }
+            });
+        }
+        function loadOrderDetail(sendDate, customerCode, bundlerNo, containerType, container, id, btn) {
+            if ($(btn).text() == "-") {
+                $("." + id).toggle();
+                $(btn).html("+");
+                return;
+            }
+            var detailDiv = $("#order" + id);
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("Order")",
                 data: { customerCode: customerCode, "etd": sendDate, bundleNo: bundlerNo, containerType: containerType, containerNo: container },
                 success: function (data) {
                     detailDiv.html('');
@@ -158,13 +344,39 @@
                     } else {
                         $(btn).text("-");
                     }
-
-                    //$('#myModal').modal({ keyboard: true });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert('Failed to retrieve detail.');
                 }
             });
+        }
+        function loadShipmentDetail(sendDate, customerCode, bundlerNo, containerType, container, id, btn) {
+            if ($(btn).text() == "-") {
+                $("." + id).toggle();
+                $(btn).html("+");
+                return;
+            }
+            var detailDiv = $("#shipment" + id);
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("Shipment")",
+                data: { customerCode: customerCode, "etd": sendDate, bundleNo: bundlerNo, containerType: containerType, containerNo: container },
+            success: function (data) {
+                detailDiv.html('');
+                detailDiv.html(data);
+                $("." + id).toggle();
+
+                if ($(btn).text() == "-") {
+                    $(btn).html("+");
+                } else {
+                    $(btn).text("-");
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve detail.');
+            }
+        });
         }
 
     </script>

@@ -227,6 +227,9 @@
     <Content Include="Views\OrderVariance\Index.cshtml" />
     <Content Include="Views\OrderVariance\VarianceDetail.cshtml" />
     <Content Include="Views\OrderVariance\Edit.cshtml" />
+    <Content Include="Views\OrderVariance\Order.cshtml" />
+    <Content Include="Views\OrderVariance\Shipment.cshtml" />
+    <Content Include="Views\OrderVariance\Cancel.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

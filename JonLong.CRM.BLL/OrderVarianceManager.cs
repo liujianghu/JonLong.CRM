@@ -23,15 +23,51 @@ namespace JonLong.CRM.BLL
             string customerCode,
             DateTime sendDate,
             string bundleNo,
-            string containerType,
-            string containerNo)
+            string containerNo,
+            string container)
         {
-            return OrderVarianceDataProvider.LoadDetail(customerCode, sendDate, bundleNo, containerType, containerNo);
+            return OrderVarianceDataProvider.LoadDetail(customerCode, sendDate, bundleNo, containerNo, container);
         }
 
         public VarianceDetail LoadById(int id)
         {
             return OrderVarianceDataProvider.LoadById(id);
+        }
+
+        public List<VarianceOrderModel> LoadOrder(string customerCode)
+        {
+            return OrderVarianceDataProvider.LoadOrder(customerCode);
+        }
+
+        public List<VarianceDetail> LoadOrderDetail(string customerCode,
+            DateTime sendDate,
+            string bundleNo,
+            string containerNo,
+            string container)
+        {
+            return OrderVarianceDataProvider.LoadOrderDetail(customerCode,
+                sendDate
+                , bundleNo
+                , containerNo
+                , container);
+        }
+
+        public List<Shipment> LoadShipments(string customerCode)
+        {
+            return OrderVarianceDataProvider.LoadShipments(customerCode);
+        }
+
+        public List<VarianceDetail> LoadShipmentDetail(string customerCode,
+                DateTime sendDate,
+                string bundleNo,
+                string containerNo,
+                string container)
+        {
+            return OrderVarianceDataProvider.LoadShipmentDetail(customerCode,
+                sendDate
+                , bundleNo
+                , containerNo
+                , container);
         }
 
     }
