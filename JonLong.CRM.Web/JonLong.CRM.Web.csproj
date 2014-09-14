@@ -120,6 +120,7 @@
     <Compile Include="Common\AccountHelper.cs" />
     <Compile Include="Common\RoleAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ArrivedController.cs" />
     <Compile Include="Controllers\EnrouteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -129,6 +130,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ArrivedDetailViewModel.cs" />
+    <Compile Include="Models\ArrivedListViewModel.cs" />
+    <Compile Include="Models\ArrivedQueryModel.cs" />
     <Compile Include="Models\EnrouteDetailViewModel.cs" />
     <Compile Include="Models\EnrouteListViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -236,6 +240,8 @@
     <Content Include="Views\OrderVariance\Confirm.cshtml" />
     <Content Include="Views\Enroute\Index.cshtml" />
     <Content Include="Views\Enroute\Detail.cshtml" />
+    <Content Include="Views\Arrived\Index.cshtml" />
+    <Content Include="Views\Arrived\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

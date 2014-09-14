@@ -2,16 +2,20 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@model JonLong.CRM.Web.Models.EnrouteListViewModel
+@using System.Globalization
+@model JonLong.CRM.Web.Models.ArrivedListViewModel
 @section head{
-
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.date.css")" type="text/css" media="screen" />
     <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-theme.min.css")" type="text/css" media="screen" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.legacy.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.date.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
 }
 <div class="content-box-header">
     <h3>
-        En route
+        Shipped
     </h3>
 
     <div class="clear">
@@ -20,6 +24,32 @@
 <!-- End .content-box-header -->
 <div class="content-box-content">
     <div class="tab-content default-tab" id="tab1">
+        <!-- This is the target div. id must match the href of this div's tab -->
+        <div class="tab-content default-tab">
+            @{
+                CultureInfo culture = new CultureInfo("en-US");
+            }
+            @using (Html.BeginForm("Index", "Arrived", FormMethod.Post))
+            {
+                <div class="bulk-actions align-left">
+                    ETD &nbsp;&nbsp;
+                    <input id="StartETD" name="StartETD" class="datepicker" value="@Model.StartETD.ToString("dd MMM, yyyy", culture)" type="text">
+                    &nbsp;&nbsp;To &nbsp;&nbsp;
+                    <input id="EndETD" name="EndETD" class="datepicker" value="@Model.EndETD.ToString("dd MMM, yyyy", culture)" type="text">
+                    &nbsp;&nbsp;Bundler.No &nbsp;&nbsp;
+                    <input type="text" value="@Model.BundleNo" id="BundleNo" name="BundleNo" />
+                    &nbsp;Container.No
+                    <input type="text" value="@Model.Container" id="Container" name="Container" />
+                    &nbsp;&nbsp;
+                    <input type="submit" class="button" value="&nbsp;&nbsp;GO&nbsp;&nbsp;" />
+                </div>
+            }
+
+            <div class="clear">
+                <p></p>
+            </div>
+           
+        </div>
         <table>
             <thead>
                 <tr>
@@ -45,7 +75,10 @@
                         Sum (pairs)
                     </th>
                     <th>
-                        Received
+                        Confirm
+                    </th>
+                    <th>
+                        ConfirmDate
                     </th>
                     <th>
                         Contract No.
@@ -67,7 +100,7 @@
                     string trclass = "";
                     string style = "";
                 }
-                @foreach (var item in Model.Enroutes)
+                @foreach (var item in Model.Items)
                 {
                     if (j % 2 == 0)
                     {
@@ -77,24 +110,25 @@
                     {
                         trclass = "";
                     }
+                   
                     <tr class="@trclass" style="@style">
                         <td>
-                            <button onclick="loadDetail('@item.ETD.ToString("yyyy-MM-dd")','@item.BundleNo','@item.ContainerNo','@item.Container','@item.Id', this);"
+                            <button onclick="loadDetail('@item.SendDate.ToString("yyyy-MM-dd")','@item.BundleNo','@item.ContainerNo','@item.Container','@item.Id', this);"
                                     class="button" title="Detail">
                                 +
                             </button>
                         </td>
                         <td>
-                            @item.ETD.ToShortDateString()
+                            @item.SendDate.ToShortDateString()
                         </td>
                         <td>
                             @item.BundleNo
                         </td>
                         <td>
-                            @item.Container
+                            @item.ContainerNo
                         </td>
                         <td>
-                            @item.ContainerNo
+                            @item.Container
                         </td>
                         <td>
                             @item.Filled%
@@ -103,18 +137,19 @@
                             @item.SumPairs
                         </td>
                         <td>
-                            <a href="javascript:;" onclick="received(@item.Id,'@item.BundleNo')" title="Received">
-                                Received
-                            </a>
+                            @item.Confirm
                         </td>
                         <td>
-                            @item.ContractNo
-                        </td>
-                        <td>
-                            @if (!String.IsNullOrEmpty(item.Invoice))
-                            {
-                                <a href="@Url.Content(item.Invoice)" target="_blank">Download</a>
+                            @if(item.ConfirmDate.HasValue){
+                              @item.ConfirmDate.Value.ToShortDateString()
                             }
+                        </td>
+                        <td>@item.ContractNo</td>
+                        <td>
+                            @if(!String.IsNullOrEmpty(item.Invoice)){
+                            <a href="@Url.Content(item.Invoice)" target="_blank">Download</a>  
+                            }
+                        </td>
                         <td>
                             @if (!String.IsNullOrEmpty(item.PackingList))
                             {
@@ -126,14 +161,15 @@
                             {
                                 <a href="@Url.Content(item.BL)" target="_blank">Download</a>
                             }
+                          
                         </td>
                     </tr>
                     <tr class="@item.Id" style="display:none">
-                        <td colspan="12">
+                        <td colspan="13">
                             <div id="@item.Id"></div>
                         </td>
                     </tr>
-                            j++;
+                    j++;
                 }
 
             </tbody>
@@ -141,26 +177,16 @@
     </div>
 </div>
 @section scripts{
-    <script>
-        function received(id, bundleNo) {
-            if (!confirm("Are you sure you have received?")) {
-                return;
-            }
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("Receive") ',
-                data: ({ id: id, bundleNo: bundleNo }),
-                datatype: 'json',
-                success: function (data) {
-                    if (data != 1) {
-                        alert(data);
-                        return;
-                    } else {
-                        window.location.href = '@Url.Action("Index")';
-                    }
+    <script type="text/javascript">
+    $(document).ready(function () {
+        setETD('StartETD','@Model.StartETD.ToString("yyyy-MM-dd")');
+        setETD('EndETD','@Model.EndETD.ToString("yyyy-MM-dd")');
+        });
 
-                }
-            });
+        function setETD(id,selected) {
+            var $input = $('#'+id).pickadate()
+            var picker = $input.pickadate('picker');
+            picker.set('select', selected, { format: 'yyyy-mm-dd' });
         }
 
         function loadDetail(sendDate, bundlerNo, containerNo, container, id, btn) {
@@ -196,3 +222,8 @@
 
     </script>
 }
+
+
+
+
+
