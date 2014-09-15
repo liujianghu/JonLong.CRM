@@ -157,10 +157,11 @@ namespace JonLong.CRM.DAL
                     info.Id = reader.GetInt32(6);
                     info.KHJC = reader.IsDBNull(7) ? "" : reader.GetString(7);
                     info.Receive = reader.GetString(8);
+                    info.InvoiceName = reader.IsDBNull(9) ? "" : reader.GetString(9);
                     info.ContractNo = reader.IsDBNull(10) ? "" : reader.GetString(10);
-                    info.Invoice = reader.GetString(11);
-                    info.PackingList = reader.GetString(12);
-                    info.BL = reader.GetString(13);
+                    info.Invoice = reader.IsDBNull(11)?"":reader.GetString(11);
+                    info.PackingList = reader.IsDBNull(12) ? "" : reader.GetString(12);
+                    info.BL = reader.IsDBNull(13) ? "" : reader.GetString(13);
 
                     list.Add(info);
                 }

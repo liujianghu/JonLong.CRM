@@ -63,10 +63,11 @@ namespace JonLong.CRM.Web.Controllers
             
         }
 
-        [RoleAuthorize]
-        public ActionResult Index()
+        public ActionResult LogOff()
         {
-            return View();
+            FormsAuthentication.SignOut();
+
+            return RedirectToAction("Login", "Account");
         }
 
     }

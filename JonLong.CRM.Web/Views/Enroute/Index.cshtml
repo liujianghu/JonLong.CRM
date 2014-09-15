@@ -113,18 +113,18 @@
                         <td>
                             @if (!String.IsNullOrEmpty(item.Invoice))
                             {
-                                <a href="@Url.Content(item.Invoice)" target="_blank">Download</a>
+                                <a href="@Url.Action("index", "Download", new { fileName = item.Invoice })" target="_blank">@item.InvoiceName</a>
                             }
                         <td>
                             @if (!String.IsNullOrEmpty(item.PackingList))
                             {
-                                <a href="@Url.Content(item.PackingList)" target="_blank">Download</a>
+                                <a href="@Url.Action("index", "Download", new { fileName = item.PackingList })" target="_blank">Packling List</a>
                             }
                         </td>
                         <td>
                             @if (!String.IsNullOrEmpty(item.BL))
                             {
-                                <a href="@Url.Content(item.BL)" target="_blank">Download</a>
+                                <a href="@Url.Action("index", "Download", new { fileName = item.BL })" target="_blank">B/L</a>
                             }
                         </td>
                     </tr>

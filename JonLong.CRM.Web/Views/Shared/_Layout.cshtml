@@ -26,10 +26,9 @@
                 </a>
                 <!-- Sidebar Profile links -->
                 <div id="profile-links">
-                    Hello, <a href="#" title="Edit your profile">Xiao chan</a>, you have <a href="#messages"
-                                                                                           rel="modal" title="3 Messages">3 Messages</a><br />
+                    Hello, <a href="#" title="Edit your profile">Xiao chan</a><br />
                     <br />
-                    <a href="#" title="View the Site">View the Site</a> | <a href="#" title="Sign Out">
+                   <a href="@Url.Action("LogOff", "Account")" title="Sign Out">
                         Sign
                         Out
                     </a>
@@ -64,7 +63,7 @@
                     <li>
                         <a href="#" class="nav-top-item">Logistics </a>
                         <ul>
-                            <li><a href="#">JONLONG warehouse</a></li>
+                            <li><a href="@Url.Action("index","JLWarehouse")">JONLONG warehouse</a></li>
                             <li><a href="#">Customer warehouse</a></li>
                         </ul>
                     </li>

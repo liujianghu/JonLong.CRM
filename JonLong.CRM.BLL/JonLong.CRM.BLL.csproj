@@ -47,6 +47,7 @@
     <Compile Include="RoleManager.cs" />
     <Compile Include="ShoeManager.cs" />
     <Compile Include="UserManager.cs" />
+    <Compile Include="WarehouseManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JonLong.CRM.DAL\JonLong.CRM.DAL.csproj">

@@ -48,6 +48,7 @@
     <Compile Include="ShoeDataProvider.cs" />
     <Compile Include="SQLHelper.cs" />
     <Compile Include="UserDataProvider.cs" />
+    <Compile Include="WarehouseDataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JonLong.CRM.Models\JonLong.CRM.Models.csproj">

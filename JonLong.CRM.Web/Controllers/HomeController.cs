@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JonLong.CRM.Web.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,7 @@ namespace JonLong.CRM.Web.Controllers
 {
     public class HomeController : Controller
     {
+        [RoleAuthorize]
         public ActionResult Index()
         {
             return View();

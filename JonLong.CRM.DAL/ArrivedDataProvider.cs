@@ -179,6 +179,7 @@ namespace JonLong.CRM.DAL
                     {
                         info.ConfirmDate = reader.GetDateTime(9);
                     }
+                    info.InvoiceName = reader.IsDBNull(11) ? "" : reader.GetString(11);
                     info.ContractNo = reader.IsDBNull(12) ? "" : reader.GetString(12);
                     info.Invoice = reader.IsDBNull(13) ? "" : reader.GetString(13);
                     info.PackingList = reader.IsDBNull(14) ? "" : reader.GetString(14);

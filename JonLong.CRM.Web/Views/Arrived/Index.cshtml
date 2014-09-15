@@ -2,16 +2,13 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using System.Globalization
+
 @model JonLong.CRM.Web.Models.ArrivedListViewModel
 @section head{
     <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.date.css")" type="text/css" media="screen" />
     <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-theme.min.css")" type="text/css" media="screen" />
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.legacy.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.date.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-datepicker.js")"></script>
 }
 <div class="content-box-header">
     <h3>
@@ -26,16 +23,13 @@
     <div class="tab-content default-tab" id="tab1">
         <!-- This is the target div. id must match the href of this div's tab -->
         <div class="tab-content default-tab">
-            @{
-                CultureInfo culture = new CultureInfo("en-US");
-            }
             @using (Html.BeginForm("Index", "Arrived", FormMethod.Post))
             {
                 <div class="bulk-actions align-left">
                     ETD &nbsp;&nbsp;
-                    <input id="StartETD" name="StartETD" class="datepicker" value="@Model.StartETD.ToString("dd MMM, yyyy", culture)" type="text">
+                    <input id="StartETD" name="StartETD" class="datepicker" data-provide="datepicker" value="@Model.StartETD.ToString("yyyy/MM/dd")" type="text">
                     &nbsp;&nbsp;To &nbsp;&nbsp;
-                    <input id="EndETD" name="EndETD" class="datepicker" value="@Model.EndETD.ToString("dd MMM, yyyy", culture)" type="text">
+                    <input id="EndETD" name="EndETD" class="datepicker" data-provide="datepicker" value="@Model.EndETD.ToString("yyyy/MM/dd")" type="text">
                     &nbsp;&nbsp;Bundler.No &nbsp;&nbsp;
                     <input type="text" value="@Model.BundleNo" id="BundleNo" name="BundleNo" />
                     &nbsp;Container.No
@@ -48,7 +42,7 @@
             <div class="clear">
                 <p></p>
             </div>
-           
+
         </div>
         <table>
             <thead>
@@ -110,7 +104,7 @@
                     {
                         trclass = "";
                     }
-                   
+
                     <tr class="@trclass" style="@style">
                         <td>
                             <button onclick="loadDetail('@item.SendDate.ToString("yyyy-MM-dd")','@item.BundleNo','@item.ContainerNo','@item.Container','@item.Id', this);"
@@ -140,28 +134,30 @@
                             @item.Confirm
                         </td>
                         <td>
-                            @if(item.ConfirmDate.HasValue){
-                              @item.ConfirmDate.Value.ToShortDateString()
+                            @if (item.ConfirmDate.HasValue)
+                            {
+                                @item.ConfirmDate.Value.ToShortDateString()
                             }
                         </td>
                         <td>@item.ContractNo</td>
                         <td>
-                            @if(!String.IsNullOrEmpty(item.Invoice)){
-                            <a href="@Url.Content(item.Invoice)" target="_blank">Download</a>  
+                            @if (!String.IsNullOrEmpty(item.Invoice))
+                            {
+                                <a href="@Url.Action("index", "Download", new { fileName = item.Invoice })" target="_blank">@item.InvoiceName</a>
                             }
                         </td>
                         <td>
                             @if (!String.IsNullOrEmpty(item.PackingList))
                             {
-                                <a href="@Url.Content(item.PackingList)" target="_blank">Download</a>
+                                <a href="@Url.Action("index", "Download", new { fileName = item.PackingList })" target="_blank">Packing List</a>
                             }
                         </td>
                         <td>
                             @if (!String.IsNullOrEmpty(item.BL))
                             {
-                                <a href="@Url.Content(item.BL)" target="_blank">Download</a>
+                                <a href="@Url.Action("index", "Download", new { fileName = item.BL })" target="_blank">B/L</a>
                             }
-                          
+
                         </td>
                     </tr>
                     <tr class="@item.Id" style="display:none">
@@ -169,7 +165,7 @@
                             <div id="@item.Id"></div>
                         </td>
                     </tr>
-                    j++;
+                            j++;
                 }
 
             </tbody>
@@ -178,13 +174,16 @@
 </div>
 @section scripts{
     <script type="text/javascript">
-    $(document).ready(function () {
-        setETD('StartETD','@Model.StartETD.ToString("yyyy-MM-dd")');
-        setETD('EndETD','@Model.EndETD.ToString("yyyy-MM-dd")');
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'yyyy/mm/dd',
+            });
+            //setETD('StartETD', '@Model.StartETD.ToString("yyyy-MM-dd")');
+            //setETD('EndETD', '@Model.EndETD.ToString("yyyy-MM-dd")');
         });
 
-        function setETD(id,selected) {
-            var $input = $('#'+id).pickadate()
+        function setETD(id, selected) {
+            var $input = $('#' + id).pickadate()
             var picker = $input.pickadate('picker');
             picker.set('select', selected, { format: 'yyyy-mm-dd' });
         }

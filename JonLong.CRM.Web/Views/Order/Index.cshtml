@@ -4,12 +4,10 @@
 @model JonLong.CRM.Web.Models.OrderStatisticsListViewModel
 @section head{
     <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.date.css")" type="text/css" media="screen" />
     <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-theme.min.css")" type="text/css" media="screen" />
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.legacy.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.date.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-datepicker.js")"></script>
+    
 }
 <div class="content-box-header">
     <h3>
@@ -28,9 +26,9 @@
             {
                 <div class="bulk-actions align-left">
                     ETD &nbsp;&nbsp;
-                    <input id="ETDFrom" name="ETDFrom" class="datepicker" value="@Model.ETDFrom" type="text">
+                    <input id="ETDFrom" name="ETDFrom" class="datepicker" data-provide="datepicker" value="@Model.ETDFrom" type="text">
                     &nbsp;&nbsp;To &nbsp;&nbsp;
-                    <input id="ETDTo" name="ETDTo" class="datepicker" value="@Model.ETDTo" type="text">
+                    <input id="ETDTo" name="ETDTo" class="datepicker" data-provide="datepicker" value="@Model.ETDTo" type="text">
                     &nbsp;&nbsp;Bundler.No &nbsp;&nbsp;
                     <input  type="text" value="@Model.BundleNo" id="BundleNo" name="BundleNo" />
                     &nbsp;Container.No
@@ -179,28 +177,13 @@
         </table>
     </div>
 </div>
-<div class="modal fade bs-example-modal-lg" style="top:10%; left:20%" id="myModal" tabindex="-1" role="dialog"
-     aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Detail</h4>
-            </div>
-            <div class="modal-body" id="detailDiv" style="overflow: auto; height:600px">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $('[type=date], .datepicker').pickadate();
+            $('.datepicker').datepicker({
+                format: 'yyyy/mm/dd',
+            });
         });
 
         function loadDetail(sendDate, customerCode, bundlerNo, containerNo, container, id, btn) {

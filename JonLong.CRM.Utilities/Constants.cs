@@ -16,7 +16,8 @@ namespace JonLong.CRM.Utilities
             {"order","order"},
             {"enroute","en route"},
             {"arrived","arrived"},
-            {"ordervariance","order variance"}
+            {"ordervariance","order variance"},
+            {"jlwarehouse", "JonLong Warehouse"}
         };
 
         /// <summary>

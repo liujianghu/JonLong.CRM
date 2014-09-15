@@ -121,8 +121,10 @@
     <Compile Include="Common\RoleAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArrivedController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\EnrouteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JLWarehouseController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderVarianceController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="Models\ArrivedQueryModel.cs" />
     <Compile Include="Models\EnrouteDetailViewModel.cs" />
     <Compile Include="Models\EnrouteListViewModel.cs" />
+    <Compile Include="Models\WarehoseListViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderCreateModel.cs" />
     <Compile Include="Models\OrderEditModel.cs" />
@@ -157,7 +160,6 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\datepicker.css" />
-    <Content Include="Content\css\datepicker.date.css" />
     <Content Include="Content\css\reset.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\images\b.png" />
@@ -197,13 +199,11 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.spinner.js" />
-    <Content Include="Scripts\picker.legacy.js" />
-    <Content Include="Scripts\picker.date.js" />
-    <Content Include="Scripts\picker.js" />
     <Content Include="Scripts\simpla.jquery.configuration.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -242,8 +242,11 @@
     <Content Include="Views\Enroute\Detail.cshtml" />
     <Content Include="Views\Arrived\Index.cshtml" />
     <Content Include="Views\Arrived\Detail.cshtml" />
+    <Content Include="Views\JLWarehouse\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Download\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

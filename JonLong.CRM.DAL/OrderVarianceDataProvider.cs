@@ -51,7 +51,7 @@ namespace JonLong.CRM.DAL
                         from t_bas_kh where Kh_bh=t.khys_khh) as khjc,t.khys_khh from t_tmp_ysyq t inner join (select khys_banderno as bn,
                         sum(khys_sl) as ysl from t_sale_khys where khys_khh='" + customerCode + @"' group by khys_banderno) as y on t.khys_banderno=y.bn
                         where sta=1 
-                        and tGuid=(select top 1 tGuid from t_tmp_ysyq where khys_khh='" + customerCode + @"' order by rq desc)  
+                        and tGuid='" + tGuid + @"' 
                         and khys_khh='" + customerCode + @"' 
                         group by t.khys_khh,khys_fhrq,khys_banderno,khys_gz,khys_container order by t.khys_khh,khys_fhrq,khys_banderno
                         ";

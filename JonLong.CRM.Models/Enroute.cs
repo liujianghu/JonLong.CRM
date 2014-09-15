@@ -14,8 +14,10 @@ namespace JonLong.CRM.Models
         public int SumPairs { get; set; }
         public string Receive { get; set; }
         public string ContractNo { get; set; }
+        public string InvoiceName { get; set; }
         public string Invoice { get; set; }
         public string PackingList { get; set; }
         public string BL { get; set; }
+
     }
 }

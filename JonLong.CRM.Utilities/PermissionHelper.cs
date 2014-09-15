@@ -13,7 +13,7 @@ namespace JonLong.CRM.Utilities
         /// <returns></returns>
         public static bool IsAllowed(string controllerName, List<string> permissions)
         {
-            if (controllerName.ToLower() == "home")
+            if (controllerName.ToLower() == "home" || controllerName.ToLower() == "download")
             {
                 return true;
             }
