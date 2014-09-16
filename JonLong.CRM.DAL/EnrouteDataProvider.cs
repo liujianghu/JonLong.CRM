@@ -17,7 +17,7 @@ namespace JonLong.CRM.DAL
                             khys_banderno ,
                             khys_gz ,
                             khys_container ,
-                            fhzs_bnBfb * 100 AS khys_bfb ,
+                            isnull(fhzs_bnBfb,0) * 100 AS khys_bfb ,
                             SUM(fh.fhs) AS sumS ,
                             yid AS id ,
                             ( SELECT    ISNULL(kh_jc, '')
