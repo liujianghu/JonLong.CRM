@@ -20,7 +20,68 @@ namespace JonLong.CRM.Web.Controllers
             {
                 var model = new WarehoseListViewModel();
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
-                model.Items = WarehouseManager.Instance.LoadList(user.CustomerCode,"");
+                model.Shoes = ShoeManager.Instance.LoadShoes(user.CustomerCode);
+                if (model.Shoes.Any())
+                {
+                    model.SelectedShoe = model.Shoes.First().Value;
+                }
+                model.Items = WarehouseManager.Instance.LoadList(user.CustomerCode, model.SelectedShoe);
+
+
+                model.WarehouseCount = model.Items.Count;
+
+                foreach (var item in model.Items)
+                {
+                    model.Total += item.Total;
+                    model.Size1Total += item.Size1;
+                    model.Size2Total += item.Size2;
+                    model.Size3Total += item.Size3;
+                    model.Size4Total += item.Size4;
+                    model.Size5Total += item.Size5;
+                    model.Size6Total += item.Size6;
+                    model.Size7Total += item.Size7;
+                    model.Size8Total += item.Size8;
+                    model.Size9Total += item.Size9;
+                    model.Size10Total += item.Size10;
+                    model.Size11Total += item.Size11;
+                    model.Size12Total += item.Size12;
+                    model.Size13Total += item.Size13;
+                    model.Size14Total += item.Size14;
+                    model.Size15Total += item.Size15;
+                    model.Size16Total += item.Size16;
+                    model.Size17Total += item.Size17;
+                    model.Size18Total += item.Size18;
+                }
+
+                if (AccountHelper.IsSuperAdmin(user))
+                {
+                    model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(Constants.SuperAdminDefaultCustomerCode);
+                }
+                else
+                {
+                    model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(user.CustomerCode);
+                }
+
+                return View(model);
+                
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.ToString();
+                return View("Error");
+            }
+        }
+
+        [RoleAuthorize]
+        [HttpPost]
+        public ActionResult Index(string shoe)
+        {
+            try
+            {
+                var model = new WarehoseListViewModel();
+                var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
+                model.Items = WarehouseManager.Instance.LoadList(user.CustomerCode, shoe);
+                model.SelectedShoe = shoe;
                 model.Shoes = ShoeManager.Instance.LoadShoes(user.CustomerCode);
 
                 model.WarehouseCount = model.Items.Count;
@@ -67,5 +128,7 @@ namespace JonLong.CRM.Web.Controllers
             }
 
         }
-	}
+
+
+    }
 }

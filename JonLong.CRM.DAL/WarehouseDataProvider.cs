@@ -129,8 +129,12 @@ namespace JonLong.CRM.DAL
                                             INNER JOIN t_Bas_xh h ON xt_xt = xh_xt
                                                                      AND xt_khh = '" + customerCode + @"'
                                    ) xh ON b.xh = xh.xh_bh
-                WHERE   state IN ( '入库', '备货' )
-                ";
+                WHERE   state IN ( '入库', '备货' )";
+                if (!String.IsNullOrEmpty(shoe))
+                {
+                    sql += " and xh.khxh = '"+ shoe + "' ";
+                }
+                sql += "group by xh,khxh order by xh";
 
             var list = new List<Warehouse>();
 

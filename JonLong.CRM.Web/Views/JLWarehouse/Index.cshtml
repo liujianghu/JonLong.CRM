@@ -1,9 +1,18 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model JonLong.CRM.Web.Models.WarehoseListViewModel
+<style>
+    .table_b td {
+        border: 1px solid #696969;
+    }
+
+    .table_b th {
+        border: 1px solid #696969;
+    }
+</style>
+
 <div class="content-box-header">
     <h3>
         JONLONG Warehouse
@@ -20,22 +29,23 @@
             @using (Html.BeginForm("Index", "JLWarehouse", FormMethod.Post))
             {
                 <div class="bulk-actions align-left">
-                    <select id="Shoe" name="Shoe">
+                    Shoes &nbsp;&nbsp; <select id="shoe" name="shoe">
                         @foreach (var pair in Model.Shoes)
                         {
-                            if (Model.SelectedShoe == pair.Key.ToLower())
+                            if (Model.SelectedShoe == pair.Value)
                             {
-                                <option selected="selected" value="@pair.Key">@pair.Value</option>
+                                <option selected="selected" value="@pair.Value">@pair.Key</option>
                             }
                             else
                             {
-                                <option value="@pair.Key" >@pair.Value</option>
+                                <option value="@pair.Value">@pair.Key</option>
                             }
                         }
                     </select>
 
                     &nbsp;&nbsp;
                     <input type="submit" class="button" value="&nbsp;&nbsp;GO&nbsp;&nbsp;" />
+
                 </div>
             }
 
@@ -44,10 +54,8 @@
             </div>
 
         </div>
-        <table class="table_b">
+        <table class="table_b" id="datatable">
             <tr class="alt-row">
-
-
                 @{
                     int sizeTypeCount = 18;
                     if (Model.ShoeSizes.Count < sizeTypeCount)
@@ -63,7 +71,7 @@
                         @Model.ShoeSizes[i]
                     </th>
                 }
-  
+
             </tr>
             @{
                 int j = 0;
@@ -216,9 +224,8 @@
                 <td id="size16total">@Model.Size16Total</td>
                 <td id="size17total">@Model.Size17Total</td>
                 <td id="size18total">@Model.Size18Total</td>
-  
+
             </tr>
         </table>
     </div>
 </div>
-
