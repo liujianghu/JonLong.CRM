@@ -26,7 +26,7 @@
     <div class="tab-content default-tab" id="tab1">
         <!-- This is the target div. id must match the href of this div's tab -->
         <div class="tab-content default-tab">
-            @using (Html.BeginForm("Index", "JLWarehouse", FormMethod.Post))
+            @using (Html.BeginForm("Index", "JLWarehouse", FormMethod.Post, new { id="form1"}))
             {
                 <div class="bulk-actions align-left">
                     Shoes &nbsp;&nbsp; <select id="shoe" name="shoe">
@@ -42,17 +42,16 @@
                             }
                         }
                     </select>
-
                     &nbsp;&nbsp;
                     <input type="submit" class="button" value="&nbsp;&nbsp;GO&nbsp;&nbsp;" />
-
+                    &nbsp;&nbsp;
+                    <input id="btnExport" type="button" class="button" value="Export" />
                 </div>
             }
 
             <div class="clear">
                 <p></p>
             </div>
-
         </div>
         <table class="table_b" id="datatable">
             <tr class="alt-row">
@@ -229,3 +228,15 @@
         </table>
     </div>
 </div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnExport").click(function () {
+                $("#form1").attr('action', '@Url.Action("ExportData", "JLWarehouse")');
+                $("#form1").submit();
+                $("#form1").attr('action', '@Url.Action("index", "JLWarehouse")');
+            })
+        });
+    </script>
+}
