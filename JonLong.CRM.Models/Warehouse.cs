@@ -8,6 +8,7 @@ namespace JonLong.CRM.Models
 {
     public class Warehouse
     {
+        public int Id { get; set; }
         public string ModelNo { get; set; }
 
         public int Total { get; set; }

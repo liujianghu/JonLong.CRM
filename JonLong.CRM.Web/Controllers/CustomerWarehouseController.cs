@@ -16,7 +16,7 @@ using System.Text;
 
 namespace JonLong.CRM.Web.Controllers
 {
-    public class JLWarehouseController : Controller
+    public class CustomerWarehouseController : Controller
     {
         [RoleAuthorize]
         public ActionResult Index()
@@ -30,7 +30,7 @@ namespace JonLong.CRM.Web.Controllers
                 {
                     model.SelectedShoe = model.Shoes.First().Value;
                 }
-                model.Items = WarehouseManager.Instance.LoadList(user.CustomerCode, model.SelectedShoe);
+                model.Items = WarehouseManager.Instance.LoadCustomerList(user.CustomerCode, model.SelectedShoe);
 
 
                 model.WarehouseCount = model.Items.Count;
@@ -103,7 +103,7 @@ namespace JonLong.CRM.Web.Controllers
             DataTable table = new DataTable();
             table.Columns.Add("Model No.");
             table.Columns.Add("Stock");
-            
+
             for (int i = 0; i < 18; i++)
             {
                 if (i < model.ShoeSizes.Count)
@@ -173,7 +173,7 @@ namespace JonLong.CRM.Web.Controllers
             Response.AddHeader("content-disposition", "attachment; filename=Exported_Diners.xls");
             Response.ContentType = "application/excel";
             Response.ContentEncoding = Encoding.GetEncoding("GB2312");
-            
+
             StringWriter sw = new StringWriter();
             HtmlTextWriter htw = new HtmlTextWriter(sw);
 
@@ -184,11 +184,26 @@ namespace JonLong.CRM.Web.Controllers
             return View("index", model);
         }
 
+        [RoleAuthorize]
+        [HttpPost]
+        public JsonResult Delete(int id)
+        {
+            try
+            {
+                WarehouseManager.Instance.Delete(id);
+                return this.Json(1);
+            }
+            catch (Exception ex)
+            {
+                return this.Json(ex.Message);
+            }
+        }
+
         private WarehoseListViewModel GetModel(string shoe)
         {
             var model = new WarehoseListViewModel();
             var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
-            model.Items = WarehouseManager.Instance.LoadList(user.CustomerCode, shoe);
+            model.Items = WarehouseManager.Instance.LoadCustomerList(user.CustomerCode, shoe);
             model.SelectedShoe = shoe;
             model.Shoes = ShoeManager.Instance.LoadShoes(user.CustomerCode);
 

@@ -17,5 +17,31 @@ namespace JonLong.CRM.BLL
         {
             return WarehouseDataProvider.LoadList(customerCode, shoe);
         }
+
+        public List<Warehouse> LoadCustomerList(string customerCode, string shoe)
+        {
+            return WarehouseDataProvider.LoadCustomerList(customerCode, shoe);
+        }
+
+        public Warehouse LoadById(int id)
+        {
+            return WarehouseDataProvider.LoadById(id);
+        }
+
+        public  void Insert(Warehouse info, string customerCode)
+        {
+             WarehouseDataProvider.Insert(info, customerCode);
+        }
+
+        public  void Update(Warehouse info, string customerCode)
+        {
+             WarehouseDataProvider.Update(info, customerCode);
+        }
+
+        public  void Delete(int id)
+        {
+             WarehouseDataProvider.Delete(id);
+        }
+
     }
 }

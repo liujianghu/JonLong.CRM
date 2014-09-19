@@ -121,6 +121,7 @@
     <Compile Include="Common\RoleAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArrivedController.cs" />
+    <Compile Include="Controllers\CustomerWarehouseController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\EnrouteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -243,6 +244,7 @@
     <Content Include="Views\Arrived\Index.cshtml" />
     <Content Include="Views\Arrived\Detail.cshtml" />
     <Content Include="Views\JLWarehouse\Index.cshtml" />
+    <Content Include="Views\CustomerWarehouse\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Download\" />
