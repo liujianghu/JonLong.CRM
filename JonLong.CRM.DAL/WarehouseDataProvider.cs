@@ -130,7 +130,7 @@ namespace JonLong.CRM.DAL
                                                                      AND xt_khh = '" + customerCode + @"'
                                    ) xh ON b.xh = xh.xh_bh
                 WHERE   state IN ( '入库', '备货' )";
-                if (!String.IsNullOrEmpty(shoe))
+                if (!String.IsNullOrEmpty(shoe)  && shoe!="ALL")
                 {
                     sql += " and xh.khxh = '"+ shoe + "' ";
                 }
