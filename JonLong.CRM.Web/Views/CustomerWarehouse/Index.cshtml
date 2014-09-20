@@ -1,0 +1,271 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model JonLong.CRM.Web.Models.WarehoseListViewModel
+<style>
+    .table_b td {
+        border: 1px solid #696969;
+    }
+
+    .table_b th {
+        border: 1px solid #696969;
+    }
+</style>
+
+<div class="content-box-header">
+    <h3>
+        JONLONG Warehouse
+    </h3>
+
+    <div class="clear">
+    </div>
+</div>
+<!-- End .content-box-header -->
+<div class="content-box-content">
+    <div class="tab-content default-tab" id="tab1">
+        <!-- This is the target div. id must match the href of this div's tab -->
+        <div class="tab-content default-tab">
+            @using (Html.BeginForm("Index", "CustomerWarehouse", FormMethod.Post, new { id = "form1" }))
+            {
+                <div class="bulk-actions align-left">
+                    Shoes &nbsp;&nbsp; <select id="shoe" name="shoe">
+                        @foreach (var pair in Model.Shoes)
+                        {
+                            if (Model.SelectedShoe == pair.Value)
+                            {
+                                <option selected="selected" value="@pair.Value">@pair.Key</option>
+                            }
+                            else
+                            {
+                                <option value="@pair.Value">@pair.Key</option>
+                            }
+                        }
+                    </select>
+                    &nbsp;&nbsp;
+                    <input type="submit" class="button" value="&nbsp;&nbsp;GO&nbsp;&nbsp;" />
+                    &nbsp;&nbsp;
+                    <input id="btnExport" type="button" class="button" value="Export" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="@Url.Action("Create")" class="button">Create</a>
+                </div>
+                
+            }
+
+            <div class="clear">
+                <p></p>
+            </div>
+        </div>
+        <table class="table_b" id="datatable">
+            <tr class="alt-row">
+                @{
+                    int sizeTypeCount = 18;
+                    if (Model.ShoeSizes.Count < sizeTypeCount)
+                    {
+                        sizeTypeCount = Model.ShoeSizes.Count;
+                    }
+                }
+                <th></th>
+                <th>Model No.</th>
+                <th>Stock</th>
+                @for (int i = 0; i < sizeTypeCount; i++)
+                {
+                    <th style="font-weight:200">
+                        @Model.ShoeSizes[i]
+                    </th>
+                }
+
+            </tr>
+            @{
+                int j = 0;
+                string trclass = "";
+            }
+            @foreach (var item in Model.Items)
+            {
+                if (j % 2 == 0)
+                {
+                    trclass = "";
+                }
+                else
+                {
+                    trclass = "alt-row";
+                }
+                <tr class="@trclass">
+                    <td><a href="@Url.Action("Edit", "CustomerWarehouse", new { id= @item.Id})">Edit</a>&nbsp;&nbsp;
+                        <a href="javascript:;" onclick="deleteWarehouse(@item.Id)" title="Delete">
+                            Delete
+                        </a>
+                    </td>
+                    <td>@item.ModelNo</td>
+                    <td>@item.Total</td>
+                    <td>
+                        @if (item.Size1 > 0)
+                        {
+                            @item.Size1
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size2 > 0)
+                        {
+                            @item.Size2
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size3 > 0)
+                        {
+                            @item.Size3
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size4 > 0)
+                        {
+                            @item.Size4
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size5 > 0)
+                        {
+                            @item.Size5
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size6 > 0)
+                        {
+                            @item.Size6
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size7 > 0)
+                        {
+                            @item.Size7
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size8 > 0)
+                        {
+                            @item.Size8
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size9 > 0)
+                        {
+                            @item.Size9
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size10 > 0)
+                        {
+                            @item.Size10
+
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size11 > 0)
+                        {
+                            @item.Size11
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size12 > 0)
+                        {
+                            @item.Size12
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size13 > 0)
+                        {
+                            @item.Size13
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size14 > 0)
+                        {
+                            @item.Size14
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size15 > 0)
+                        {
+                            @item.Size15
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size16 > 0)
+                        {
+                            @item.Size16
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size17 > 0)
+                        {
+                            @item.Size17
+                        }
+                    </td>
+                    <td>
+                        @if (item.Size18 > 0)
+                        {
+                            @item.Size18
+                        }
+                    </td>
+                </tr>
+                        j++;
+            }
+            <tr style="background-color:#D3D3D3">
+                <td></td>
+                <td id="orderCount">@Model.WarehouseCount</td>
+                <td id="total">@Model.Total</td>
+                <td id="size1total">@Model.Size1Total</td>
+                <td id="size2total">@Model.Size2Total</td>
+                <td id="size3total">@Model.Size3Total</td>
+                <td id="size4total">@Model.Size4Total</td>
+                <td id="size5total">@Model.Size5Total</td>
+                <td id="size6total">@Model.Size6Total</td>
+                <td id="size7total">@Model.Size7Total</td>
+                <td id="size8total">@Model.Size8Total</td>
+                <td id="size9total">@Model.Size9Total</td>
+                <td id="size10total">@Model.Size10Total</td>
+                <td id="size11total">@Model.Size11Total</td>
+                <td id="size12total">@Model.Size12Total</td>
+                <td id="size13total">@Model.Size13Total</td>
+                <td id="size14total">@Model.Size14Total</td>
+                <td id="size15total">@Model.Size15Total</td>
+                <td id="size16total">@Model.Size16Total</td>
+                <td id="size17total">@Model.Size17Total</td>
+                <td id="size18total">@Model.Size18Total</td>
+
+            </tr>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnExport").click(function () {
+                $("#form1").attr('action', '@Url.Action("ExportData", "CustomerWarehouse")');
+                $("#form1").submit();
+                $("#form1").attr('action', '@Url.Action("index", "CustomerWarehouse")');
+            })
+        });
+        function deleteWarehouse(id) {
+            if (!confirm("This will delete this warehouse, are you sure?")) {
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Delete") ',
+                data: ({ id: id }),
+                datatype: 'json',
+                success: function (data) {
+                    if(data != 1){
+                        alert(data);
+                        return;
+                    } else {
+                        window.location.href = '@Url.Action("Index")';
+                    }
+                
+                }
+            });
+        }
+    </script>
+}
