@@ -131,11 +131,7 @@ namespace JonLong.CRM.DAL
                                    ) xh ON b.xh = xh.xh_bh
 
                 WHERE   state IN ( '入库', '备货' )";
-                if (!String.IsNullOrEmpty(shoe) && shoe!="ALL")
-                {
-                    sql += " and xh.khxh = '"+ shoe + "' ";
-                }
-                sql += "group by xh,khxh order by xh";
+               
 
             var list = new List<Warehouse>();
 
