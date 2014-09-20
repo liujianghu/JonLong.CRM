@@ -45,9 +45,9 @@ namespace JonLong.CRM.Web.Common
                     filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new
                     {
-                        controller = "Account"
+                        controller = "Error"
                         ,
-                        action = "login"
+                        action = "index"
                         ,
                         returnUrl = filterContext.HttpContext.Request.Url
                         ,
@@ -62,9 +62,9 @@ namespace JonLong.CRM.Web.Common
                     filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new
                     {
-                        controller = "Account"
+                        controller = "Error"
                         ,
-                        action = "login"
+                        action = "Index"
                         ,
                         returnUrl = filterContext.HttpContext.Request.Url
                         ,

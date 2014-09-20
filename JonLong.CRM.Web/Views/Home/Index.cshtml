@@ -1,51 +1,44 @@
 ﻿
 <h2>
-    Welcome Xiao chan
+    Welcome @JonLong.CRM.Web.Common.AccountHelper.GetCurrentUser().CustomerName
 </h2>
 <p id="page-intro">
     What would you like to do?
 </p>
 <ul class="shortcut-buttons-set">
     <li>
-        <a class="shortcut-button" href="#">
+        <a class="shortcut-button" href="@Url.Action("index", "Order")">
             <span>
-                <img src="@Url.Content("~/Content/images/icons/pencil_48.png")" alt="icon" />><br />
-                Write an Article
+                <img src="@Url.Content("~/Content/images/icons/pencil_48.png")" alt="icon" /><br />
+                Order & Forecast
             </span>
         </a>
     </li>
     <li>
-        <a class="shortcut-button" href="#">
+        <a class="shortcut-button" href="@Url.Action("index","OrderVariance")">
             <span>
-                <img src="@Url.Content("~/Content/images/icons/paper_content_pencil_48.png")" alt="icon" />><br />
-                Create a New Page
+                <img src="@Url.Content("~/Content/images/icons/paper_content_pencil_48.png")" alt="icon" /><br />
+                Order Variance
             </span>
         </a>
     </li>
     <li>
-        <a class="shortcut-button" href="#">
+        <a class="shortcut-button" href="@Url.Action("index","JLWarehouse")">
             <span>
-                <img src="@Url.Content("~/Content/images/icons/image_add_48.png")" alt="icon" />><br />
-                Upload an Image
+                <img src="@Url.Content("~/Content/images/icons/image_add_48.png")" alt="icon" /><br />
+                JONLONG warehouse
             </span>
         </a>
     </li>
     <li>
-        <a class="shortcut-button" href="#">
+        <a class="shortcut-button" href="@Url.Action("index","User")">
             <span>
-                <img src="@Url.Content("~/Content/images/icons/clock_48.png")" alt="icon" />><br />
-                Add an Event
+                <img src="@Url.Content("~/Content/images/icons/clock_48.png")" alt="icon" /><br />
+                User
             </span>
         </a>
     </li>
-    <li>
-        <a class="shortcut-button" href="#messages" rel="modal">
-            <span>
-                <img src="@Url.Content("~/Content/images/icons/comment_48.png")" alt="icon" />><br />
-                Open Modal
-            </span>
-        </a>
-    </li>
+
 </ul>
 <!-- End .shortcut-buttons-set -->
 <div class="clear">
