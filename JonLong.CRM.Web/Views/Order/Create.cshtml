@@ -6,13 +6,8 @@
 @model JonLong.CRM.Web.Models.OrderCreateModel
 @section head{
     <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.date.css")" type="text/css" media="screen" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-spinner.css")" type="text/css" media="screen" />
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.legacy.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.date.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.spinner.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-datepicker.js")"></script>
     <style>
         .table_b td {
             border: 1px solid #696969;
@@ -44,7 +39,7 @@
                 <table class="table_b">
                     <tr class="alt-row">
                         <th>ETD </th>
-                        <th><input id="ETD" name="ETD" class="datepicker" value="@Model.ETD" type="text"></th>
+                        <th><input id="ETD" name="ETD" class="datepicker" data-provide="datepicker"  type="text"></th>
                         <th>Shoes</th>
                         <th>
                             <select id="Shoe" name="Shoe">
@@ -148,7 +143,8 @@
                     </tr>
                     <tr class="alt-row">
                         <td>Total</td>
-                        <td colspan="9"><input id="Total" name="Total" value="@Model.Total" /></td>
+                        <td colspan="9"><label id="Total1">@Model.Total</label>
+                        <input type="hidden" id="Total" name="Total" value="@Model.Total" /></td>
                     </tr>
                 </table>
 
@@ -172,7 +168,7 @@
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            setETD('@Model.ETD');
+           
             $('[type=date], .size').change(function () {
                 var total = 0;
                 if (!$.isNumeric(this.value)) {
@@ -183,18 +179,11 @@
                 $('[type=date], .size').each(function () {
                     total += parseInt($(this).val());
                 });
+                $("#Total1").text(total);
                 $("#Total").val(total);
             });
         });
-        function setETD(selected) {
-            var $input = $('.datepicker').pickadate()
-            var picker = $input.pickadate('picker');
-            picker.set('select', selected, { format: 'yyyy-mm-dd' });
-        }
-        $('#customize-spinner').spinner('changed', function (e, newVal, oldVal) {
-            $('#old-val').text(oldVal);
-            $('#new-val').text(newVal);
-        });
+        
         $("#BundleNo").change(function () {
             $.ajax({
                 cache: false,

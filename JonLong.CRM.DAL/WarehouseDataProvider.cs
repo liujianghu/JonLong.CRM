@@ -198,12 +198,13 @@ namespace JonLong.CRM.DAL
                         ISNULL(khkc_s17, 0) AS khkc_s17 ,
                         ISNULL(khkc_s18, 0) AS khkc_s18 ,
                         ISNULL(khkc_s19, 0) AS khkc_s19 ,
-                        ISNULL(khkc_s20, 0) AS khkc_s20
+                        ISNULL(khkc_s20, 0) AS khkc_s20,
+                        khkc_xhb
                 FROM    t_sale_khkc
                 WHERE   khkc_khbh = '" + customerCode + "'";
             if (!String.IsNullOrEmpty(shoe) && shoe != "ALL")
             {
-                sql += " and khkc_xh='" + shoe + "'";
+                sql += " and khkc_xhb='" + shoe + "'";
             }
             var list = new List<Warehouse>();
 
@@ -235,6 +236,7 @@ namespace JonLong.CRM.DAL
                     info.Size18 = reader.GetInt32(21);
                     info.Size19 = reader.GetInt32(22);
                     info.Size20 = reader.GetInt32(23);
+                    info.Shoe = reader.IsDBNull(24) ? "" : reader.GetString(24);
 
                     list.Add(info);
                 }
@@ -269,7 +271,8 @@ namespace JonLong.CRM.DAL
                         ISNULL(khkc_s17, 0) AS khkc_s17 ,
                         ISNULL(khkc_s18, 0) AS khkc_s18 ,
                         ISNULL(khkc_s19, 0) AS khkc_s19 ,
-                        ISNULL(khkc_s20, 0) AS khkc_s20
+                        ISNULL(khkc_s20, 0) AS khkc_s20,
+                        khkc_xhb
                     FROM [jncrm].[dbo].[t_sale_khkc]
                     where id = " + id;
             using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString, CommandType.Text, sql))
@@ -300,6 +303,7 @@ namespace JonLong.CRM.DAL
                     info.Size18 = reader.GetInt32(21);
                     info.Size19 = reader.GetInt32(22);
                     info.Size20 = reader.GetInt32(23);
+                    info.Shoe = reader.IsDBNull(24) ? "" : reader.GetString(24);
 
                     return info;
                 }
@@ -333,7 +337,8 @@ namespace JonLong.CRM.DAL
                        ,[khkc_s18]
                        ,[khkc_s19]
                        ,[khkc_s20]
-                       ,[khkc_khbh])
+                       ,[khkc_khbh]
+                       , [khkc_xhb])
                  VALUES
                        ('" + info.ModelNo + @"'
                        ,'" + info.Total + @"'
@@ -357,7 +362,8 @@ namespace JonLong.CRM.DAL
                        ,'" + info.Size18 + @"'
                        ,'" + info.Size19 + @"'
                        ,'" + info.Size20 + @"'
-                       ,'" + customerCode + "')";
+                       ,'" + customerCode + "'"
+                        + ", '" + info.Shoe + "')";
 
             SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
         }
@@ -365,8 +371,7 @@ namespace JonLong.CRM.DAL
         public static void Update(Warehouse info, string customerCode)
         {
             string sql = @"UPDATE [jncrm].[dbo].[t_sale_khkc]
-               SET [ID] = '" + info.Id + @"'
-                  ,[khkc_xh] = '" + info.ModelNo + @"'
+               SET [khkc_xh] = '" + info.ModelNo + @"'
                   ,[khkc_sumS] = '" + info.Total + @"'
                   ,[khkc_s1] = " + info.Size1 + @"
                   ,[khkc_s2] = " + info.Size1 + @"
@@ -389,7 +394,8 @@ namespace JonLong.CRM.DAL
                   ,[khkc_s19] = " + info.Size1 + @"
                   ,[khkc_s20] = " + info.Size1 + @"
                   ,[khkc_khbh] = '" + customerCode + @"'
-             WHERE id = " + info.Id;
+                  ,[khkc_xhb] = '" + info.Shoe + @"' 
+             WHERE ID = " + info.Id;
 
             SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
         }

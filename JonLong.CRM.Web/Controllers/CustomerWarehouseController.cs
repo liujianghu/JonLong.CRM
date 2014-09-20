@@ -185,6 +185,104 @@ namespace JonLong.CRM.Web.Controllers
         }
 
         [RoleAuthorize]
+        public ActionResult Create()
+        {
+            try
+            {
+                var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
+                var model = new WarehouseEditModel();
+                model.Shoes = ShoeManager.Instance.LoadShoes(user.CustomerCode);
+                
+                if (AccountHelper.IsSuperAdmin(user))
+                {
+                    model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(Constants.SuperAdminDefaultCustomerCode);
+                }
+                else
+                {
+                    model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(user.CustomerCode);
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.ToString();
+                return View("Error");
+            }
+            
+        }
+
+        [RoleAuthorize]
+        [HttpPost]
+        public ActionResult Create(Warehouse model)
+        {
+            try
+            {
+                var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
+                WarehouseManager.Instance.Insert(model, user.CustomerCode);
+                return RedirectToAction("index");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.ToString();
+                return View("Error");
+            }
+        }
+
+        [RoleAuthorize]
+        public ActionResult Edit(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                {
+                    return RedirectToAction("idex");
+                }
+                var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
+                var model = new WarehouseEditModel();
+                model.Detail = WarehouseManager.Instance.LoadById(id);
+                model.Shoes = ShoeManager.Instance.LoadShoes(user.CustomerCode);
+
+                if (AccountHelper.IsSuperAdmin(user))
+                {
+                    model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(Constants.SuperAdminDefaultCustomerCode);
+                }
+                else
+                {
+                    model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(user.CustomerCode);
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.ToString();
+                return View("Error");
+            }
+        }
+
+        [RoleAuthorize]
+        [HttpPost]
+        public ActionResult Edit(Warehouse model)
+        {
+            try
+            {
+                if (model == null || model.Id <=0)
+                {
+                    return RedirectToAction("index");
+                }
+                var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
+                WarehouseManager.Instance.Update(model, user.CustomerCode);
+                return RedirectToAction("index");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.ToString();
+                return View("Error");
+            }
+        }
+
+        [RoleAuthorize]
         [HttpPost]
         public JsonResult Delete(int id)
         {

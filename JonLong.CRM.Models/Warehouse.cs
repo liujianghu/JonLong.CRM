@@ -11,6 +11,8 @@ namespace JonLong.CRM.Models
         public int Id { get; set; }
         public string ModelNo { get; set; }
 
+        public string Shoe { get; set; }
+
         public int Total { get; set; }
 
         /// <summary>

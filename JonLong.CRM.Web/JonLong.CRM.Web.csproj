@@ -153,6 +153,7 @@
     <Compile Include="Models\VarianceDetailViewModel.cs" />
     <Compile Include="Models\VarianceEditViewModel.cs" />
     <Compile Include="Models\VarianceListViewModel.cs" />
+    <Compile Include="Models\WarehouseEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +246,8 @@
     <Content Include="Views\Arrived\Detail.cshtml" />
     <Content Include="Views\JLWarehouse\Index.cshtml" />
     <Content Include="Views\CustomerWarehouse\Index.cshtml" />
+    <Content Include="Views\CustomerWarehouse\Create.cshtml" />
+    <Content Include="Views\CustomerWarehouse\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Download\" />
