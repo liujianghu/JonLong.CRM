@@ -129,6 +129,7 @@
     <Compile Include="Controllers\JLWarehouseController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\OrderVarianceController.cs" />
+    <Compile Include="Controllers\PreLoadCabinetController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -253,6 +254,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Download\" />
+    <Folder Include="Views\PreLoadCabinet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
