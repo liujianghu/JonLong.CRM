@@ -96,7 +96,7 @@ namespace JonLong.CRM.DAL
                            ,'" + cabinet.SendDate + @"'
                            ,'" + cabinet.BanderNo + @"'
                            ,'" + cabinet.ModelNo + @"'
-                           ,'" + "xhb" + @"'
+                           ,'" + cabinet.XHB + @"'
                            ," + cabinet.Total + @"
                            ," + cabinet.Size1 + @"
                            ," + cabinet.Size2 + @"

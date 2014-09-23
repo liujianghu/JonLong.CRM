@@ -10,6 +10,8 @@ namespace JonLong.CRM.Models
     {
         public string TGuid { get; set; }
 
+        public string XHB { get; set; }
+
         /// <summary>
         /// 客户鞋型(xh)
         /// </summary>
