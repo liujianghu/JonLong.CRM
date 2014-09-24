@@ -8,6 +8,7 @@ namespace JonLong.CRM.Models
 {
     public class PreLoadCabinet
     {
+        public int Id { get; set; }
         public string TGuid { get; set; }
 
         public string XHB { get; set; }

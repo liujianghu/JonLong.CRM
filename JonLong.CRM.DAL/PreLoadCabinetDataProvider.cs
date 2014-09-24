@@ -122,6 +122,42 @@ namespace JonLong.CRM.DAL
             SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
         }
 
+        public static void Update(PreLoadCabinet cabinet)
+        {
+            string sql = @"UPDATE [jncrm].[dbo].[t_sale_yzk]
+                       SET [sumS] = "+cabinet.Total+@"
+                          ,[s1] = "+cabinet.Size1+@"
+                          ,[s2] = " + cabinet.Size2 + @"
+                            ,[s3] = " + cabinet.Size3 + @"
+                            ,[s4] = " + cabinet.Size4 + @"
+                            ,[s5] = " + cabinet.Size5 + @"
+                            ,[s6] = " + cabinet.Size6 + @"
+                            ,[s7] = " + cabinet.Size7 + @"
+                            ,[s8] = " + cabinet.Size8 + @"
+                            ,[s9] = " + cabinet.Size9 + @"
+                            ,[s10] = " + cabinet.Size10 + @"
+                            ,[s11] = " + cabinet.Size11 + @"
+                            ,[s12] = " + cabinet.Size12 + @"
+                            ,[s13] = " + cabinet.Size13 + @"
+                            ,[s14] = " + cabinet.Size14 + @"
+                            ,[s15] = " + cabinet.Size15 + @"
+                            ,[s16] = " + cabinet.Size16 + @"
+                            ,[s17] = " + cabinet.Size17 + @"
+                            ,[s18] = " + cabinet.Size18 + @"
+                            ,[s19] = " + cabinet.Size19 + @"
+                            ,[s20] = " + cabinet.Size20 + @"
+                     WHERE  id = " +cabinet.Id;
+
+            SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
+        }
+
+        public static void Delete(int id)
+        {
+            string sql = @"DELETE FROM [jncrm].[dbo].[t_sale_yzk] where [id]=" + id;
+
+            SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
+        }
+
         public static decimal GetFilled(string customerCode, string guid, string containerNo)
         {
             SqlParameter[] parameters = new SqlParameter[5];
