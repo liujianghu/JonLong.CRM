@@ -26,7 +26,34 @@ namespace JonLong.CRM.Web.Controllers
                 {
                     customerCode = user.CustomerCode;
                 }
-                var statistics = OrderManager.Instance.LoadOrderStatistics(customerCode, null, null, "", "");
+
+                string bundlerNo = "", containerNo = "", from = "", to = "";
+                if (Request.Cookies["query"] != null)
+                {
+                    string queryJson = Request.Cookies["query"].Value;
+                    var queryModel = JsonConvert.DeserializeObject<OrderQueryModel>(queryJson);
+                    from = queryModel.ETDFrom;
+                    to = queryModel.ETDTo;
+                    bundlerNo = queryModel.BundleNo;
+                    containerNo = queryModel.ContainerNo;
+                }
+
+                DateTime? sendDateFrom= null, sendDateTo = null;
+                if (!String.IsNullOrEmpty(from))
+                {
+                    sendDateFrom = Convert.ToDateTime(from);
+                }
+                if (!String.IsNullOrEmpty(to))
+                {
+                    sendDateTo = Convert.ToDateTime(to);
+                }
+
+                var statistics = OrderManager.Instance.LoadOrderStatistics(
+                      customerCode
+                    , sendDateFrom
+                    , sendDateTo
+                    , bundlerNo
+                    , containerNo);
                 var model = new OrderStatisticsListViewModel();
 
                 if (statistics != null && statistics.Any())
@@ -34,6 +61,11 @@ namespace JonLong.CRM.Web.Controllers
                     model.Items = statistics;
                 }
 
+                model.ETDFrom = from;
+                model.ETDTo = to;
+                model.BundleNo = bundlerNo;
+                model.ContainerNo = containerNo;
+                model.SetTotal();
                 return View(model);
 
             }
@@ -68,6 +100,9 @@ namespace JonLong.CRM.Web.Controllers
                 if (!String.IsNullOrEmpty(queryModel.ETDFrom))
                 {
                     sendDateFrom = Convert.ToDateTime(queryModel.ETDFrom);
+                }
+                if (!String.IsNullOrEmpty(queryModel.ETDTo))
+                {
                     sendDateTo = Convert.ToDateTime(queryModel.ETDTo);
                 }
 
@@ -88,6 +123,8 @@ namespace JonLong.CRM.Web.Controllers
                 {
                     model.Items = statistics;
                 }
+
+                model.SetTotal();
 
                 return View(model);
 
@@ -236,8 +273,10 @@ namespace JonLong.CRM.Web.Controllers
 
                 foreach (var item in statistics)
                 {
-                    model.BundleNos.Add(item.BanderNo, item.SendDate.ToString("yyyy-MM-dd"));
+                    model.BundleNos.Add(item.BanderNo, item.SendDate.ToString("yyyy/M/dd"));
                 }
+
+                TempData["editModel"] = model;
 
                 return View(model);
             }
@@ -265,11 +304,14 @@ namespace JonLong.CRM.Web.Controllers
                 }
 
                 string message = OrderManager.Instance.UpdateOrder(model, user.LoginName);
+                OrderEditModel editModel;
+                editModel = TempData["editModel"] as OrderEditModel;
                 if (!String.IsNullOrEmpty(message))
                 {
-                    TempData["Error"] = message;
-                    return View("Error");
+                    editModel.Message = message;
+                    return View(editModel);
                 }
+
                 return RedirectToAction("index");
             }
             catch (Exception ex)
@@ -306,7 +348,7 @@ namespace JonLong.CRM.Web.Controllers
                 {
                     model.BundlerNoList.Insert(0, "");
                 }
-                
+
                 model.ContainerTypes = Constants.Containers;
                 model.ShoeList = ShoeManager.Instance.LoadShoes(customerCode);
 
@@ -319,6 +361,7 @@ namespace JonLong.CRM.Web.Controllers
                     model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(customerCode);
                 }
 
+                TempData["createModel"] = model;
                 return View(model);
             }
             catch (Exception ex)
@@ -336,7 +379,7 @@ namespace JonLong.CRM.Web.Controllers
             try
             {
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
-                
+
                 var order = new Order();
                 if (AccountHelper.IsSuperAdmin(user))
                 {
@@ -373,10 +416,12 @@ namespace JonLong.CRM.Web.Controllers
                 order.Size20 = model.Size20;
 
                 string message = OrderManager.Instance.Create(order, user.LoginName);
+                OrderEditModel createModel;
+                createModel = TempData["editModel"] as OrderEditModel;
                 if (!String.IsNullOrEmpty(message))
                 {
-                    TempData["Error"] = message;
-                    return View("Error");
+                    createModel.Message = message;
+                    return View(createModel);
                 }
                 return RedirectToAction("index");
             }

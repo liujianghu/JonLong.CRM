@@ -181,7 +181,7 @@
                     <tr class="alt-row">
                         <th>ETD </th>
                         <th>
-                        <input id="SendDate" name="SendDate" class="datepicker" data-provide="datepicker" value="@Model.Order.SendDate.ToString("yyyy/MM/dd")" type="text"></th>
+                        <input id="SendDate" name="SendDate" class="datepicker" data-provide="datepicker" value="@Model.Order.SendDate.ToString("yyyy/M/dd")" type="text"></th>
                         <th>Bunlde No:</th>
                         <th>
                             <select id="BanderNo" name="BanderNo">
@@ -290,7 +290,9 @@
                         <a href="@Url.Action("index")" class="button">Cancel</a>
                     </p>
                 </div>
-                
+                <div style="color: red; font-weight: 700">
+                    @Model.Message
+                </div>
             }
 
         </div>
@@ -301,7 +303,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('.datepicker').datepicker({
-                format: 'yyyy/mm/dd',
+                format: 'yyyy/m/dd',
             });
             $('[type=date], .size').change(function () {
                 var total = 0;
@@ -315,7 +317,7 @@
 
 
         $("#BanderNo").change(function () {
-            setETD($('#BanderNo option:selected').attr('fhrq'));
+            $("#SendDate").val($('#BanderNo option:selected').attr('fhrq'));
             //alert(this.value + ',' + $('#bundlerno option:selected').attr('fhrq'));
         });
     </script>

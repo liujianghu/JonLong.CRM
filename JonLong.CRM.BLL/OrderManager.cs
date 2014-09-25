@@ -51,7 +51,9 @@ namespace JonLong.CRM.BLL
                 , sendDateFrom.Value
                 , sendDateTo.Value
                 , banderNo
-                , containerNo);
+                , containerNo).Where(t=>t.SendDate>=DateTime.Now.Date 
+                    || (t.SendDate < DateTime.Now.Date && t.Complete == 0)
+                    ).ToList();
         }
 
         public List<Order> LoadStatisticsDetail(
