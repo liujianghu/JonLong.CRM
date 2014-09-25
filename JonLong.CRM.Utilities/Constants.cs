@@ -19,6 +19,7 @@ namespace JonLong.CRM.Utilities
             {"ordervariance","order variance"},
             {"jlwarehouse", "JonLong Warehouse"},
             {"customerwarehouse", "Customer Warehouse"},
+            {"preloadcabinet", "Preload Cabinet"},
         };
 
         /// <summary>

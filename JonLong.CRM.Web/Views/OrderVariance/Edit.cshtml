@@ -2,18 +2,14 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using System.Globalization
+
 @model JonLong.CRM.Web.Models.VarianceEditViewModel
 
 @section head{
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.date.css")" type="text/css" media="screen" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-spinner.css")" type="text/css" media="screen" />
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.legacy.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.date.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.spinner.js")"></script>
+<link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
+<link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-theme.min.css")" type="text/css" media="screen" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-datepicker.js")"></script>
     <style>
         .table_b td {
             border: 1px solid #696969;
@@ -175,9 +171,6 @@
                 <td>@Model.Detail.SendDate.ToShortDateString()</td>
             </tr>
 
-            @{
-                CultureInfo culture = new CultureInfo("en-US");
-            }
         </table>
         <div class="clear">
             <p></p>
@@ -194,7 +187,7 @@
                 <table class="table_b">
                     <tr class="alt-row">
                         <th>ETD </th>
-                        <th><input id="SendDate" name="SendDate" class="datepicker" value="@Model.Detail.SendDate.ToString("dd MMM, yyyy", culture)" type="text"></th>
+                        <th><input id="SendDate" name="SendDate" class="datepicker" data-provide="datepicker" value="@Model.Detail.SendDate.ToString("yyyy/MM/dd")" type="text"></th>
                         <th>Bunlde No:</th>
                         <th>
                             <select id="BundleNo" name="BundleNo">
@@ -312,7 +305,9 @@
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            setETD('@Model.Detail.SendDate.ToString("yyyy-MM-dd")');
+            $('.datepicker').datepicker({
+                format: 'yyyy/mm/dd',
+            });
             $('[type=date], .size').change(function () {
                 var total = 0;
                 $('[type=date], .size').each(function () {
@@ -321,18 +316,9 @@
                 $("#Total").val(total);
             });
         });
-        function setETD(selected) {
-            var $input = $('.datepicker').pickadate()
-            var picker = $input.pickadate('picker');
-            picker.set('select', selected, { format: 'yyyy-mm-dd' });
-        }
-        $('#customize-spinner').spinner('changed', function (e, newVal, oldVal) {
-            $('#old-val').text(oldVal);
-            $('#new-val').text(newVal);
-        });
+        
         $("#BundleNo").change(function () {
             setETD($('#BundleNo option:selected').attr('fhrq'));
-            //alert(this.value + ',' + $('#bundlerno option:selected').attr('fhrq'));
         });
     </script>
 }

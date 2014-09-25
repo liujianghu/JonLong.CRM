@@ -4,11 +4,21 @@ using Newtonsoft.Json;
 using System.Security.Principal;
 using System.Web.Security;
 using JonLong.CRM.Utilities;
+using System.Web;
 
 namespace JonLong.CRM.Web.Common
 {
     public static class AccountHelper
     {
+        public static User GetCurrentUser()
+        {
+            var identity = HttpContext.Current.User.Identity as FormsIdentity;
+            if (identity == null)
+            {
+                return null;
+            }
+            return JsonConvert.DeserializeObject<User>(identity.Ticket.Name);
+        }
         public static User GetLoginUserInfo(IIdentity identity)
         {
             var ticket = (identity as FormsIdentity).Ticket;

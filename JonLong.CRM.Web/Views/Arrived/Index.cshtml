@@ -178,15 +178,8 @@
             $('.datepicker').datepicker({
                 format: 'yyyy/mm/dd',
             });
-            //setETD('StartETD', '@Model.StartETD.ToString("yyyy-MM-dd")');
-            //setETD('EndETD', '@Model.EndETD.ToString("yyyy-MM-dd")');
-        });
 
-        function setETD(id, selected) {
-            var $input = $('#' + id).pickadate()
-            var picker = $input.pickadate('picker');
-            picker.set('select', selected, { format: 'yyyy-mm-dd' });
-        }
+        });
 
         function loadDetail(sendDate, bundlerNo, containerNo, container, id, btn) {
             if ($(btn).text() == "-") {

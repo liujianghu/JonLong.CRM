@@ -180,7 +180,8 @@
                 <table class="table_b">
                     <tr class="alt-row">
                         <th>ETD </th>
-                        <th><input id="SendDate" name="SendDate" class="datepicker" data-provide="datepicker" value="@Model.Order.SendDate.ToString("yyyy/MM/dd")" type="text"></th>
+                        <th>
+                        <input id="SendDate" name="SendDate" class="datepicker" data-provide="datepicker" value="@Model.Order.SendDate.ToString("yyyy/MM/dd")" type="text"></th>
                         <th>Bunlde No:</th>
                         <th>
                             <select id="BanderNo" name="BanderNo">
@@ -299,6 +300,9 @@
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'yyyy/mm/dd',
+            });
             $('[type=date], .size').change(function () {
                 var total = 0;
                 $('[type=date], .size').each(function () {

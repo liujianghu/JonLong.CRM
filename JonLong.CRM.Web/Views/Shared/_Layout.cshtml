@@ -26,7 +26,7 @@
                 </a>
                 <!-- Sidebar Profile links -->
                 <div id="profile-links">
-                    Hello, <a href="#" title="Edit your profile">Xiao chan</a><br />
+                    Hello, <a href="javascript:void();" title="Edit your profile">@JonLong.CRM.Web.Common.AccountHelper.GetCurrentUser().CustomerName</a><br />
                     <br />
                    <a href="@Url.Action("LogOff", "Account")" title="Sign Out">
                         Sign
@@ -65,6 +65,12 @@
                         <ul>
                             <li><a href="@Url.Action("index","JLWarehouse")">JONLONG warehouse</a></li>
                             <li><a href="@Url.Action("index","CustomerWarehouse")">Customer warehouse</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-top-item">Pre load cabinet </a>
+                        <ul>
+                            <li><a href="@Url.Action("index","PreLoadCabinet")">Preload Cabinet</a></li>
                         </ul>
                     </li>
                     <li>
@@ -152,9 +158,9 @@
             <div id="footer">
                 <small>
                     <!-- Remove this notice or replace it with whatever you want -->
-                    &#169; Copyright 2009 Your Company | Powered by <a href="#">
-                        Simpla Admin
-                    </a> | <a href="#">Top</a>
+                    &#169; Copyright 2014 JON LONG | Powered by <a href="#">
+                        JON LONG
+                    </a> 
                 </small>
             </div>
             <!-- End #footer -->
