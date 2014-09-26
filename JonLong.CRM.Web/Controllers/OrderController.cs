@@ -416,7 +416,7 @@ namespace JonLong.CRM.Web.Controllers
                 order.Size20 = model.Size20;
 
                 string message = OrderManager.Instance.Create(order, user.LoginName);
-                OrderEditModel createModel;
+                OrderCreateModel createModel;
                 createModel = TempData["editModel"] as OrderCreateModel;
                 if (!String.IsNullOrEmpty(message))
                 {
