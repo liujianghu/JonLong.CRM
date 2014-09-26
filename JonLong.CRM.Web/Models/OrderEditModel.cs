@@ -14,5 +14,7 @@ namespace JonLong.CRM.Web.Models
         public List<string> Containers { get; set; }
 
         public Dictionary<string,string> BundleNos { get; set; }
+
+        public string Message { get; set; }
     }
 }

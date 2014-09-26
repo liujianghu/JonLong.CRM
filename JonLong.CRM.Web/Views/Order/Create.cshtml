@@ -158,7 +158,9 @@
                         <a href="@Url.Action("index")" class="button">Cancel</a>
                     </p>
                 </div>
-
+                 <div style="color: red; font-weight: 700">
+                    @Model.Message
+                </div>
             }
 
         </div>
@@ -168,7 +170,9 @@
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-           
+            $('.datepicker').datepicker({
+                format: 'yyyy/m/dd',
+            });
             $('[type=date], .size').change(function () {
                 var total = 0;
                 if (!$.isNumeric(this.value)) {
