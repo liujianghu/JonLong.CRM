@@ -54,6 +54,8 @@ namespace JonLong.CRM.Web.Models
         public int Size19 { get; set; }
         public int Size20 { get; set; }
         public int Total { get; set; }
+        
+        public string Message { get; set; }
 
 
     }
