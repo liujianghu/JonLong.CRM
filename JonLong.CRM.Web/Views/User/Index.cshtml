@@ -96,12 +96,10 @@
                             </td>
                             <td>
                                 <!-- Icons -->
-                                <a href="@Url.Action("Edit", "User", new { id = @item.UserId })" title="Edit">
-                                    <img src="@Url.Content("~/Content/images/icons/pencil.png")" alt="Edit" />
+                                <a class="button" href="@Url.Action("Edit", "User", new { id = @item.UserId })" title="Edit">
+                                    Edit Role
                                 </a>
-                                <a href="javascript:;" onclick="deleteUser(@item.UserId)" title="Delete">
-                                    <img src="@Url.Content("~/Content/images/icons/cross.png")" alt="Delete" />
-                                </a>
+                               
                             </td>
                         </tr>
                                     j++;
