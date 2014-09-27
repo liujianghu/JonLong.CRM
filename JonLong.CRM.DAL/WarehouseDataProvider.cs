@@ -126,11 +126,15 @@ namespace JonLong.CRM.DAL
                         INNER JOIN ( SELECT xh_bh ,
                                             xh_khxh AS khxh
                                      FROM   t_bas_xt t
-                                            INNER JOIN t_Bas_xh h ON xt_xt = xh_xt
-                                                                     AND xt_khh = '" + customerCode + @"'
-                                   ) xh ON b.xh = xh.xh_bh
+   INNER JOIN t_Bas_xh h ON xt_xt = xh_xt"; 
 
+                        if (!String.IsNullOrEmpty(customerCode))
+                        {
+                            sql += " AND xt_khh = '" + customerCode + "' ";
+                        }
+                        sql += @") xh ON b.xh = xh.xh_bh
                 WHERE   state IN ( '入库', '备货' )";
+
             if (!String.IsNullOrEmpty(shoe) && shoe != "ALL")
             {
                 sql += " and xh.khxh = '" + shoe + "' ";
@@ -375,25 +379,25 @@ namespace JonLong.CRM.DAL
                SET [khkc_xh] = '" + info.ModelNo + @"'
                   ,[khkc_sumS] = '" + info.Total + @"'
                   ,[khkc_s1] = " + info.Size1 + @"
-                  ,[khkc_s2] = " + info.Size1 + @"
-                  ,[khkc_s3] = " + info.Size1 + @"
-                  ,[khkc_s4] = " + info.Size1 + @"
-                  ,[khkc_s5] = " + info.Size1 + @"
-                  ,[khkc_s6] = " + info.Size1 + @"
-                  ,[khkc_s7] = " + info.Size1 + @"
-                  ,[khkc_s8] = " + info.Size1 + @"
-                  ,[khkc_s9] = " + info.Size1 + @"
-                  ,[khkc_s10] = " + info.Size1 + @"
-                  ,[khkc_s11] = " + info.Size1 + @"
-                  ,[khkc_s12] = " + info.Size1 + @"
-                  ,[khkc_s13] = " + info.Size1 + @"
-                  ,[khkc_s14] = " + info.Size1 + @"
-                  ,[khkc_s15] = " + info.Size1 + @"
-                  ,[khkc_s16] = " + info.Size1 + @"
-                  ,[khkc_s17] = " + info.Size1 + @"
-                  ,[khkc_s18] = " + info.Size1 + @"
-                  ,[khkc_s19] = " + info.Size1 + @"
-                  ,[khkc_s20] = " + info.Size1 + @"
+                  ,[khkc_s2] = " + info.Size2 + @"
+                  ,[khkc_s3] = " + info.Size3 + @"
+                  ,[khkc_s4] = " + info.Size4 + @"
+                  ,[khkc_s5] = " + info.Size5 + @"
+                  ,[khkc_s6] = " + info.Size6 + @"
+                  ,[khkc_s7] = " + info.Size7 + @"
+                  ,[khkc_s8] = " + info.Size8 + @"
+                  ,[khkc_s9] = " + info.Size9 + @"
+                  ,[khkc_s10] = " + info.Size10 + @"
+                  ,[khkc_s11] = " + info.Size11 + @"
+                  ,[khkc_s12] = " + info.Size12 + @"
+                  ,[khkc_s13] = " + info.Size13 + @"
+                  ,[khkc_s14] = " + info.Size14 + @"
+                  ,[khkc_s15] = " + info.Size15 + @"
+                  ,[khkc_s16] = " + info.Size16 + @"
+                  ,[khkc_s17] = " + info.Size17 + @"
+                  ,[khkc_s18] = " + info.Size18 + @"
+                  ,[khkc_s19] = " + info.Size19 + @"
+                  ,[khkc_s20] = " + info.Size20 + @"
                   ,[khkc_khbh] = '" + customerCode + @"'
                   ,[khkc_xhb] = '" + info.Shoe + @"' 
              WHERE ID = " + info.Id;

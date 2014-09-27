@@ -16,46 +16,60 @@
     <!-- End .content-box-header -->
     <div class="content-box-content">
         <div class="tab-content default-tab" id="tab1">
-            <!-- This is the target div. id must match the href of this div's tab -->
-            <table>
-                <thead>
-                    <tr>
-                        <th>
-                            Id
-                        </th>
-                        <th>
-                            Login Name
-                        </th>
-                        <th>
-                            Customer Code
-                        </th>
-                        <th>
-                            Is Contract Customer
-                        </th>
-                        <th>
-                            Email
-                        </th>
-                        <th>
-                            Action
-                        </th>
-                    </tr>
-                </thead>
+            <div class="tab-content default-tab">
+                @using (Html.BeginForm("Index", "User", FormMethod.Post))
+                {
+                    <div class="bulk-actions align-left">
+                        LoginName &nbsp;&nbsp;
+                        <input id="loginName" name="loginName" value="@Model.LoginName" type="text">
+                        &nbsp;&nbsp;
+                        <input type="submit" class="button" value="&nbsp;&nbsp;GO&nbsp;&nbsp;" />
+                    </div>
+                }
 
-                <tbody>
-                    @{
-                        int j = 0;
-                        string trclass = "";
-                    }
-                    @foreach (var item in Model.Users)
-                    {
-                        if (j % 2 == 0)
-                        {
-                            trclass = "";
+                <div class="clear">
+                    <p></p>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Login Name
+                            </th>
+                            <th>
+                                Customer Code
+                            </th>
+                            <th>Roles</th>
+                            <th>
+                                Is Contract Customer
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{
+                            int j = 0;
+                            string trclass = "";
                         }
-                        else
+                        @foreach (var item in Model.Users)
                         {
-                            trclass = "alt-row";
-                        }
+                            if (j % 2 == 0)
+                            {
+                                trclass = "";
+                            }
+                            else
+                            {
+                                trclass = "alt-row";
+                            }
                         <tr class="@trclass">
                             <td>
                                 @item.UserId
@@ -66,13 +80,14 @@
                             <td>
                                 @item.CustomerCode
                             </td>
+                            <td>@item.Roles</td>
                             <td>
                                 @if (item.IsContractCustomer)
-                                {
+                                    {
                                     @:true
                                 }
-                                else
-                                {
+                                    else
+                                    {
                                     @:false
                                 }
                             </td>
@@ -81,18 +96,17 @@
                             </td>
                             <td>
                                 <!-- Icons -->
-                                <a href="@Url.Action("Edit", "User", new { id = @item.UserId })" title="Edit">
-                                    <img src="@Url.Content("~/Content/images/icons/pencil.png")" alt="Edit" />
+                                <a class="button" href="@Url.Action("Edit", "User", new { id = @item.UserId })" title="Edit">
+                                    Edit Role
                                 </a>
-                                <a href="javascript:;" onclick="deleteUser(@item.UserId)" title="Delete">
-                                    <img src="@Url.Content("~/Content/images/icons/cross.png")" alt="Delete" />
-                                </a>
+                               
                             </td>
                         </tr>
-                                j++;
-                    }
-                </tbody>
-            </table>
+                                    j++;
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- End #tab1 -->
         <!-- End #tab2 -->

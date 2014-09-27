@@ -13,9 +13,15 @@ namespace JonLong.CRM.BLL
         protected UserManager() { }
         public static readonly UserManager Instance = new UserManager();
 
-        public List<User> LoadUserList()
+        public List<User> LoadUserList(string loginName)
         {
-            return UserDataProvider.LoadUserList();
+            var tuple = UserDataProvider.LoadUserList(loginName);
+            var list = tuple.Item1;
+            foreach (var item in list)
+            {
+                item.Roles = String.Join(",", tuple.Item2.Where(t => t.UserId == item.UserId).Select(t=>t.RoleName).ToArray());
+            }
+            return list;
         }
 
         public User Login(string loginName, string password)

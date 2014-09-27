@@ -30,7 +30,12 @@ namespace JonLong.CRM.Web.Controllers
                 {
                     model.SelectedShoe = model.Shoes.First().Value;
                 }
-                model.Items = WarehouseManager.Instance.LoadCustomerList(user.CustomerCode, model.SelectedShoe);
+                string customerCode = String.Empty;
+                if (!AccountHelper.IsSuperAdmin(user))
+                {
+                    customerCode = user.CustomerCode;
+                }
+                model.Items = WarehouseManager.Instance.LoadCustomerList(customerCode, model.SelectedShoe);
 
 
                 model.WarehouseCount = model.Items.Count;
@@ -301,7 +306,13 @@ namespace JonLong.CRM.Web.Controllers
         {
             var model = new WarehoseListViewModel();
             var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
-            model.Items = WarehouseManager.Instance.LoadCustomerList(user.CustomerCode, shoe);
+            string customerCode = String.Empty;
+            if (!AccountHelper.IsSuperAdmin(user))
+            {
+                customerCode = user.CustomerCode;
+            }
+
+            model.Items = WarehouseManager.Instance.LoadCustomerList(customerCode, shoe);
             model.SelectedShoe = shoe;
             model.Shoes = ShoeManager.Instance.LoadShoes(user.CustomerCode);
 

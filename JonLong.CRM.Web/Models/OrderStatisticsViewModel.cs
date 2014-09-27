@@ -9,6 +9,7 @@ namespace JonLong.CRM.Web.Models
 {
     public class OrderStatisticsViewModel
     {
+        public bool IsSuperAdmin { get; set; }
         public List<Order> Orders { get; set; }
         public List<string> ShoeSizes { get; set; }
 

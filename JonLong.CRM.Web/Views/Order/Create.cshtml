@@ -137,9 +137,9 @@
                         <td id="shoe17">@Model.ShoeSizes[17]</td>
                         <td><input class="size" name="Size18" value="@Model.Size18" /></td>
                         <td id="shoe18">@Model.ShoeSizes[18]</td>
-                        <td><input class="size" name="Size17" value="@Model.Size19" /></td>
+                        <td><input type="hidden" class="size" name="Size17" value="@Model.Size19" /></td>
                         <td id="shoe19">@Model.ShoeSizes[19]</td>
-                        <td><input class="size" name="Size18" value="@Model.Size20" /></td>
+                        <td><input type="hidden" class="size" name="Size18" value="@Model.Size20" /></td>
                     </tr>
                     <tr class="alt-row">
                         <td>Total</td>
@@ -175,9 +175,11 @@
             });
             $('[type=date], .size').change(function () {
                 var total = 0;
-                if (!$.isNumeric(this.value)) {
+                
+                if (this.value.length == 0) {
+                    $(this).val(0);
+                }else if (!$.isNumeric(this.value)) {
                     alert('Please input number.');
-                    this.value = 0;
                     return;
                 }
                 $('[type=date], .size').each(function () {
@@ -239,6 +241,19 @@
                 return false;
             }
 
+            var isTrue = true;
+            $('[type=date], .size').each(function () {
+                if (parseInt($(this).val()) < 0) {
+                    alert('No less than 0!');
+                    $(this).focus();
+                    isTrue = false;
+                    return false;
+                }
+            });
+            if (isTrue == false){
+                return false;
+            }
+            
             if (parseInt($('#Total').val()) < 0) {
                 alert('No less than 0!');
                 $('#Total').focus();

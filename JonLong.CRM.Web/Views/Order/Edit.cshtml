@@ -285,7 +285,7 @@
                 </div>
                 <div style="text-align:center">
                     <p>
-                        <input class="button" type="submit" value="Save" />&nbsp;&nbsp;
+                        <input class="button" type="submit" onclick="return validate();" value="Save" />&nbsp;&nbsp;
 
                         <a href="@Url.Action("index")" class="button">Cancel</a>
                     </p>
@@ -307,6 +307,12 @@
             });
             $('[type=date], .size').change(function () {
                 var total = 0;
+                if (this.value.length == 0) {
+                    $(this).val(0);
+                } else if (!$.isNumeric(this.value)) {
+                    alert('Please input number.');
+                    return;
+                }
                 $('[type=date], .size').each(function () {
                     total += parseInt($(this).val());
                 });
@@ -320,6 +326,47 @@
             $("#SendDate").val($('#BanderNo option:selected').attr('fhrq'));
             //alert(this.value + ',' + $('#bundlerno option:selected').attr('fhrq'));
         });
+
+        function validate() {
+            if ($("#ETD").val() == "") {
+                alert("please input ETD.");
+                $("#ETD").focus();
+                return false;
+            }
+            if ($('#ContainerType').val() == "") {
+                alert('Please chose container.');
+                $('#ContainerType').focus();
+                return false;
+            }
+            if ($("#ContractNo").val() == "") {
+                alert('Please input contract no.');
+                $("#ContractNo").focus();
+                return false;
+            }
+
+            var isTrue = true;
+            $('[type=date], .size').each(function () {
+                if (parseInt($(this).val()) < 0) {
+                    alert('No less than 0!');
+                    $(this).focus();
+                    isTrue = false;
+                    return false;
+                }
+            });
+            if (isTrue == false) {
+                return false;
+            }
+
+            if (parseInt($('#Total').val()) < 0) {
+                alert('No less than 0!');
+                $('#Total').focus();
+                return false;
+            }
+
+            return true;
+        }
+
+
     </script>
 }
 

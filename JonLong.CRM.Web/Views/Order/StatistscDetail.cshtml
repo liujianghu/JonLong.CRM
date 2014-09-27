@@ -15,10 +15,10 @@
 
 <table class="table_b">
     <tr class="alt-row">
-        <th>
-
-        </th>
-
+        @if(!Model.IsSuperAdmin){
+            <th>
+            </th>
+}
         @{
             int sizeTypeCount = 18;
             if (Model.ShoeSizes.Count < sizeTypeCount)
@@ -52,12 +52,16 @@
             trclass = "alt-row";
         }
         <tr class="@trclass">
-            <td >
-                <a href="@Url.Action("Edit", "Order", new { id = @item.Id })">Edit</a>&nbsp;&nbsp;
-                <a href="javascript:;" onclick="deleteOrder(@item.Id)" title="Delete">
-                    Delete
-                </a>
-            </td>
+            @if(!Model.IsSuperAdmin){
+                <td>
+
+                    <a href="@Url.Action("Edit", "Order", new { id = @item.Id })">Edit</a>&nbsp;&nbsp;
+                    <a href="javascript:;" onclick="deleteOrder(@item.Id)" title="Delete">
+                        Delete
+                    </a>
+
+                </td>
+}
             <td>@item.ModelNo</td>
             <td>@item.Total</td>
             <td>
@@ -118,7 +122,7 @@
                 @if (item.Size10 > 0)
                 {
                     @item.Size10
-                    
+
                 }
             </td>
             <td>
@@ -174,28 +178,34 @@
                 j++;
     }
     <tr style="background-color:#D3D3D3">
-        <td ><a href="@Url.Action("Create", new { etd = @Model.SendDate, bundleNo = @Model.BundleNo, containerType =@Model.ContainerType})">Add model</a></td>
-        <td id="orderCount" >@Model.OrderCount</td>
-        <td id="total" >@Model.Total</td>
-        <td id="size1total" >@Model.Size1Total</td>
-        <td id="size2total" >@Model.Size2Total</td>
-        <td id="size3total" >@Model.Size3Total</td>
-        <td id="size4total" >@Model.Size4Total</td>
-        <td id="size5total" >@Model.Size5Total</td>
-        <td id="size6total" >@Model.Size6Total</td>
-        <td id="size7total" >@Model.Size7Total</td>
-        <td id="size8total" >@Model.Size8Total</td>
-        <td id="size9total" >@Model.Size9Total</td>
-        <td id="size10total" >@Model.Size10Total</td>
-        <td id="size11total" >@Model.Size11Total</td>
-        <td id="size12total" >@Model.Size12Total</td>
-        <td id="size13total" >@Model.Size13Total</td>
-        <td id="size14total" >@Model.Size14Total</td>
-        <td id="size15total" >@Model.Size15Total</td>
-        <td id="size16total" >@Model.Size16Total</td>
-        <td id="size17total" >@Model.Size17Total</td>
-        <td id="size18total" >@Model.Size18Total</td>
-        <td ><button class="button" onclick="convertToOrder()">Convert to order</button></td>
+        @if(!Model.IsSuperAdmin){
+            <td><a href="@Url.Action("Create", new { etd = @Model.SendDate, bundleNo = @Model.BundleNo, containerType =@Model.ContainerType})">Add model</a></td>
+}
+        <td id="orderCount">@Model.OrderCount</td>
+        <td id="total">@Model.Total</td>
+        <td id="size1total">@Model.Size1Total</td>
+        <td id="size2total">@Model.Size2Total</td>
+        <td id="size3total">@Model.Size3Total</td>
+        <td id="size4total">@Model.Size4Total</td>
+        <td id="size5total">@Model.Size5Total</td>
+        <td id="size6total">@Model.Size6Total</td>
+        <td id="size7total">@Model.Size7Total</td>
+        <td id="size8total">@Model.Size8Total</td>
+        <td id="size9total">@Model.Size9Total</td>
+        <td id="size10total">@Model.Size10Total</td>
+        <td id="size11total">@Model.Size11Total</td>
+        <td id="size12total">@Model.Size12Total</td>
+        <td id="size13total">@Model.Size13Total</td>
+        <td id="size14total">@Model.Size14Total</td>
+        <td id="size15total">@Model.Size15Total</td>
+        <td id="size16total">@Model.Size16Total</td>
+        <td id="size17total">@Model.Size17Total</td>
+        <td id="size18total">@Model.Size18Total</td>
+        <td>
+            @if(!Model.IsSuperAdmin){
+                <button class="button" onclick="convertToOrder()">Convert to order</button>
+}
+        </td>
     </tr>
 </table>
 <script>
@@ -209,14 +219,14 @@
             data: ({ id: id }),
             datatype: 'json',
             success: function (data) {
-                if(data != 1){
+                if (data != 1) {
                     alert(data);
                     return;
                 } else {
                     alert("Delete Success!");
                     window.location.href = '@Url.Action("Index")';
                 }
-                
+
             }
         });
     }

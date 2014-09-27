@@ -156,13 +156,13 @@ namespace JonLong.CRM.DAL
                     var info = new ArrivedModel();
 
                     info.SendDate = reader.GetDateTime(0);
-                    info.BundleNo = reader.GetString(1);
-                    info.ContainerNo = reader.GetString(2);
-                    info.Container = reader.GetString(3);
+                    info.BundleNo = reader.IsDBNull(1)?"":reader.GetString(1);
+                    info.ContainerNo = reader.IsDBNull(2) ? "" : reader.GetString(2);
+                    info.Container = reader.IsDBNull(3) ? "" : reader.GetString(3);
                     info.Filled = reader.GetDecimal(4);
                     info.SumPairs = reader.GetInt32(5);
                     info.Id = reader.GetInt32(6);
-                    info.CustomerName = reader.GetString(7);
+                    info.CustomerName = reader.IsDBNull(7) ? "" : reader.GetString(7);
                     info.Confirm = reader.IsDBNull(8) ? "" : reader.GetString(8);
                     if (!reader.IsDBNull(9))
                     {
