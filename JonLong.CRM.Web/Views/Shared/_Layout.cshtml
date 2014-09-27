@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using JonLong.CRM.Web.Common
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -22,12 +23,20 @@
                 </h1>
                 <!-- Logo (221px wide) -->
                 <a href="#">
-                    <img id="logo" src="@Url.Content("~/Content/images/logo.png")" alt="Simpla Admin logo" />
+                    <img id="logo" src="@Url.Content("~/Content/images/logo.jpg")" alt="Simpla Admin logo" />
                 </a>
                 <!-- Sidebar Profile links -->
                 <div id="profile-links">
-                    Hello, <a href="javascript:void();" title="Edit your profile">@JonLong.CRM.Web.Common.AccountHelper.GetCurrentUser().CustomerName</a><br />
+                    Hello, <a href="javascript:void();" title="Edit your profile">
+                    @{
+                        var user = AccountHelper.GetCurrentUser();
+                        if(user==null){
+                            user = new JonLong.CRM.Models.User();
+                        }
+                    }
+                    @user.CustomerName (@user.LoginName)</a><br />
                     <br />
+                    <label style="color:white; font-size:larger">@DateTime.Now.ToString("yyyy-MM-dd")</label>&nbsp;&nbsp;| 
                    <a href="@Url.Action("LogOff", "Account")" title="Sign Out">
                         Sign
                         Out

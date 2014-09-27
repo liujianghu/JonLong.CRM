@@ -10,6 +10,8 @@ namespace JonLong.CRM.Models
     {
         public int UserId { get; set; }
         public string LoginName { get; set; }
+
+        public string Roles { get; set; }
         /// <summary>
         /// 用户编号(Khbh)
         /// </summary>

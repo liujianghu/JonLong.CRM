@@ -1,5 +1,6 @@
 ﻿using JonLong.CRM.Models;
 using JonLong.CRM.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -8,12 +9,17 @@ namespace JonLong.CRM.DAL
 {
     public class UserDataProvider
     {
-        public static List<User> LoadUserList()
+        public static Tuple<List<User>,List<UserRoleInfo>> LoadUserList(string loginName = "")
         {
             var list = new List<User>();
+            var roles = new List<UserRoleInfo>();
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("@LoginName", SqlDbType.VarChar);
+            parameters[0].Value = loginName;
             using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString
                 , CommandType.StoredProcedure
-                , "t_Sys_User_LoadAll"))
+                , "t_Sys_User_LoadAll"
+                , parameters))
             {
                 while (reader.Read())
                 {
@@ -26,9 +32,20 @@ namespace JonLong.CRM.DAL
                     user.Email = reader.IsDBNull(5) ? "" : reader.GetString(5);
                     list.Add(user);
                 }
+
+                if (reader.NextResult())
+                {
+                    while (reader.Read())
+                    {
+                        roles.Add(new UserRoleInfo{
+                            RoleName = reader.GetString(1),
+                            UserId = reader.GetInt32(2)
+                        });
+                    }
+                }
             }
 
-            return list;
+            return new Tuple<List<User>, List<UserRoleInfo>>(list, roles);
         }
 
         public static User Login(string loginName, string password)

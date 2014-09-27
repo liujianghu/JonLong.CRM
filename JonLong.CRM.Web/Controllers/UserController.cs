@@ -13,16 +13,17 @@ namespace JonLong.CRM.Web.Controllers
     public class UserController : Controller
     {
         [RoleAuthorize]
-        public ActionResult Index()
+        public ActionResult Index(string loginName = "")
         {
             try
             {
-                var users = UserManager.Instance.LoadUserList();
+                var users = UserManager.Instance.LoadUserList(loginName);
                 var model = new UserListViewModel();
                 if (users != null)
                 {
                     model.Users = users;
                 }
+                model.LoginName = loginName;
                 return View(model);
 
             }

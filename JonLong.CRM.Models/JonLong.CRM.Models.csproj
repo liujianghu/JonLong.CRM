@@ -45,6 +45,7 @@
     <Compile Include="Enroute.cs" />
     <Compile Include="EnrouteDetail.cs" />
     <Compile Include="PreLoadCabinet.cs" />
+    <Compile Include="UserRoleInfo.cs" />
     <Compile Include="Warehouse.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderStatistics.cs" />

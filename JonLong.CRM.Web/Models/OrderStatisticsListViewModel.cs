@@ -7,6 +7,7 @@ namespace JonLong.CRM.Web.Models
 {
     public class OrderStatisticsListViewModel
     {
+        public bool IsSuperAdmin { get; set; }
         public OrderStatisticsListViewModel()
         {
             this.Items = new List<OrderStatistics>();

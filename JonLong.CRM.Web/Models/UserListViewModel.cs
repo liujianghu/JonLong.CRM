@@ -8,6 +8,7 @@ namespace JonLong.CRM.Web.Models
 {
     public class UserListViewModel
     {
+        public string LoginName { get; set; }
         public UserListViewModel()
         {
             this.Users = new List<User>();

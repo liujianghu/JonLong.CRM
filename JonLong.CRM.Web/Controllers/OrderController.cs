@@ -20,11 +20,16 @@ namespace JonLong.CRM.Web.Controllers
         {
             try
             {
+                var model = new OrderStatisticsListViewModel();
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
                 string customerCode = String.Empty;
                 if (!AccountHelper.IsSuperAdmin(user))
                 {
                     customerCode = user.CustomerCode;
+                }
+                else
+                {
+                    model.IsSuperAdmin = true;
                 }
 
                 string bundlerNo = "", containerNo = "", from = "", to = "";
@@ -48,13 +53,14 @@ namespace JonLong.CRM.Web.Controllers
                     sendDateTo = Convert.ToDateTime(to);
                 }
 
+
                 var statistics = OrderManager.Instance.LoadOrderStatistics(
                       customerCode
                     , sendDateFrom
                     , sendDateTo
                     , bundlerNo
                     , containerNo);
-                var model = new OrderStatisticsListViewModel();
+                
 
                 if (statistics != null && statistics.Any())
                 {
@@ -83,11 +89,16 @@ namespace JonLong.CRM.Web.Controllers
         {
             try
             {
+                var model = new OrderStatisticsListViewModel();
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
                 string customerCode = String.Empty;
                 if (!AccountHelper.IsSuperAdmin(user))
                 {
                     customerCode = user.CustomerCode;
+                }
+                else
+                {
+                    model.IsSuperAdmin = true;
                 }
 
                 string queryJson = JsonConvert.SerializeObject(queryModel);
@@ -113,7 +124,7 @@ namespace JonLong.CRM.Web.Controllers
                     , queryModel.BundleNo
                     , queryModel.ContainerNo);
 
-                var model = new OrderStatisticsListViewModel();
+                
                 model.BundleNo = queryModel.BundleNo;
                 model.ContainerNo = queryModel.ContainerNo;
                 model.ETDFrom = queryModel.ETDFrom;
@@ -193,6 +204,7 @@ namespace JonLong.CRM.Web.Controllers
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
                 if (AccountHelper.IsSuperAdmin(user))
                 {
+                    model.IsSuperAdmin = true;
                     model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(Constants.SuperAdminDefaultCustomerCode);
                 }
                 else
