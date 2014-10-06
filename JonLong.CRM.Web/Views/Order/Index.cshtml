@@ -65,6 +65,12 @@
                     <th>
                         ETD
                     </th>
+                    @if (Model.IsSuperAdmin)
+                    {
+                        <th>
+                            Customer Code
+                        </th>
+                    }
                     <th>
                         Last Change Date
                     </th>
@@ -134,6 +140,12 @@
                         <td>
                             @item.SendDate.ToShortDateString()
                         </td>
+                        @if (Model.IsSuperAdmin)
+                        {
+                            <td>
+                                @item.CustomerCode
+                            </td>
+                        }
                         <td>
                             @item.ChangeDate
                         </td>

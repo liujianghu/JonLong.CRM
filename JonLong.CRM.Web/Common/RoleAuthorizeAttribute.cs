@@ -38,7 +38,7 @@ namespace JonLong.CRM.Web.Common
                 var actionDescriptor = filterContext.ActionDescriptor;
                 var controllerDescriptor = actionDescriptor.ControllerDescriptor;
                 var controller = controllerDescriptor.ControllerName;
-                //var action = actionDescriptor.ActionName;
+                var action = actionDescriptor.ActionName;
                 var user = AccountHelper.GetLoginUserInfo(filterContext.RequestContext.HttpContext.User.Identity);
                 if (user == null || user.UserId <= 0)
                 {
@@ -56,22 +56,26 @@ namespace JonLong.CRM.Web.Common
                     return;
                 }
 
-                var permissions = UserManager.Instance.LoadUserPermissions(user.UserId);
-                if (!PermissionHelper.IsAllowed(controller, permissions))
+                if (action.ToLower() != "updatepassword" && action.ToLower() != "editprofile")
                 {
-                    filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary(new
+                    var permissions = UserManager.Instance.LoadUserPermissions(user.UserId);
+                    if (!PermissionHelper.IsAllowed(controller, permissions))
                     {
-                        controller = "Error"
-                        ,
-                        action = "Index"
-                        ,
-                        returnUrl = filterContext.HttpContext.Request.Url
-                        ,
-                        returnMessage = "您无权查看."
-                    }));
-                    return;
+                        filterContext.Result = new RedirectToRouteResult(
+                        new RouteValueDictionary(new
+                        {
+                            controller = "Error"
+                            ,
+                            action = "Index"
+                            ,
+                            returnUrl = filterContext.HttpContext.Request.Url
+                            ,
+                            returnMessage = "您无权查看."
+                        }));
+                        return;
+                    }
                 }
+                
 
             }
 

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using JonLong.CRM.BLL;
 using JonLong.CRM.Models;
 using JonLong.CRM.Web.Models;
+using System.Web.Security;
 
 namespace JonLong.CRM.Web.Controllers
 {
@@ -92,6 +93,50 @@ namespace JonLong.CRM.Web.Controllers
             {
                 TempData["Error"] = ex.Message;
                 return View("Error");
+            }
+        }
+
+        [RoleAuthorize]
+        [HttpGet]
+        public ActionResult EditProfile()
+        {
+            try
+            {
+                var model = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.ToString();
+                return View("Error");
+            }
+        }
+
+        [RoleAuthorize]
+        [HttpPost]
+        public JsonResult UpdatePassword(string oldpwd, string newpwd)
+        {
+            try
+            {
+                if (String.IsNullOrEmpty(oldpwd) || String.IsNullOrEmpty(newpwd))
+                {
+                    return this.Json("The password is empty");
+                }
+                var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
+
+                string pwd = FormsAuthentication.HashPasswordForStoringInConfigFile(oldpwd, "SHA1");
+                string newPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(newpwd, "SHA1");
+                bool isSuccess = UserManager.Instance.UpdatePassword(user.UserId, user.LoginName, pwd, newPassword);
+                if (isSuccess)
+                {
+                    return this.Json(1);
+                }
+
+                return this.Json("The password is incorrect.");
+            }
+            catch (Exception ex)
+            {
+                return this.Json(ex.Message);
             }
         }
 

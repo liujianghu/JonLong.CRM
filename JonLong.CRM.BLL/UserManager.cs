@@ -70,5 +70,16 @@ namespace JonLong.CRM.BLL
         }
         
 
+        public bool UpdatePassword(int userId, string loginName, string oldPwd, string newPwd)
+        {
+            var user = this.Login(loginName, oldPwd);
+            if (user == null || user.UserId <=0)
+            {
+                return false;
+            }
+
+            UserDataProvider.UpdatePassword(userId, newPwd);
+            return true;
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace JonLong.CRM.Web.Models
         public List<PreLoadCabinet> Items { get; set; }
 
         public List<string> ShoeSizes { get; set; }
+
+        public string Guid { get; set; }
     }
 }

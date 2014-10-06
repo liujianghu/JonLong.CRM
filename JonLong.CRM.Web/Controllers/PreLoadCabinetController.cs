@@ -20,6 +20,7 @@ namespace JonLong.CRM.Web.Controllers
             {
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
                 var model = new PreLoadCabinetModel();
+                model.Guid = Guid.NewGuid().ToString();
                 model.Items = PreLoadCabinetManager.Instance.LoadAviailable(user.CustomerCode);
                 
                 if (AccountHelper.IsSuperAdmin(user))
@@ -40,5 +41,52 @@ namespace JonLong.CRM.Web.Controllers
             }
             
         }
+
+        [RoleAuthorize]
+        public ActionResult PreLoad(int index)
+        {
+            var model =  new PreLoadCabinetItemModel
+            {
+                Index = index
+            };
+
+            return PartialView(model);
+        }
+
+        [RoleAuthorize]
+        public JsonResult Save(PreLoadCabinet model)
+        {
+            var result = new PreLoadCabinetEditModel
+            {
+                IsSuccess = true
+            };
+            try
+            {
+                var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
+                model.CustomerCode = user.CustomerCode;
+                
+                int id = model.Id;
+                if (id >0)
+                {
+                    PreLoadCabinetManager.Instance.Update(model);
+                }
+                else
+                {
+                    id = PreLoadCabinetManager.Instance.Insert(model);
+                }
+
+                result.Id = id;
+
+                result.Filled = PreLoadCabinetManager.Instance.GetFilled(user.CustomerCode, model.TGuid, model.ContainerType);
+                
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.Message = ex.ToString();
+            }
+            return this.Json(result);
+        }
+
 	}
 }

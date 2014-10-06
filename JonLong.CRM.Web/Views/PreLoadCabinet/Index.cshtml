@@ -34,210 +34,239 @@
                     <option value="56.63">40</option>
                     <option value="65.13">40T</option>
                 </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Filled: <label id="filled">0</label>
             </div>
 
             <div class="clear">
                 <p></p>
             </div>
         </div>
-        
+
     </div>
-    <div class="content-box column-left">
-        <div class="content-box-header">
-            <h3>
-                Content box left
-            </h3>
-        </div>
-        <!-- End .content-box-header -->
-        <div class="content-box-content">
-            <div class="tab-content default-tab">
-                <table class="table_b">
-                    <tr class="alt-row">
-                        <th>
+    <div class="content-box-content">
+        <div class="tab-content default-tab">
+            <table class="table_b">
+                <tr class="alt-row">
+                    <th>
 
-                        </th>
+                    </th>
 
-                        @{
-                            int sizeTypeCount = 18;
-                            if (Model.ShoeSizes.Count < sizeTypeCount)
-                            {
-                                sizeTypeCount = Model.ShoeSizes.Count;
-                            }
-                        }
-                        <th>Model No.</th>
-                        <th>Total</th>
-                        @for (int i = 0; i < sizeTypeCount; i++)
-                        {
-                            <th style="font-weight:200">
-                                @Model.ShoeSizes[i]
-                            </th>
-                        }
-                        <th>Original ETD</th>
-
-                    </tr>
                     @{
-                        int j = 0;
-                        string trclass = "";
+                        int sizeTypeCount = 18;
+                        if (Model.ShoeSizes.Count < sizeTypeCount)
+                        {
+                            sizeTypeCount = Model.ShoeSizes.Count;
+                        }
                     }
-                    @foreach (var item in Model.Items)
+                    <th>Model No.</th>
+                    <th style="width:50px">Total</th>
+                    @for (int i = 0; i < sizeTypeCount; i++)
                     {
-                        if (j % 2 == 0)
-                        {
-                            trclass = "";
-                        }
-                        else
-                        {
-                            trclass = "alt-row";
-                        }
-                        <tr class="@trclass">
-                            <td></td>
-                            <td>@item.ModelNo</td>
-                            <td>@item.Total</td>
-                            <td>
-                                @if (item.Size1 > 0)
-                                {
-                                    @item.Size1
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size2 > 0)
-                                {
-                                    @item.Size2
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size3 > 0)
-                                {
-                                    @item.Size3
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size4 > 0)
-                                {
-                                    @item.Size4
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size5 > 0)
-                                {
-                                    @item.Size5
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size6 > 0)
-                                {
-                                    @item.Size6
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size7 > 0)
-                                {
-                                    @item.Size7
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size8 > 0)
-                                {
-                                    @item.Size8
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size9 > 0)
-                                {
-                                    @item.Size9
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size10 > 0)
-                                {
-                                    @item.Size10
-
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size11 > 0)
-                                {
-                                    @item.Size11
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size12 > 0)
-                                {
-                                    @item.Size12
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size13 > 0)
-                                {
-                                    @item.Size13
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size14 > 0)
-                                {
-                                    @item.Size14
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size15 > 0)
-                                {
-                                    @item.Size15
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size16 > 0)
-                                {
-                                    @item.Size16
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size17 > 0)
-                                {
-                                    @item.Size17
-                                }
-                            </td>
-                            <td>
-                                @if (item.Size18 > 0)
-                                {
-                                    @item.Size18
-                                }
-                            </td>
-                            <td>@item.SendDate.ToShortDateString()</td>
-                        </tr>
-                                j++;
+                        <th style="font-weight:200;width:50px">
+                            @Model.ShoeSizes[i]
+                        </th>
                     }
+                    <th>Bundle No</th>
+                    <th>Original ETD</th>
 
-                </table>
-            </div>
-            <!-- End #tab3 -->
+                </tr>
+                @{
+                    int j = 0;
+                    string trclass = "";
+                }
+                @foreach (var item in Model.Items)
+                {
+                    if (j % 2 == 0)
+                    {
+                        trclass = "";
+                    }
+                    else
+                    {
+                        trclass = "alt-row";
+                    }
+                    <tr class="@trclass">
+                        <td>
+                            <button onclick="preLoad('@j',this);"
+                                    class="button" title="Load">
+                                Load
+                            </button>
+                            <input type="hidden" value="@item.XHB" id="@("xhb"+j)" />
+                        </td>
+                        <td id="@("modelNo"+j)" style="width:150px">@item.ModelNo</td>
+                        <td>@item.Total
+                        @item.XHB
+                        </td>
+                        <td id="@("td_pre"+j +"_size1")">
+                            @item.Size1
+                        </td>
+                        <td id="@("td_pre"+j +"_size2")">@item.Size2</td>
+                        <td id="@("td_pre"+j +"_size3")">@item.Size3</td>
+                        <td id="@("td_pre"+j +"_size4")">@item.Size4</td>
+                        <td id="@("td_pre"+j +"_size5")">@item.Size5</td>
+                        <td id="@("td_pre"+j +"_size6")">@item.Size6
+                        </td>
+                        <td id="@("td_pre"+j +"_size7")">
+                                @item.Size7
+                        </td>
+                        <td id="@("td_pre"+j +"_size8")">
+                                @item.Size8
+                        </td>
+                        <td id="@("td_pre"+j +"_size9")">
+                                @item.Size9
+                        </td>
+                        <td id="@("td_pre"+j +"_size10")">
+                                @item.Size10
+                        </td>
+                        <td id="@("td_pre"+j +"_size11")">
+                                @item.Size11
+                        </td>
+                        <td id="@("td_pre"+j +"_size12")">
+                                @item.Size12
+                        </td>
+                        <td id="@("td_pre"+j +"_size13")">
+                                @item.Size13
+                        </td>
+                        <td id="@("td_pre"+j +"_size14")">
+                                @item.Size14
+                        </td>
+                        <td id="@("td_pre"+j +"_size15")">
+                                @item.Size15
+                        </td>
+                        <td id="@("td_pre"+j +"_size16")">
+                                @item.Size16
+                        </td>
+                        <td id="@("td_pre"+j +"_size17")">
+                                @item.Size17
+                        </td>
+                        <td id="@("td_pre"+j +"_size18")">
+                                @item.Size18
+                        </td>
+                        <td id="@("banderno"+j)">@item.BanderNo</td>
+                        <td id="@("sendDate"+j)">@item.SendDate.ToShortDateString()</td>
+                    </tr>
+                    <tr id="@("loadDiv"+j)" style="display: none; background-color: #d5ffc2;">
+                        <td colspan="23"></td>
+                    </tr>
+                            j++;
+                }
+
+            </table>
         </div>
-        <!-- End .content-box-content -->
+        <!-- End #tab3 -->
     </div>
-    <div class="content-box column-right closed-box">
-        <div class="content-box-header">
-            <!-- Add the class "closed" to the Content box header to have it closed by default -->
-            <h3>
-                Content box right
-            </h3>
-        </div>
-        <!-- End .content-box-header -->
-        <div class="content-box-content">
-            <div class="tab-content default-tab">
-                <h4>
-                    This box is closed by default
-                </h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas
-                    dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum.
-                    Duis nec rutrum lorem. Donec egestas metus a risus euismod ultricies. Maecenas lacinia
-                    orci at neque commodo commodo.
-                </p>
-            </div>
-            <!-- End #tab3 -->
-        </div>
-        <!-- End .content-box-content -->
-    </div>
+
 </div>
 <div class="clear">
 </div>
+@section scripts{
+    <script type="text/javascript">
+        var guid = '@Model.Guid';
+
+        function sizeChange(input) {
+            var total = 0;
+            if (input.value.length == 0) {
+                $(input).val(0);
+            } else if (!$.isNumeric(input.value)) {
+                alert('Please input number.');
+                return;
+            }
+            var origin = String($("#td_" + input.id).html()).trim();
+            if (input.value > parseInt(origin)) {
+                alert("Your input is too much");
+                $(input).val(0);
+                return;
+            }
+            var index = $(input).attr("index");
+            $("#loadDiv" + index + " input").each(function () {
+                total = total + parseInt($(this).val());
+            });
+            $("#pre" + index + "_total1").text(total);
+            $("#pre" + index + "_total").val(total);
+        }
+        function preLoad(index,btn) {
+            var detailDiv = $("#loadDiv" + index);
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("PreLoad")",
+                data: { "index": index },
+                success: function (data) {
+                    detailDiv.html('');
+                    detailDiv.html(data);
+                    detailDiv.show();
+                    $(btn).hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve detail.');
+                }
+            });
+            
+        }
+
+        function save(index) {
+            var containerNo = $("#Cabinet").val();
+            var sendDate = $("#sendDate" + index).html();
+            var bundlerNo = $("#banderno" + index).html();
+            var modelNo = $("#modelNo" + index).html();
+            var xhb = $("#xhb" + index).val();
+            var prefix = "#pre" + index + "_size";
+            var id = $("#pre" + index + "_id").val();
+            var total = $("#pre" + index + "_total").val();
+            var size1 = $(prefix + "1").val();
+            var size2 = $(prefix + "2").val();
+            var size3 = $(prefix + "3").val();
+            var size4 = $(prefix + "4").val();
+            var size5 = $(prefix + "5").val();
+            var size6 = $(prefix + "6").val();
+            var size7 = $(prefix + "7").val();
+            var size8 = $(prefix + "8").val();
+            var size9 = $(prefix + "9").val();
+            var size10 = $(prefix + "10").val();
+            var size11 = $(prefix + "11").val();
+            var size12 = $(prefix + "12").val();
+            var size13 = $(prefix + "13").val();
+            var size14 = $(prefix + "14").val();
+            var size15 = $(prefix + "15").val();
+            var size16 = $(prefix + "16").val();
+            var size17 = $(prefix + "17").val();
+            var size18 = $(prefix + "18").val();
+
+            if (total <= 0) {
+                alert("The total must be more than 0.");
+                return;
+            }
+
+            var datas = {
+                Id: id, TGuid: guid, XHB: xhb, ModelNo: modelNo,
+                Total: total, SendDate: sendDate, BanderNo: bundlerNo,
+                ContainerType: containerNo, Size1: size1, Size2: size2,
+                Size3: size3, Size4: size4, Size5: size5, Size6: size6, Size7: size7,
+                Size8: size8, Size9: size9, Size10: size10, Size11: size11, Size12: size12,
+                Size13: size13, Size14: size14, Size15: size15, Size16: size16, Size17: size17,
+                Size18: size18
+            };
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Save")",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(datas),
+                success: function (data) {
+                    if (data.IsSuccess) {
+                        $("#filled").text(data.Filled + "%");
+                        $("#pre" + index + "_id").val(data.Id);
+                        alert("Success");
+                    } else {
+                        alert(data.Message);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve detail.');
+                }
+            });
+        }
+
+    </script>
+}
 

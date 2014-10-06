@@ -166,5 +166,14 @@ namespace JonLong.CRM.DAL
             
         }
 
+        public static void UpdatePassword(int userId, string password)
+        {
+            string sql = @"UPDATE [jncrm].[dbo].[t_Sys_User]
+                         SET [Password] = '"+password+@"'
+                         WHERE [UserId] = "+ userId+";";
+
+            SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
+        }
+
     }
 }
