@@ -4,7 +4,9 @@ using Newtonsoft.Json;
 using System.Security.Principal;
 using System.Web.Security;
 using JonLong.CRM.Utilities;
+using System.Linq;
 using System.Web;
+using System.Collections.Generic;
 
 namespace JonLong.CRM.Web.Common
 {
@@ -26,6 +28,45 @@ namespace JonLong.CRM.Web.Common
         }
 
         /// <summary>
+        /// 验证是否有权限访问此功能
+        /// </summary>
+        /// <param name="controllerName"></param>
+        /// <returns></returns>
+        public static bool IsAllowed(string controllerName, string actionName = "")
+        {
+            var user = GetCurrentUser();
+            if (user == null || user.UserId <= 0)
+            {
+                return false;
+            }
+
+            if (controllerName.ToLower() == "home" || controllerName.ToLower() == "download"
+                || actionName.ToLower() == "updatepassword" || actionName.ToLower() == "editprofile")
+            {
+                return true;
+            }
+
+            var permissions = UserManager.Instance.LoadUserPermissions(user.UserId);
+            if (permissions == null || !permissions.Any())
+            {
+                return false;
+            }
+
+            if (permissions.Contains(Constants.SuperAdminPermission))
+            {
+                return true;
+            }
+
+            if (permissions.Contains(controllerName.ToLower()))
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+
+        /// <summary>
         /// 验证当前用户是否是超级管理员
         /// </summary>
         /// <param name="identity"></param>
@@ -38,9 +79,10 @@ namespace JonLong.CRM.Web.Common
                 return false;
             }
             var permissions = UserManager.Instance.LoadUserPermissions(user.UserId);
-            return PermissionHelper.IsSuperAdmin(permissions);
+            return IsSuperAdmin(permissions);
         }
 
+       
         /// <summary>
         /// 验证用户是否是超级管理
         /// </summary>
@@ -53,7 +95,7 @@ namespace JonLong.CRM.Web.Common
                 return false;
             }
             var permissions = UserManager.Instance.LoadUserPermissions(user.UserId);
-            return PermissionHelper.IsSuperAdmin(permissions);
+            return IsSuperAdmin(permissions);
         }
 
         /// <summary>
@@ -68,7 +110,25 @@ namespace JonLong.CRM.Web.Common
                 return false;
             }
             var permissions = UserManager.Instance.LoadUserPermissions(userId);
-            return PermissionHelper.IsSuperAdmin(permissions);
+            return IsSuperAdmin(permissions);
+        }
+
+        /// <summary>
+        /// 判断是否拥有超级管理员的权限
+        /// </summary>
+        /// <param name="permissions"></param>
+        /// <returns></returns>
+        public static bool IsSuperAdmin(List<string> permissions)
+        {
+            if (permissions == null || !permissions.Any())
+            {
+                return false;
+            }
+            if (permissions.Contains(Constants.SuperAdminPermission))
+            {
+                return true;
+            }
+            return false;
         }
 
         public static string GetCustomerCode(string customerCode)

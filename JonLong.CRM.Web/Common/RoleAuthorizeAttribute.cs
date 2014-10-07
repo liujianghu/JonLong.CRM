@@ -38,16 +38,15 @@ namespace JonLong.CRM.Web.Common
                 var actionDescriptor = filterContext.ActionDescriptor;
                 var controllerDescriptor = actionDescriptor.ControllerDescriptor;
                 var controller = controllerDescriptor.ControllerName;
-                var action = actionDescriptor.ActionName;
-                var user = AccountHelper.GetLoginUserInfo(filterContext.RequestContext.HttpContext.User.Identity);
-                if (user == null || user.UserId <= 0)
+                string action = actionDescriptor.ActionName;
+                if (!AccountHelper.IsAllowed(controller, action))
                 {
                     filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new
                     {
                         controller = "Error"
                         ,
-                        action = "index"
+                        action = "Index"
                         ,
                         returnUrl = filterContext.HttpContext.Request.Url
                         ,
@@ -55,27 +54,6 @@ namespace JonLong.CRM.Web.Common
                     }));
                     return;
                 }
-
-                if (action.ToLower() != "updatepassword" && action.ToLower() != "editprofile")
-                {
-                    var permissions = UserManager.Instance.LoadUserPermissions(user.UserId);
-                    if (!PermissionHelper.IsAllowed(controller, permissions))
-                    {
-                        filterContext.Result = new RedirectToRouteResult(
-                        new RouteValueDictionary(new
-                        {
-                            controller = "Error"
-                            ,
-                            action = "Index"
-                            ,
-                            returnUrl = filterContext.HttpContext.Request.Url
-                            ,
-                            returnMessage = "您无权查看."
-                        }));
-                        return;
-                    }
-                }
-                
 
             }
 
