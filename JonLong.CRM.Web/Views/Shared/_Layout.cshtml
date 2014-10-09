@@ -19,25 +19,27 @@
             <div id="sidebar-wrapper">
                 <!-- Sidebar with logo and menu -->
                 <h1 id="sidebar-title">
-                    <a href="@Url.Action("index","home")">Simpla Admin</a>
+                    <a href="@Url.Action("index","home")">Jonlong CRM</a>
                 </h1>
                 <!-- Logo (221px wide) -->
                 <a href="#">
-                    <img id="logo" src="@Url.Content("~/Content/images/logo.jpg")" alt="Simpla Admin logo" />
+                    <img id="logo" src="@Url.Content("~/Content/images/logo.jpg")" alt="Jonlong logo" />
                 </a>
                 <!-- Sidebar Profile links -->
                 <div id="profile-links">
-                    Hello, <a href="javascript:void();" title="Edit your profile">
-                    @{
-                        var user = AccountHelper.GetCurrentUser();
-                        if(user==null){
-                            user = new JonLong.CRM.Models.User();
+                    Hello, <a href="@Url.Action("EditProfile","User")" title="Edit your profile">
+                        @{
+                            var user = AccountHelper.GetCurrentUser();
+                            if (user == null)
+                            {
+                                user = new JonLong.CRM.Models.User();
+                            }
                         }
-                    }
-                    @user.CustomerName (@user.LoginName)</a><br />
+                        @user.CustomerName (@user.LoginName)
+                    </a><br />
                     <br />
-                    <label style="color:white; font-size:larger">@DateTime.Now.ToString("yyyy-MM-dd")</label>&nbsp;&nbsp;| 
-                   <a href="@Url.Action("LogOff", "Account")" title="Sign Out">
+                    <label style="color:white; font-size:larger">@DateTime.Now.ToString("yyyy-MM-dd")</label>&nbsp;&nbsp;|
+                    <a href="@Url.Action("LogOff", "Account")" title="Sign Out">
                         Sign
                         Out
                     </a>
@@ -45,106 +47,89 @@
                 <ul id="main-nav">
                     <!-- Accordion Menu -->
                     <li>
-                        <a href="@Url.Action("index","home")" class="nav-top-item no-submenu">
+                        <a href="@Url.Action("index","home")" class="nav-top-item no-submenu current">
                             <!-- Add the class "no-submenu" to menu items with no sub menu -->
                             Index
                         </a>
                     </li>
+                    @if (AccountHelper.IsAllowed("order") || AccountHelper.IsAllowed("Enroute") || AccountHelper.IsAllowed("Arrived"))
+                    {
+                        <li>
+                            <a href="javascript:;" class="nav-top-item">
+                                <!-- Add the class "current" to current menu item -->
+                                Daily Operation
+                            </a>
+                            <ul>
+                                @if (AccountHelper.IsAllowed("order"))
+                                {
+                                    <li><a href="@Url.Action("index","Order")">Order & Forecast</a></li>
+                                }
+                                @if (AccountHelper.IsAllowed("Enroute"))
+                                {
+                                    <li><a href="@Url.Action("index","Enroute")">En route</a></li>
+                                }
+                                @if (AccountHelper.IsAllowed("Arrived"))
+                                {
+                                    <li><a href="@Url.Action("index","Arrived")">Arrived</a></li>
+                                }
+
+                            </ul>
+                        </li>
+                    }
+                    @if (AccountHelper.IsAllowed("OrderVariance"))
+                    {
+                        <li>
+                            <a href="javascript:;" class="nav-top-item">Customer Reconciliation </a>
+                            <ul>
+                                <li><a href="@Url.Action("Index","OrderVariance")">Order Variance Reconciliation</a></li>
+                            </ul>
+                        </li>
+                    }
+
+                    @if (AccountHelper.IsAllowed("JLWarehouse") || AccountHelper.IsAllowed("CustomerWarehouse"))
+                    {
+                        <li>
+                            <a href="javascript:;" class="nav-top-item">Logistics </a>
+                            <ul>
+                                @if (AccountHelper.IsAllowed("JLWarehouse"))
+                                {
+                                    <li><a href="@Url.Action("index","JLWarehouse")">JONLONG warehouse</a></li>
+                                }
+                                @if (AccountHelper.IsAllowed("CustomerWarehouse"))
+                                {
+                                    <li><a href="@Url.Action("index","CustomerWarehouse")">Customer warehouse</a></li>
+                                }
+
+                            </ul>
+                        </li>
+                    }
+                    @if (AccountHelper.IsAllowed("PreLoadCabinet"))
+                    {
+                        <li>
+                            <a href="javascript:;" class="nav-top-item">Pre load cabinet </a>
+                            <ul>
+                                <li><a href="@Url.Action("index","PreLoadCabinet")">Preload Cabinet</a></li>
+                            </ul>
+                        </li>
+                    }
+
                     <li>
-                        <a href="#" class="nav-top-item current">
-                            <!-- Add the class "current" to current menu item -->
-                            Daily Operation
-                        </a>
+                        <a href="javascript:;" class="nav-top-item">Settings </a>
                         <ul>
-                            <li><a class="current" href="@Url.Action("index","Order")">Order & Forecast</a></li>
-                            <li><a href="@Url.Action("index","Enroute")">En route</a></li>
-                            <!-- Add class "current" to sub menu items also -->
-                            <li><a href="@Url.Action("index","Arrived")">Arrived</a></li>
+                            @if (AccountHelper.IsAllowed("Role"))
+                            {
+                                <li><a href="@Url.Action("index","Role")">Role</a></li>
+                            }
+                            @if (AccountHelper.IsAllowed("User"))
+                            {
+                                <li><a href="@Url.Action("index","User")">User</a></li>
+                            }
+                            <li><a href="@Url.Action("EditProfile","User")">Update Password</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#" class="nav-top-item">Customer Reconciliation </a>
-                        <ul>
-                            <li><a href="@Url.Action("Index","OrderVariance")">Order Variance Reconciliation</a></li>
-                            <li><a href="#">Accounts Receivable Reconciliation</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-top-item">Logistics </a>
-                        <ul>
-                            <li><a href="@Url.Action("index","JLWarehouse")">JONLONG warehouse</a></li>
-                            <li><a href="@Url.Action("index","CustomerWarehouse")">Customer warehouse</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-top-item">Pre load cabinet </a>
-                        <ul>
-                            <li><a href="@Url.Action("index","PreLoadCabinet")">Preload Cabinet</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-top-item">Settings </a>
-                        <ul>
-                            <li><a href="@Url.Action("index","Role")">Role</a></li>
-                            <li><a href="@Url.Action("index","User")">User</a></li>
-                            <li><a href="#">Your Profile</a></li>
-                            <li><a href="#">Users and Permissions</a></li>
-                        </ul>
-                    </li>
+
                 </ul>
-                <!-- End #main-nav -->
-                <div id="messages" style="display: none">
-                    <!-- Messages are shown when a link with these attributes are clicked: href="#messages" rel="modal"  -->
-                    <h3>
-                        3 Messages
-                    </h3>
-                    <p>
-                        <strong>17th May 2009</strong> by Admin<br />
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in
-                        mi at felis aliquet congue. <small>
-                            <a href="#" class="remove-link" title="Remove message">
-                                Remove
-                            </a>
-                        </small>
-                    </p>
-                    <p>
-                        <strong>2nd May 2009</strong> by Jane Doe<br />
-                        Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at
-                        sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam.
-                        Vivamus pretium ornare est. <small>
-                            <a href="#" class="remove-link" title="Remove message">
-                                Remove
-                            </a>
-                        </small>
-                    </p>
-                    <p>
-                        <strong>25th April 2009</strong> by Admin<br />
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in
-                        mi at felis aliquet congue. <small>
-                            <a href="#" class="remove-link" title="Remove message">
-                                Remove
-                            </a>
-                        </small>
-                    </p>
-                    <form action="#" method="post">
-                        <h4>
-                            New Message
-                        </h4>
-                        <fieldset>
-                            <textarea class="textarea" name="textfield" cols="79" rows="5"></textarea>
-                        </fieldset>
-                        <fieldset>
-                            <select name="dropdown" class="small-input">
-                                <option value="option1">Send to...</option>
-                                <option value="option2">Everyone</option>
-                                <option value="option3">Admin</option>
-                                <option value="option4">Jane Doe</option>
-                            </select>
-                            <input class="button" type="submit" value="Send" />
-                        </fieldset>
-                    </form>
-                </div>
-                <!-- End #messages -->
+
             </div>
         </div>
         <!-- End #sidebar -->
@@ -169,7 +154,7 @@
                     <!-- Remove this notice or replace it with whatever you want -->
                     &#169; Copyright 2014 JON LONG | Powered by <a href="#">
                         JON LONG
-                    </a> 
+                    </a>
                 </small>
             </div>
             <!-- End #footer -->

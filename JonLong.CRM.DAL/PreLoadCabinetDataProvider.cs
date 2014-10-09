@@ -62,7 +62,7 @@ namespace JonLong.CRM.DAL
 
         }
 
-        public static void Insert(PreLoadCabinet cabinet)
+        public static int Insert(PreLoadCabinet cabinet)
         {
             string sql = @"INSERT INTO [jncrm].[dbo].[t_sale_yzk]
                            ([tGuid]
@@ -95,7 +95,7 @@ namespace JonLong.CRM.DAL
                            ('"+cabinet.TGuid+@"'
                            ,'" + cabinet.SendDate + @"'
                            ,'" + cabinet.BanderNo + @"'
-                           ,'" + cabinet.ModelNo + @"'
+                           ,'" + cabinet.ContainerType + @"'
                            ,'" + cabinet.XHB + @"'
                            ," + cabinet.Total + @"
                            ," + cabinet.Size1 + @"
@@ -117,9 +117,18 @@ namespace JonLong.CRM.DAL
                             ," + cabinet.Size17 + @"
                             ," + cabinet.Size18 + @"
                             ," + cabinet.Size19 + @"
-                           ," + cabinet.Size20 + ")";
+                           ," + cabinet.Size20 + ") ";
+            sql += " SET @Id = SCOPE_IDENTITY();";
 
-            SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = new SqlParameter("@Id", SqlDbType.Int);
+            parameters[0].Direction = ParameterDirection.InputOutput;
+                
+            SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql,parameters);
+
+            int id = 0;
+            int.TryParse(parameters[0].Value.ToString(), out id);
+            return id;
         }
 
         public static void Update(PreLoadCabinet cabinet)

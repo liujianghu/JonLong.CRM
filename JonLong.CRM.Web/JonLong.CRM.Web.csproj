@@ -140,6 +140,8 @@
     <Compile Include="Models\ArrivedQueryModel.cs" />
     <Compile Include="Models\EnrouteDetailViewModel.cs" />
     <Compile Include="Models\EnrouteListViewModel.cs" />
+    <Compile Include="Models\PreLoadCabinetEditModel.cs" />
+    <Compile Include="Models\PreLoadCabinetItemModel.cs" />
     <Compile Include="Models\PreLoadCabinetModel.cs" />
     <Compile Include="Models\WarehoseListViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -255,6 +257,8 @@
     <Content Include="Views\CustomerWarehouse\Edit.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\PreLoadCabinet\Index.cshtml" />
+    <Content Include="Views\PreLoadCabinet\PreLoad.cshtml" />
+    <Content Include="Views\User\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Download\" />
