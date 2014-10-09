@@ -196,6 +196,7 @@
     <Content Include="Content\images\icons\pencil.png" />
     <Content Include="Content\images\icons\pencil_48.png" />
     <Content Include="Content\images\icons\tick_circle.png" />
+    <Content Include="Content\images\logo.jpg" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\menu-current-arrow.gif" />
     <Content Include="Content\images\shortcut-button-bg.gif" />
