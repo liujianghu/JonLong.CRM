@@ -54,12 +54,12 @@
         <tr class="@trclass">
             <td>
                 @if(item.CYLX ==1){
-                    <a href="@Url.Action("Confirm", "OrderVariance", new { id = @item.Id, guid=@Model.Guid })">Confirm</a>
+                    <a href="@Url.Action("Confirm", "OrderVariance", new { id = @item.Id, guid=@Model.Guid, bundleno = @Model.BundleNo })">Confirm</a>
                 }
                 else
                 {
-                    <a href="@Url.Action("Edit", "OrderVariance", new { id = @item.Id, guid=@Model.Guid })">Deplay</a>@:&nbsp;&nbsp;
-                    <a href="@Url.Action("Cancel", "OrderVariance", new { id = @item.Id, guid=@Model.Guid })">Cancel</a>
+                    <a href="@Url.Action("Edit", "OrderVariance", new { id = @item.Id, guid=@Model.Guid, bundleno = @Model.BundleNo })">Deplay</a>@:&nbsp;&nbsp;
+                    <a href="@Url.Action("Cancel", "OrderVariance", new { id = @item.Id, guid = @Model.Guid, bundleno = @Model.BundleNo })">Cancel</a>
                 }
                    
             </td>

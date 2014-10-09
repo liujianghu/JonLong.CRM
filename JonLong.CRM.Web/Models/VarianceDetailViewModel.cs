@@ -13,6 +13,7 @@ namespace JonLong.CRM.Web.Models
         public string Guid { get; set; }
 
         public List<string> ShoeSizes { get; set; }
+        public string BundleNo { get; set; }
 
         public int VarianceCount { get; set; }
         public int Total { get; set; }

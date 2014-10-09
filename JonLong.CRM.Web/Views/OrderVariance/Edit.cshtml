@@ -315,10 +315,11 @@
                 });
                 $("#Total").val(total);
             });
+
         });
         
         $("#BundleNo").change(function () {
-            setETD($('#BundleNo option:selected').attr('fhrq'));
+            $("#SendDate").val($('#BundleNo option:selected').attr('fhrq'));
         });
     </script>
 }
