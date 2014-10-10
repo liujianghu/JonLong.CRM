@@ -46,6 +46,7 @@ namespace JonLong.CRM.Web.Controllers
             try
             {
                 var model = new VarianceDetailViewModel();
+                model.BundleNo = bundleNo;
                 DateTime sendDate;
                 DateTime.TryParse(etd, out sendDate);
                 model.VarianceDetails = OrderVarianceManager.Instance.LoadDetail(
@@ -102,7 +103,7 @@ namespace JonLong.CRM.Web.Controllers
         }
 
         [RoleAuthorize]
-        public ActionResult Edit(int id, string guid)
+        public ActionResult Edit(int id, string guid, string bundleno)
         {
             try
             {
@@ -147,6 +148,7 @@ namespace JonLong.CRM.Web.Controllers
                 }
 
                 model.BundleNos = new Dictionary<string, string>();
+                model.BundleNos.Add(bundleno, " ");
 
                 foreach (var item in statistics)
                 {
@@ -189,7 +191,7 @@ namespace JonLong.CRM.Web.Controllers
         }
 
         [RoleAuthorize]
-        public ActionResult Cancel(int id, string guid)
+        public ActionResult Cancel(int id, string guid, string bundleno)
         {
             try
             {
@@ -234,6 +236,7 @@ namespace JonLong.CRM.Web.Controllers
                 }
 
                 model.BundleNos = new Dictionary<string, string>();
+                model.BundleNos.Add(bundleno, "");
 
                 foreach (var item in statistics)
                 {
@@ -276,7 +279,7 @@ namespace JonLong.CRM.Web.Controllers
         }
 
         [RoleAuthorize]
-        public ActionResult Confirm(int id, string guid)
+        public ActionResult Confirm(int id, string guid, string bundleno)
         {
             try
             {
@@ -321,6 +324,7 @@ namespace JonLong.CRM.Web.Controllers
                 }
 
                 model.BundleNos = new Dictionary<string, string>();
+                model.BundleNos.Add(bundleno, "");
 
                 foreach (var item in statistics)
                 {
