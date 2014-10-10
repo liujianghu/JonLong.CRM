@@ -5,14 +5,10 @@
 @model JonLong.CRM.Web.Models.VarianceEditViewModel
 
 @section head{
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.date.css")" type="text/css" media="screen" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-spinner.css")" type="text/css" media="screen" />
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.legacy.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/picker.date.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.spinner.js")"></script>
+<link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
+<link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-theme.min.css")" type="text/css" media="screen" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-datepicker.js")"></script>
     <style>
         .table_b td {
             border: 1px solid #696969;
@@ -281,7 +277,8 @@
                         <td>@Model.ShoeSizes[17]</td>
                         <td><input class="size" name="Size18" value="@Model.Detail.Size18" /></td>
                         <td>Total</td>
-                        <td><input id="Total" name="Total" value="@Model.Detail.Total" /></td>
+                        <td><label id="Total1">@Model.Detail.Total</label>
+                        <input id="Total" name="Total" type="hidden" value="@Model.Detail.Total" /></td>
                         <td>
                             @Html.Hidden("Size19", @Model.Detail.Size19)
                         </td>
@@ -311,20 +308,19 @@
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            setETD('@Model.Detail.SendDate.ToString("yyyy-MM-dd")');
+            $('.datepicker').datepicker({
+                format: 'yyyy/mm/dd',
+            });
             $('[type=date], .size').change(function () {
                 var total = 0;
                 $('[type=date], .size').each(function () {
                     total += parseInt($(this).val());
                 });
+                $("#Total1").text(total);
                 $("#Total").val(total);
             });
         });
-        function setETD(selected) {
-            var $input = $('.datepicker').pickadate()
-            var picker = $input.pickadate('picker');
-            picker.set('select', selected, { format: 'yyyy-mm-dd' });
-        }
+
     </script>
 }
 
