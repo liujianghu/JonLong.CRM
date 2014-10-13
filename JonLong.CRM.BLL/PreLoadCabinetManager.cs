@@ -44,7 +44,7 @@ namespace JonLong.CRM.BLL
 
         public decimal GetFilled(string customerCode, string guid, string containerNo)
         {
-            return PreLoadCabinetDataProvider.GetFilled(customerCode, guid, containerNo);
+            return PreLoadCabinetDataProvider.GetFilled(customerCode, guid, containerNo) * 100;
         }
 
     }
