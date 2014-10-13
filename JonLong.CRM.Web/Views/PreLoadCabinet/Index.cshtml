@@ -171,7 +171,7 @@
                 alert('Please input number.');
                 return;
             }
-            var origin = String($("#td_" + input.id).html()).trim();
+            var origin = $("#td_" + input.id).text();
             if (input.value > parseInt(origin)) {
                 alert("Your input is too much");
                 $(input).val(0);
@@ -179,8 +179,11 @@
             }
             var index = $(input).attr("index");
             $("#loadDiv" + index + " input").each(function () {
-                total = total + parseInt($(this).val());
+                if (this.id != "pre" + index + "_total" && this.id != "pre" + index + "_id") {
+                    total += +parseInt($(this).val());
+                }
             });
+
             $("#pre" + index + "_total1").text(total);
             $("#pre" + index + "_total").val(total);
         }

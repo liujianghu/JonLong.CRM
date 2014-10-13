@@ -275,7 +275,8 @@
                         <td>@Model.ShoeSizes[17]</td>
                         <td><input class="size" name="Size18" value="@Model.Detail.Size18" /></td>
                         <td>Total</td>
-                        <td><input id="Total" name="Total" value="@Model.Detail.Total" /></td>
+                        <td><label id="Total1">@Model.Detail.Total</label>
+                        <input id="Total" name="Total" type="hidden" value="@Model.Detail.Total" /></td>
                         <td>
                             @Html.Hidden("Size19", @Model.Detail.Size19)
                         </td>
@@ -313,6 +314,7 @@
                 $('[type=date], .size').each(function () {
                     total += parseInt($(this).val());
                 });
+                $("#Total1").text(total);
                 $("#Total").val(total);
             });
 

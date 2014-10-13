@@ -538,10 +538,10 @@ namespace JonLong.CRM.DAL
                 {
                     var detail = new VarianceDetail();
                     detail.Id = reader.GetInt32(0);
-                    detail.ModelNo = reader.GetString(1);
+                    detail.ModelNo = reader.IsDBNull(1)?"":reader.GetString(1);
                     detail.SendDate = reader.GetDateTime(2);
-                    detail.BundleNo = reader.GetString(3);
-                    detail.ContainerType = reader.GetString(4);
+                    detail.BundleNo = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                    detail.ContainerType = reader.IsDBNull(4) ? "" : reader.GetString(4);
                     detail.Total = reader.GetInt32(5);
                     detail.Size1 = reader.GetInt32(6);
                     detail.Size2 = reader.GetInt32(7);
@@ -563,8 +563,8 @@ namespace JonLong.CRM.DAL
                     detail.Size18 = reader.GetInt32(23);
                     detail.Size19 = reader.GetInt32(24);
                     detail.Size20 = reader.GetInt32(25);
-                    detail.OldHtbh = reader.GetString(26);
-                    detail.ContractNo = reader.GetString(31);
+                    detail.OldHtbh = reader.IsDBNull(26) ? "" : reader.GetString(26);
+                    detail.ContractNo = reader.IsDBNull(31) ? "" : reader.GetString(31);
 
                     list.Add(detail);
                 }
