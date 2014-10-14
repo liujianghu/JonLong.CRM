@@ -21,8 +21,9 @@ namespace JonLong.CRM.Web.Controllers
             {
                 var model = new VarianceListViewModel();
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
-                model.Variances = OrderVarianceManager.Instance.LoadOrderVariance(AccountHelper.IsSuperAdmin(user), user.CustomerCode);
-                model.Orders = OrderVarianceManager.Instance.LoadOrder(user.CustomerCode);
+                model.IsSuperAdmin = AccountHelper.IsSuperAdmin(user);
+                model.Variances = OrderVarianceManager.Instance.LoadOrderVariance(model.IsSuperAdmin, user.CustomerCode);
+                model.Orders = OrderVarianceManager.Instance.LoadOrder(model.IsSuperAdmin,user.CustomerCode);
                 model.Shipments = OrderVarianceManager.Instance.LoadShipments(user.CustomerCode);
                 return View(model);
             }

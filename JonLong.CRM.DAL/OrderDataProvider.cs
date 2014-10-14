@@ -47,8 +47,8 @@ namespace JonLong.CRM.DAL
                     {
                         statistic.Filled = Convert.ToDouble(reader.GetDecimal(4));
                     }
-                    statistic.CustomerCode = reader.GetString(5);
 
+                    statistic.CustomerCode = reader.GetString(5);
                     statistic.Complete = Convert.ToDouble(reader.GetDecimal(6));
                     statistic.ContainerSum = reader.GetInt32(7);
                     statistic.Id = reader.GetInt32(8);
@@ -56,6 +56,8 @@ namespace JonLong.CRM.DAL
                     {
                         statistic.ChangeDate = reader.GetDateTime(9);
                     }
+
+                    statistic.CustomerName = reader.IsDBNull(10)?"":reader.GetString(10);
                     statistic.ContractNo = reader.GetString(11);
                     statistic.HTBH = reader.GetString(12);
 

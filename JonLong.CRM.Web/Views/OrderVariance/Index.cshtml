@@ -42,10 +42,15 @@
                             <th>
                                 ETD
                             </th>
-
                             <th>
                                 Bundler No.
                             </th>
+                            @if (Model.IsSuperAdmin)
+                            {
+                                <th>
+                                    Customer
+                                </th>
+                            }
                             <th>
                                 Container
                             </th>
@@ -94,6 +99,10 @@
                                 <td>
                                     @item.BundleNo
                                 </td>
+                                @if (Model.IsSuperAdmin)
+                                {
+                                    <td>@item.KHJC</td>
+                                }
                                 <td>
                                     @item.ContainerType
                                 </td>
@@ -115,7 +124,7 @@
                                     <div id="@item.Id"></div>
                                 </td>
                             </tr>
-                            j++;
+                                j++;
                         }
 
                     </tbody>
@@ -135,6 +144,10 @@
                             <th>
                                 Bundler No.
                             </th>
+                            @if (Model.IsSuperAdmin)
+                            {
+                                <th>Customer</th>
+                            }
                             <th>
                                 Container
                             </th>
@@ -180,6 +193,10 @@
                                 <td>
                                     @item.BundleNo
                                 </td>
+                                @if(Model.IsSuperAdmin)
+                                {
+                                    <td>@item.CustomerName</td>
+                                }
                                 <td>
                                     @item.ContainerType
                                 </td>
@@ -218,6 +235,10 @@
                             <th>
                                 Bundler No.
                             </th>
+                            @if(Model.IsSuperAdmin)
+                            {
+                                <th>Customer</th>
+                            }
                             <th>
                                 Container
                             </th>
@@ -263,6 +284,10 @@
                                 <td>
                                     @item.BundleNo
                                 </td>
+                                @if(Model.IsSuperAdmin)
+                                {
+                                    <td>@item.CustomerName</td>
+                                }
                                 <td>
                                     @item.ContainerType
                                 </td>
@@ -294,7 +319,7 @@
 </div>
 @section scripts{
     <script type="text/javascript">
-        function loadDetail(sendDate, customerCode, bundlerNo, containerType, container, id, btn,guid) {
+        function loadDetail(sendDate, customerCode, bundlerNo, containerType, container, id, btn, guid) {
             if ($(btn).text() == "-") {
                 $("." + id).toggle();
                 $(btn).html("+");
@@ -305,7 +330,7 @@
                 cache: false,
                 type: "GET",
                 url: "@Url.Action("VarianceDetail")",
-                data: { customerCode: customerCode, "etd": sendDate, bundleNo: bundlerNo, containerType: containerType, containerNo: container, guid:guid },
+                data: { customerCode: customerCode, "etd": sendDate, bundleNo: bundlerNo, containerType: containerType, containerNo: container, guid: guid },
                 success: function (data) {
                     detailDiv.html('');
                     detailDiv.html(data);
@@ -362,21 +387,21 @@
                 type: "GET",
                 url: "@Url.Action("Shipment")",
                 data: { customerCode: customerCode, "etd": sendDate, bundleNo: bundlerNo, containerType: containerType, containerNo: container },
-            success: function (data) {
-                detailDiv.html('');
-                detailDiv.html(data);
-                $("." + id).toggle();
+                success: function (data) {
+                    detailDiv.html('');
+                    detailDiv.html(data);
+                    $("." + id).toggle();
 
-                if ($(btn).text() == "-") {
-                    $(btn).html("+");
-                } else {
-                    $(btn).text("-");
+                    if ($(btn).text() == "-") {
+                        $(btn).html("+");
+                    } else {
+                        $(btn).text("-");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve detail.');
                 }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert('Failed to retrieve detail.');
-            }
-        });
+            });
         }
 
     </script>
