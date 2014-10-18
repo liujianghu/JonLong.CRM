@@ -1,374 +1,388 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 @model JonLong.CRM.Web.Models.OrderEditModel
 
-@section head{
+
 <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
 <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-theme.min.css")" type="text/css" media="screen" />
 <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-datepicker.js")"></script>
-    <style>
-        .table_b td {
-            border: 1px solid #696969;
-        }
+<style>
+    .table_b1 td {
+        border: 1px solid #696969;
+        background-color: #FFCC00;
+    }
 
-        .table_b th {
-            border: 1px solid #696969;
-        }
-    </style>
-}
+    .table_b1 th {
+        border: 1px solid #696969;
+        background-color: #FFCC00;
+    }
 
-<div class="content-box">
-    <!-- Start Content Box -->
-    <div class="content-box-header">
-        <h3>
-            Edit order
-        </h3>
-        <ul class="content-box-tabs">
-            <li><a href="@Url.Action("index")" class="button">Back to list</a></li>
-        </ul>
-        <div class="clear">
-        </div>
-    </div>
-    <!-- End .content-box-header -->
-    <div class="content-box-content">
+</style>
 
-        <table class="table_b">
-            <tr class="alt-row">
-                @{
-                    int sizeTypeCount = 18;
-                    if (Model.ShoeSizes.Count < sizeTypeCount)
-                    {
-                        sizeTypeCount = Model.ShoeSizes.Count;
-                    }
-                }
-                <th>Model No.</th>
-                <th>Total</th>
-                @for (int i = 0; i < sizeTypeCount; i++)
-                {
-                    <th style="font-weight:200">
-                        @Model.ShoeSizes[i]
-                    </th>
-                }
-                <th>Original ETD</th>
-
-            </tr>
-            <tr>
-                <td>@Model.Order.ModelNo</td>
-                <td>@Model.Order.Total</td>
-                <td>
-                    @if (Model.Order.Size1 > 0)
-                    {
-                        @Model.Order.Size1
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size2 > 0)
-                    {
-                        @Model.Order.Size2
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size3 > 0)
-                    {
-                        @Model.Order.Size3
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size4 > 0)
-                    {
-                        @Model.Order.Size4
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size5 > 0)
-                    {
-                        @Model.Order.Size5
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size6 > 0)
-                    {
-                        @Model.Order.Size6
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size7 > 0)
-                    {
-                        @Model.Order.Size7
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size8 > 0)
-                    {
-                        @Model.Order.Size8
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size9 > 0)
-                    {
-                        @Model.Order.Size9
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size10 > 0)
-                    {
-                        @Model.Order.Size10
-
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size11 > 0)
-                    {
-                        @Model.Order.Size11
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size12 > 0)
-                    {
-                        @Model.Order.Size12
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size13 > 0)
-                    {
-                        @Model.Order.Size13
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size14 > 0)
-                    {
-                        @Model.Order.Size14
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size15 > 0)
-                    {
-                        @Model.Order.Size15
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size16 > 0)
-                    {
-                        @Model.Order.Size16
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size17 > 0)
-                    {
-                        @Model.Order.Size17
-                    }
-                </td>
-                <td>
-                    @if (Model.Order.Size18 > 0)
-                    {
-                        @Model.Order.Size18
-                    }
-                </td>
-                <td>@Model.Order.OriginalETD.ToShortDateString()</td>
-            </tr>
-        </table>
-        <div class="clear">
-            <p></p>
-        </div>
-        <div class="tab-content default-tab" id="tab2">
-            @using (Html.BeginForm("Edit", "Order", FormMethod.Post, new { @class = "form" }))
+<table class="table_b1" >
+    <tr class="alt-row">
+        @{
+            int sizeTypeCount = 18;
+            if (Model.ShoeSizes.Count < sizeTypeCount)
             {
-                @Html.Hidden("Id", Model.Order.Id)
-                @Html.Hidden("CustomerCode", Model.Order.CustomerCode)
-                <table class="table_b">
-                    <tr class="alt-row">
-                        <th>ETD </th>
-                        <th>
-                        <input id="SendDate" name="SendDate" class="datepicker" data-provide="datepicker" value="@Model.Order.SendDate.ToString("yyyy/M/dd")" type="text"></th>
-                        <th>Bunlde No:</th>
-                        <th>
-                            <select id="BanderNo" name="BanderNo">
-                                @foreach (var pair in Model.BundleNos)
-                                {
-                                    if (Model.Order.BanderNo.ToLower() == pair.Key.ToLower())
-                                    {
-                                        <option selected="selected" fhrq="@pair.Value" value="@pair.Key">@pair.Key @pair.Value</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@pair.Key" fhrq="@pair.Value">@pair.Key @pair.Value</option>
-                                    }
-                                }
-                            </select>
-                        </th>
-                        <th>Container</th>
-                        <th>
-                            <select id="ContainerType" name="ContainerType">
-                                @foreach (var item in Model.Containers)
-                                {
-                                    if (item.ToLower() == Model.Order.ContainerType)
-                                    {
-                                        <option selected="selected" value="@item">@item</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item">@item</option>
-                                    }
-                                }
-                            </select>
-                        </th>
-                        <th>Contract No:</th>
-                        <th><input id="ContractNo" name="ContractNo" value="@Model.Order.ContractNo" /></th>
-                    </tr>
-                    <tr>
-                        <td colspan="8" style="background-color:yellow">
-                            Any changes done to a container, will result in changing of corresponding container
-                            numbers for all items in the container
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>@Model.ShoeSizes[0]</td>
-                        <td><input class="size" name="Size1" value="@Model.Order.Size1" /></td>
-                        <td>@Model.ShoeSizes[1]</td>
-                        <td><input class="size" name="Size2" value="@Model.Order.Size2" /></td>
-                        <td>@Model.ShoeSizes[2]</td>
-                        <td><input class="size" name="Size3" value="@Model.Order.Size3" /></td>
-                        <td>@Model.ShoeSizes[3]</td>
-                        <td><input class="size" name="Size4" value="@Model.Order.Size4" /></td>
-                    </tr>
-                    <tr class="alt-row">
-                        <td>@Model.ShoeSizes[4]</td>
-                        <td><input class="size" name="Size5" value="@Model.Order.Size5" /></td>
-                        <td>@Model.ShoeSizes[5]</td>
-                        <td><input class="size" name="Size6" value="@Model.Order.Size6" /></td>
-                        <td>@Model.ShoeSizes[6]</td>
-                        <td><input class="size" name="Size7" value="@Model.Order.Size7" /></td>
-                        <td>@Model.ShoeSizes[7]</td>
-                        <td><input class="size" name="Size8" value="@Model.Order.Size8" /></td>
-                    </tr>
-                    <tr class="alt-row">
-                        <td>@Model.ShoeSizes[8]</td>
-                        <td><input class="size" name="Size9" value="@Model.Order.Size9" /></td>
-                        <td>@Model.ShoeSizes[9]</td>
-                        <td><input class="size" name="Size10" value="@Model.Order.Size10" /></td>
-                        <td>@Model.ShoeSizes[10]</td>
-                        <td><input class="size" name="Size11" value="@Model.Order.Size11" /></td>
-                        <td>@Model.ShoeSizes[11]</td>
-                        <td><input class="size" name="Size12" value="@Model.Order.Size12" /></td>
-                    </tr>
-                    <tr class="alt-row">
-                        <td>@Model.ShoeSizes[12]</td>
-                        <td><input class="size" name="Size13" value="@Model.Order.Size13" /></td>
-                        <td>@Model.ShoeSizes[13]</td>
-                        <td><input class="size" name="Size14" value="@Model.Order.Size14" /></td>
-                        <td>@Model.ShoeSizes[14]</td>
-                        <td><input class="size" name="Size15" value="@Model.Order.Size15" /></td>
-                        <td>@Model.ShoeSizes[15]</td>
-                        <td><input class="size" name="Size16" value="@Model.Order.Size16" /></td>
-                    </tr>
-                    <tr class="alt-row">
-                        <td>@Model.ShoeSizes[16]</td>
-                        <td><input class="size" name="Size17" value="@Model.Order.Size17" /></td>
-                        <td>@Model.ShoeSizes[17]</td>
-                        <td><input class="size" name="Size18" value="@Model.Order.Size18" /></td>
-                        <td>Total</td>
-                        <td><label id="Total1">@Model.Order.Total</label>
-                        <input type="hidden" id="Total" name="Total" value="@Model.Order.Total" /></td>
-                        <td>
-                            @Html.Hidden("Size19",@Model.Order.Size19)
-                        </td>
-                        <td>
-                           @Html.Hidden("Size20", @Model.Order.Size20)
-                        </td>
-                    </tr>
-                </table>
-                
-                <div class="clear">
-                    <p></p>
-                </div>
-                <div style="text-align:center">
-                    <p>
-                        <input class="button" type="submit" onclick="return validate();" value="Save" />&nbsp;&nbsp;
-
-                        <a href="@Url.Action("index")" class="button">Cancel</a>
-                    </p>
-                </div>
-                <div style="color: red; font-weight: 700">
-                    @Model.Message
-                </div>
+                sizeTypeCount = Model.ShoeSizes.Count;
             }
+        }
+        <th>Model No.</th>
+        <th>Total</th>
+        @for (int i = 0; i < sizeTypeCount; i++)
+        {
+            <th style="font-weight:200">
+                @Model.ShoeSizes[i]
+            </th>
+        }
+        <th>Original ETD</th>
 
-        </div>
+    </tr>
+    <tr>
+        <td>@Model.Order.ModelNo</td>
+        <td>@Model.Order.Total</td>
+        <td>
+            @if (Model.Order.Size1 > 0)
+            {
+                @Model.Order.Size1
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size2 > 0)
+            {
+                @Model.Order.Size2
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size3 > 0)
+            {
+                @Model.Order.Size3
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size4 > 0)
+            {
+                @Model.Order.Size4
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size5 > 0)
+            {
+                @Model.Order.Size5
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size6 > 0)
+            {
+                @Model.Order.Size6
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size7 > 0)
+            {
+                @Model.Order.Size7
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size8 > 0)
+            {
+                @Model.Order.Size8
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size9 > 0)
+            {
+                @Model.Order.Size9
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size10 > 0)
+            {
+                @Model.Order.Size10
+
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size11 > 0)
+            {
+                @Model.Order.Size11
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size12 > 0)
+            {
+                @Model.Order.Size12
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size13 > 0)
+            {
+                @Model.Order.Size13
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size14 > 0)
+            {
+                @Model.Order.Size14
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size15 > 0)
+            {
+                @Model.Order.Size15
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size16 > 0)
+            {
+                @Model.Order.Size16
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size17 > 0)
+            {
+                @Model.Order.Size17
+            }
+        </td>
+        <td>
+            @if (Model.Order.Size18 > 0)
+            {
+                @Model.Order.Size18
+            }
+        </td>
+        <td>@Model.Order.OriginalETD.ToShortDateString()</td>
+    </tr>
+</table>
+<div class="tab-content default-tab" id="tab2">
+    @Html.Hidden("EId", Model.Order.Id)
+    @Html.Hidden("ECustomerCode", Model.Order.CustomerCode)
+    <table class="table_b">
+        <tr class="alt-row">
+            <th>ETD </th>
+            <th>
+                <input id="ESendDate" name="ESendDate" class="datepicker" data-provide="datepicker" value="@Model.Order.SendDate.ToString("yyyy/M/dd")" type="text">
+            </th>
+            <th>Bunlde No:</th>
+            <th>
+                <select id="EBanderNo" name="EBanderNo">
+                    @foreach (var pair in Model.BundleNos)
+                    {
+                        if (Model.Order.BanderNo.ToLower() == pair.Key.ToLower())
+                        {
+                            <option selected="selected" fhrq="@pair.Value" value="@pair.Key">@pair.Key @pair.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@pair.Key" fhrq="@pair.Value">@pair.Key @pair.Value</option>
+                        }
+                    }
+                </select>
+            </th>
+            <th>Container</th>
+            <th>
+                <select id="EContainerType" name="EContainerType">
+                    @foreach (var item in Model.Containers)
+                    {
+                        if (item.ToLower() == Model.Order.ContainerType)
+                        {
+                            <option selected="selected" value="@item">@item</option>
+                        }
+                        else
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    }
+                </select>
+            </th>
+            <th>Contract No:</th>
+            <th><input id="EContractNo" name="EContractNo" value="@Model.Order.ContractNo" /></th>
+        </tr>
+        <tr>
+            <td colspan="8" style="background-color:yellow">
+                Any changes done to a container, will result in changing of corresponding container
+                numbers for all items in the container
+            </td>
+        </tr>
+        <tr>
+            <td>@Model.ShoeSizes[0]</td>
+            <td><input class="size" id="Size1" value="@Model.Order.Size1" /></td>
+            <td>@Model.ShoeSizes[1]</td>
+            <td><input class="size" id="Size2" value="@Model.Order.Size2" /></td>
+            <td>@Model.ShoeSizes[2]</td>
+            <td><input class="size" id="Size3" value="@Model.Order.Size3" /></td>
+            <td>@Model.ShoeSizes[3]</td>
+            <td><input class="size" id="Size4" value="@Model.Order.Size4" /></td>
+        </tr>
+        <tr class="alt-row">
+            <td>@Model.ShoeSizes[4]</td>
+            <td><input class="size" id="Size5" value="@Model.Order.Size5" /></td>
+            <td>@Model.ShoeSizes[5]</td>
+            <td><input class="size" id="Size6" value="@Model.Order.Size6" /></td>
+            <td>@Model.ShoeSizes[6]</td>
+            <td><input class="size" id="Size7" value="@Model.Order.Size7" /></td>
+            <td>@Model.ShoeSizes[7]</td>
+            <td><input class="size" id="Size8" value="@Model.Order.Size8" /></td>
+        </tr>
+        <tr class="alt-row">
+            <td>@Model.ShoeSizes[8]</td>
+            <td><input class="size" id="Size9" value="@Model.Order.Size9" /></td>
+            <td>@Model.ShoeSizes[9]</td>
+            <td><input class="size" id="Size10" value="@Model.Order.Size10" /></td>
+            <td>@Model.ShoeSizes[10]</td>
+            <td><input class="size" id="Size11" value="@Model.Order.Size11" /></td>
+            <td>@Model.ShoeSizes[11]</td>
+            <td><input class="size" id="Size12" value="@Model.Order.Size12" /></td>
+        </tr>
+        <tr class="alt-row">
+            <td>@Model.ShoeSizes[12]</td>
+            <td><input class="size" id="Size13" value="@Model.Order.Size13" /></td>
+            <td>@Model.ShoeSizes[13]</td>
+            <td><input class="size" id="Size14" value="@Model.Order.Size14" /></td>
+            <td>@Model.ShoeSizes[14]</td>
+            <td><input class="size" id="Size15" value="@Model.Order.Size15" /></td>
+            <td>@Model.ShoeSizes[15]</td>
+            <td><input class="size" id="Size16" value="@Model.Order.Size16" /></td>
+        </tr>
+        <tr class="alt-row">
+            <td>@Model.ShoeSizes[16]</td>
+            <td><input class="size" id="Size17" value="@Model.Order.Size17" /></td>
+            <td>@Model.ShoeSizes[17]</td>
+            <td><input class="size" id="Size18" value="@Model.Order.Size18" /></td>
+            <td>Total</td>
+            <td>
+                <label id="Total1">@Model.Order.Total</label>
+                <input type="text" id="Total" name="Total" value="@Model.Order.Total" />
+            </td>
+            <td>
+                @Html.Hidden("Size19", @Model.Order.Size19)
+            </td>
+            <td>
+                @Html.Hidden("Size20", @Model.Order.Size20)
+            </td>
+        </tr>
+    </table>
+
+    <div class="clear">
+        <p></p>
     </div>
-    <!-- End .content-box-content -->
+    <div style="text-align:center">
+        <p>
+            <input class="button" type="button" onclick="return postData();" value="Save" />&nbsp;&nbsp;
+            <input class="button" type="button" onclick="return cancel();" value="Cancel" />
+        </p>
+    </div>
 </div>
-@section scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.datepicker').datepicker({
-                format: 'yyyy/m/dd',
-            });
-            $('[type=date], .size').change(function () {
-                var total = 0;
-                if (this.value.length == 0) {
-                    $(this).val(0);
-                } else if (!$.isNumeric(this.value)) {
-                    alert('Please input number.');
-                    return;
+
+<script type="text/javascript">
+    function cancel() {
+        $("#edittr" + oldIndex).toggle();
+        $("#edit" + oldIndex).toggle();
+        return false;
+    }
+    function postData() {
+        if (!validate()){
+            return false;
+        }
+        var jsonData = {
+            Id: $("#EId").val(), Total: $("#Total").val(),
+            SendDate: $("#ESendDate").val(), CustomerCode: $("#ECustomerCode").val(),
+            BanderNo: $("#EBanderNo").val(),
+            ContainerType: $("#EContainerType").val(), ContractNo: $("#EContractNo").val(),
+            Size1: $("#Size1").val(), Size2: $("#Size2").val(), Size3: $("#Size3").val(),
+            Size4: $("#Size4").val(), Size5: $("#Size5").val(), Size6: $("#Size6").val(),
+            Size7: $("#Size7").val(), Size8: $("#Size8").val(), Size9: $("#Size9").val(),
+            Size10: $("#Size10").val(), Size11: $("#Size11").val(), Size12: $("#Size12").val(),
+            Size13: $("#Size13").val(), Size14: $("#Size14").val(), Size15: $("#Size15").val(),
+            Size16: $("#Size16").val(), Size17: $("#Size17").val(), Size18: $("#Size18").val(),
+            Size19: $("#Size19").val(), Size20: $("#Size20").val()
+        };
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Edit") ',
+            data: JSON.stringify(jsonData),
+            contentType: "application/json",
+            datatype: 'json',
+            success: function (data) {
+                if (data.IsSuccess == true) {
+                    alert('Save Success');
+                } else {
+                    alert(data.Message);
                 }
-                $('[type=date], .size').each(function () {
-                    total += parseInt($(this).val());
-                });
-                $("#Total1").text(total);
-                $("#Total").val(total);
-            });
+
+            }
         });
-
-
-        $("#BanderNo").change(function () {
-            $("#SendDate").val($('#BanderNo option:selected').attr('fhrq'));
-            //alert(this.value + ',' + $('#bundlerno option:selected').attr('fhrq'));
+        return false;
+    }
+    $(document).ready(function () {
+        $('.datepicker').datepicker({
+            format: 'yyyy/m/dd',
         });
-
-        function validate() {
-            if ($("#ETD").val() == "") {
-                alert("please input ETD.");
-                $("#ETD").focus();
-                return false;
+        $('[type=date], .size').change(function () {
+            var total = 0;
+            if (this.value.length == 0) {
+                $(this).val(0);
+            } else if (!$.isNumeric(this.value)) {
+                alert('Please input number.');
+                return;
             }
-            if ($('#ContainerType').val() == "") {
-                alert('Please chose container.');
-                $('#ContainerType').focus();
-                return false;
-            }
-            if ($("#ContractNo").val() == "") {
-                alert('Please input contract no.');
-                $("#ContractNo").focus();
-                return false;
-            }
-
-            var isTrue = true;
             $('[type=date], .size').each(function () {
-                if (parseInt($(this).val()) < 0) {
-                    alert('No less than 0!');
-                    $(this).focus();
-                    isTrue = false;
-                    return false;
-                }
+                total += parseInt($(this).val());
             });
-            if (isTrue == false) {
-                return false;
-            }
+            $("#Total1").text(total);
+            $("#Total").val(total);
+        });
+    });
 
-            if (parseInt($('#Total').val()) < 0) {
-                alert('No less than 0!');
-                $('#Total').focus();
-                return false;
-            }
 
-            return true;
+    $("#EBanderNo").change(function () {
+        $("#ESendDate").val($('#EBanderNo option:selected').attr('fhrq'));
+        //alert(this.value + ',' + $('#bundlerno option:selected').attr('fhrq'));
+    });
+
+    function validate() {
+        if ($("#ESendDate").val() == "") {
+            alert("please input ETD.");
+            $("#ESendDate").focus();
+            return false;
+        }
+        if ($('#ContainerType').val() == "") {
+            alert('Please chose container.');
+            $('#ContainerType').focus();
+            return false;
+        }
+        if ($("#EContractNo").val() == "") {
+            alert('Please input contract no.');
+            $("#EContractNo").focus();
+            return false;
         }
 
+        var isTrue = true;
+        $('[type=date], .size').each(function () {
+            if (parseInt($(this).val()) < 0) {
+                alert('No less than 0!');
+                $(this).focus();
+                isTrue = false;
+                return false;
+            }
+        });
+        if (isTrue == false) {
+            return false;
+        }
 
-    </script>
-}
+        if (parseInt($('#Total').val()) < 0) {
+            alert('No less than 0!');
+            $('#Total').focus();
+            return false;
+        }
+
+        return true;
+    }
+
+
+</script>
 
 
 

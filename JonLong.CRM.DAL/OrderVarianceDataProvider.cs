@@ -424,7 +424,7 @@ namespace JonLong.CRM.DAL
             return list;
         }
 
-        public static List<Shipment> LoadShipments(string customerCode)
+        public static List<Shipment> LoadShipments(bool isSuperAdmin, string customerCode)
         {
             string sql = @"SELECT  khys_fhrq ,
                         khys_banderno ,
@@ -447,12 +447,17 @@ namespace JonLong.CRM.DAL
                 WHERE   sta = 2
                         AND tGuid = ( SELECT TOP 1
                                                 tGuid
-                                      FROM      t_tmp_ysyq
-                                      WHERE     khys_khh = '" + customerCode + @"'
-                                      ORDER BY  rq DESC
-                                    )
-                        AND khys_khh = '" + customerCode + @"'
-                GROUP BY khys_khh ,
+                                      FROM      t_tmp_ysyq";
+            if (!isSuperAdmin)
+            {              
+                sql += " WHERE khys_khh = '" + customerCode + "' ";
+            }
+            sql += @" ORDER BY  rq DESC)";
+            if (!isSuperAdmin)
+            {
+                sql += " AND khys_khh = '" + customerCode + "'";
+            }
+            sql += @" GROUP BY khys_khh ,
                         khys_fhrq ,
                         khys_banderno ,
                         khys_gz ,

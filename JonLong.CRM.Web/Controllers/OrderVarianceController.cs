@@ -23,8 +23,8 @@ namespace JonLong.CRM.Web.Controllers
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
                 model.IsSuperAdmin = AccountHelper.IsSuperAdmin(user);
                 model.Variances = OrderVarianceManager.Instance.LoadOrderVariance(model.IsSuperAdmin, user.CustomerCode);
-                model.Orders = OrderVarianceManager.Instance.LoadOrder(model.IsSuperAdmin,user.CustomerCode);
-                model.Shipments = OrderVarianceManager.Instance.LoadShipments(user.CustomerCode);
+                model.Orders = OrderVarianceManager.Instance.LoadOrder(model.IsSuperAdmin, user.CustomerCode);
+                model.Shipments = OrderVarianceManager.Instance.LoadShipments(model.IsSuperAdmin, user.CustomerCode);
                 return View(model);
             }
             catch (Exception ex)
@@ -116,13 +116,13 @@ namespace JonLong.CRM.Web.Controllers
                 var model = new VarianceEditViewModel();
                 model.Detail = OrderVarianceManager.Instance.LoadById(id);
                 model.Guid = guid;
-                
+
                 if (model.Detail == null)
                 {
                     TempData["Error"] = "This data is not exists.";
                     return View("Error");
                 }
-                
+
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
                 string customerCode = String.Empty;
                 if (AccountHelper.IsSuperAdmin(user))
@@ -435,7 +435,7 @@ namespace JonLong.CRM.Web.Controllers
         [RoleAuthorize]
         [HttpGet]
         public ActionResult Shipment(
-            string customerCode, 
+            string customerCode,
             string etd,
             string bundleNo,
             string containerType,
