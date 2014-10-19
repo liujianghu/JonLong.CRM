@@ -254,7 +254,7 @@
             <td>Total</td>
             <td>
                 <label id="Total1">@Model.Order.Total</label>
-                <input type="text" id="Total" name="Total" value="@Model.Order.Total" />
+                <input type="hidden" id="Total" name="Total" value="@Model.Order.Total" />
             </td>
             <td>
                 @Html.Hidden("Size19", @Model.Order.Size19)
