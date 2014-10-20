@@ -27,6 +27,10 @@ namespace JonLong.CRM.Web.Models
         public string BundleNo { get; set; }
         public string ContainerNo { get; set; }
 
+        public string CustomerCode { get; set; }
+
+        public string CustomerName { get; set; }
+
         public void SetTotal()
         {
             if (this.Items == null || this.Items.Any() == false)

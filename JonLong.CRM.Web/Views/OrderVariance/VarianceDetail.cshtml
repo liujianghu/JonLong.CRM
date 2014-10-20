@@ -40,6 +40,7 @@
     @{
         int j = 0;
         string trclass = "";
+        string fontColor = "";
     }
     @foreach (var item in Model.VarianceDetails)
     {
@@ -55,120 +56,123 @@
             <td>
                 @if(item.CYLX ==1){
                     <a href="@Url.Action("Confirm", "OrderVariance", new { id = @item.Id, guid=@Model.Guid, bundleno = @Model.BundleNo })">Confirm</a>
+                    fontColor = "";
                 }
                 else
                 {
+                    fontColor = "color:red";
                     <a href="@Url.Action("Edit", "OrderVariance", new { id = @item.Id, guid=@Model.Guid, bundleno = @Model.BundleNo })">Deplay</a>@:&nbsp;&nbsp;
                     <a href="@Url.Action("Cancel", "OrderVariance", new { id = @item.Id, guid = @Model.Guid, bundleno = @Model.BundleNo })">Cancel</a>
                 }
                    
             </td>
+            
             <td>@item.ModelNo</td>
-            <td style="color:red">@item.Total</td>
-            <td style="color:red">
+            <td style="@fontColor">@item.Total</td>
+            <td style="@fontColor">
                 @if (item.Size1 > 0)
                 {
                     @item.Size1
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size2 > 0)
                 {
                     @item.Size2
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size3 > 0)
                 {
                     @item.Size3
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size4 > 0)
                 {
                     @item.Size4
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size5 > 0)
                 {
                     @item.Size5
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size6 > 0)
                 {
                     @item.Size6
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size7 > 0)
                 {
                     @item.Size7
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size8 > 0)
                 {
                     @item.Size8
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size9 > 0)
                 {
                     @item.Size9
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size10 > 0)
                 {
                     @item.Size10
 
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size11 > 0)
                 {
                     @item.Size11
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size12 > 0)
                 {
                     @item.Size12
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size13 > 0)
                 {
                     @item.Size13
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size14 > 0)
                 {
                     @item.Size14
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size15 > 0)
                 {
                     @item.Size15
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size16 > 0)
                 {
                     @item.Size16
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size17 > 0)
                 {
                     @item.Size17
                 }
             </td>
-            <td style="color:red">
+            <td style="@fontColor">
                 @if (item.Size18 > 0)
                 {
                     @item.Size18

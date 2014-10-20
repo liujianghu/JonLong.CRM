@@ -277,17 +277,31 @@ namespace JonLong.CRM.DAL
 
         }
 
-        public static List<VarianceOrderModel> LoadOrder(string customerCode)
+        public static List<VarianceOrderModel> LoadOrder(bool isSuperAdmin ,string customerCode)
         {
             string sql = @"select khys_fhrq,khys_banderno,khys_gz,khys_container,
             cast((case when sum(khys_bfb)=0 then 0 else cast(sum(khys_sl) as decimal(12,4))/sum(khys_bfb)*100 end) as decimal(12,2)) as bfb 
             ,sum(khys_sl) as sumS,'',MIN(id) as id,
             max(isnull(khys_khdd,'')) as khdd,(select ISNULL(kh_jc,'') 
-            from t_bas_kh where Kh_bh=t_sale_khys.khys_khh) as khjc,khys_khh 
-            from t_sale_khys where khys_khh= '" + customerCode + @"' and khys_banderno in (select khys_banderno from t_tmp_ysyq 
-            where tGuid=(select top 1 tGuid from t_tmp_ysyq where khys_khh='" + customerCode + @"' order by rq desc)  
-            and khys_khh='" + customerCode + @"')
-            group by khys_khh,khys_fhrq,khys_banderno,khys_gz,khys_container order by khys_khh,khys_fhrq,khys_banderno
+            from t_bas_kh where Kh_bh=t_sale_khys.khys_khh) as khjc,khys_khh
+            from t_sale_khys where ";
+            if (!isSuperAdmin)
+            {
+                sql += "khys_khh= '" + customerCode + "' and ";
+            }
+            sql += @" khys_banderno in (select khys_banderno from t_tmp_ysyq 
+            where tGuid=(select top 1 tGuid from t_tmp_ysyq";
+            if (!isSuperAdmin)
+            {
+                sql += " where khys_khh='" + customerCode + "' ";
+            }
+            sql += " order by rq desc) ";
+            if (!isSuperAdmin)
+            {
+                sql += "and khys_khh='" + customerCode + "' ";
+            }
+            
+            sql += @" ) group by khys_khh,khys_fhrq,khys_banderno,khys_gz,khys_container order by khys_khh,khys_fhrq,khys_banderno
             ";
 
             var list = new List<VarianceOrderModel>();
@@ -307,6 +321,7 @@ namespace JonLong.CRM.DAL
                         SumPairs = reader.GetInt32(5),
                         Id = reader.GetInt32(7),
                         ContractNo = reader.GetString(8),
+                        CustomerName = reader.IsDBNull(9)?"":reader.GetString(9),
                         CustomerCode = reader.GetString(10)
                     };
 
@@ -409,7 +424,7 @@ namespace JonLong.CRM.DAL
             return list;
         }
 
-        public static List<Shipment> LoadShipments(string customerCode)
+        public static List<Shipment> LoadShipments(bool isSuperAdmin, string customerCode)
         {
             string sql = @"SELECT  khys_fhrq ,
                         khys_banderno ,
@@ -432,12 +447,17 @@ namespace JonLong.CRM.DAL
                 WHERE   sta = 2
                         AND tGuid = ( SELECT TOP 1
                                                 tGuid
-                                      FROM      t_tmp_ysyq
-                                      WHERE     khys_khh = '" + customerCode + @"'
-                                      ORDER BY  rq DESC
-                                    )
-                        AND khys_khh = '" + customerCode + @"'
-                GROUP BY khys_khh ,
+                                      FROM      t_tmp_ysyq";
+            if (!isSuperAdmin)
+            {              
+                sql += " WHERE khys_khh = '" + customerCode + "' ";
+            }
+            sql += @" ORDER BY  rq DESC)";
+            if (!isSuperAdmin)
+            {
+                sql += " AND khys_khh = '" + customerCode + "'";
+            }
+            sql += @" GROUP BY khys_khh ,
                         khys_fhrq ,
                         khys_banderno ,
                         khys_gz ,
@@ -463,6 +483,7 @@ namespace JonLong.CRM.DAL
                         SumPairs = reader.GetInt32(5),
                         Id = reader.GetInt32(7),
                         ContractNo = reader.IsDBNull(8) ? "" : reader.GetString(8),
+                        CustomerName = reader.IsDBNull(9) ? "" : reader.GetString(9),
                         CustomerCode = reader.IsDBNull(10) ? "" : reader.GetString(10)
                     };
 

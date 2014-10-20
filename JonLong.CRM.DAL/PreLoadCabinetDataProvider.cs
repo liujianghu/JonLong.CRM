@@ -95,7 +95,7 @@ namespace JonLong.CRM.DAL
                            ('"+cabinet.TGuid+@"'
                            ,'" + cabinet.SendDate + @"'
                            ,'" + cabinet.BanderNo + @"'
-                           ,'" + cabinet.ContainerType + @"'
+                           ,'" + cabinet.ModelNo + @"'
                            ,'" + cabinet.XHB + @"'
                            ," + cabinet.Total + @"
                            ," + cabinet.Size1 + @"

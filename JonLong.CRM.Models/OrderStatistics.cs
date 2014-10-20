@@ -39,6 +39,8 @@ namespace JonLong.CRM.Models
             set;
         }
 
+        public string CustomerName { get; set; }
+
         /// <summary>
         /// 装柜百分比(khys_bfb)
         /// </summary>

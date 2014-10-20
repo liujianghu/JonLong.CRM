@@ -34,9 +34,9 @@ namespace JonLong.CRM.BLL
             return OrderVarianceDataProvider.LoadById(id);
         }
 
-        public List<VarianceOrderModel> LoadOrder(string customerCode)
+        public List<VarianceOrderModel> LoadOrder(bool isSuperAdmin, string customerCode)
         {
-            return OrderVarianceDataProvider.LoadOrder(customerCode);
+            return OrderVarianceDataProvider.LoadOrder(isSuperAdmin, customerCode);
         }
 
         public List<VarianceDetail> LoadOrderDetail(string customerCode,
@@ -52,9 +52,9 @@ namespace JonLong.CRM.BLL
                 , container);
         }
 
-        public List<Shipment> LoadShipments(string customerCode)
+        public List<Shipment> LoadShipments(bool isSuperAdmin, string customerCode)
         {
-            return OrderVarianceDataProvider.LoadShipments(customerCode);
+            return OrderVarianceDataProvider.LoadShipments(isSuperAdmin, customerCode);
         }
 
         public List<VarianceDetail> LoadShipmentDetail(string customerCode,

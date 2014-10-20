@@ -13,5 +13,7 @@ namespace JonLong.CRM.Web.Models
         public List<VarianceOrderModel> Orders { get; set; }
 
         public List<Shipment> Shipments { get; set; }
+
+        public bool IsSuperAdmin { get; set; }
     }
 }

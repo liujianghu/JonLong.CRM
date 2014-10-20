@@ -175,5 +175,25 @@ namespace JonLong.CRM.DAL
             SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
         }
 
+        public static string LoadCustomerCodeByName(string name)
+        {
+            string sql = "SELECT t.Kh_bh FROM dbo.t_bas_kh AS t WITH (NOLOCK) where ";
+            sql += " t.Kh_jc = '"+name+"'";
+            sql += " OR t.Kh_mc = '"+name+"';";
+
+            using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString, CommandType.Text, sql))
+            {
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        return reader.GetString(0);
+                    }
+                }
+            }
+
+            return String.Empty;
+        }
+
     }
 }

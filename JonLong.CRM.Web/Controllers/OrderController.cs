@@ -41,6 +41,8 @@ namespace JonLong.CRM.Web.Controllers
                     to = queryModel.ETDTo;
                     bundlerNo = queryModel.BundleNo;
                     containerNo = queryModel.ContainerNo;
+                    //customerCode = queryModel.CustomerCode;
+                    //model.CustomerName = queryModel.CustomerName;
                 }
 
                 DateTime? sendDateFrom= null, sendDateTo = null;
@@ -52,7 +54,6 @@ namespace JonLong.CRM.Web.Controllers
                 {
                     sendDateTo = Convert.ToDateTime(to);
                 }
-
 
                 var statistics = OrderManager.Instance.LoadOrderStatistics(
                       customerCode
@@ -71,6 +72,7 @@ namespace JonLong.CRM.Web.Controllers
                 model.ETDTo = to;
                 model.BundleNo = bundlerNo;
                 model.ContainerNo = containerNo;
+                //model.CustomerCode = customerCode;
                 model.SetTotal();
                 return View(model);
 
@@ -100,6 +102,18 @@ namespace JonLong.CRM.Web.Controllers
                 {
                     model.IsSuperAdmin = true;
                 }
+
+                /*
+                if (!String.IsNullOrEmpty(queryModel.CustomerName))
+                {
+                    customerCode = UserManager.Instance.LoadCustomerCodeByName(queryModel.CustomerName);
+                    if (String.IsNullOrEmpty(customerCode))
+                    {
+                        return View(model);
+                    }
+                }
+
+                */
 
                 string queryJson = JsonConvert.SerializeObject(queryModel);
                 HttpCookie queryCookie = new HttpCookie("query");
@@ -301,7 +315,7 @@ namespace JonLong.CRM.Web.Controllers
 
         [RoleAuthorize]
         [HttpPost]
-        public ActionResult Edit(Order model)
+        public JsonResult Edit(Order model)
         {
             try
             {
@@ -320,16 +334,17 @@ namespace JonLong.CRM.Web.Controllers
                 editModel = TempData["editModel"] as OrderEditModel;
                 if (!String.IsNullOrEmpty(message))
                 {
-                    editModel.Message = message;
-                    return View(editModel);
+                    return this.Json(new { IsSuccess = false, Message = message});
+                    //editModel.Message = message;
+                    //return View(editModel);
                 }
 
-                return RedirectToAction("index");
+                return this.Json(new {IsSuccess = true });
+                //return RedirectToAction("index");
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.ToString();
-                return View("Error");
+                return this.Json(new { IsSuccess = false, Message = ex.Message });
             }
         }
 

@@ -16,5 +16,6 @@ namespace JonLong.CRM.Models
         public string TGuid { get; set; }
         public string KHJC { get; set; }
         public string CustomerCode { get; set; }
+
     }
 }

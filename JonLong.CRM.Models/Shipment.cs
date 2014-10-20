@@ -17,5 +17,6 @@ namespace JonLong.CRM.Models
         public int SumPairs { get; set; }
         public string ContractNo { get; set; }
         public string CustomerCode { get; set; }
+        public string CustomerName { get; set; }
     }
 }

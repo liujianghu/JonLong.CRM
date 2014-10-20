@@ -81,5 +81,10 @@ namespace JonLong.CRM.BLL
             UserDataProvider.UpdatePassword(userId, newPwd);
             return true;
         }
+
+        public string LoadCustomerCodeByName(string name)
+        {
+            return UserDataProvider.LoadCustomerCodeByName(name);
+        }
     }
 }
