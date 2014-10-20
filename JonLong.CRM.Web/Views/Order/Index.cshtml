@@ -34,6 +34,24 @@
                     &nbsp;Container.No
                     <input type="text" value="@Model.ContainerNo" id="ContainerNo" name="ContainerNo" />
                     &nbsp;&nbsp;
+                    @if (Model.IsSuperAdmin)
+                    {
+                        @:Customer&nbsp;
+                        <select id="CustomerCode" name="CustomerCode">
+                            @foreach (var item in Model.Customers)
+                            {
+                                if (item.Key == Model.CustomerCode)
+                                {
+                                    <option value="@item.Key" selected="selected">@item.Value</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            }
+                        </select>
+                    }
+                    &nbsp;&nbsp;
                     <input type="submit" class="button" value="&nbsp;&nbsp;GO&nbsp;&nbsp;" />
                 </div>
             }

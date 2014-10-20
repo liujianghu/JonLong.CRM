@@ -42,7 +42,7 @@ namespace JonLong.CRM.Web.Controllers
                     bundlerNo = queryModel.BundleNo;
                     containerNo = queryModel.ContainerNo;
                     //customerCode = queryModel.CustomerCode;
-                    //model.CustomerName = queryModel.CustomerName;
+                    model.CustomerCode = queryModel.CustomerCode;
                 }
 
                 DateTime? sendDateFrom= null, sendDateTo = null;
@@ -65,14 +65,32 @@ namespace JonLong.CRM.Web.Controllers
 
                 if (statistics != null && statistics.Any())
                 {
-                    model.Items = statistics;
+                    if (model.IsSuperAdmin && !String.IsNullOrEmpty(model.CustomerCode))
+                    {
+                        model.Items = statistics.Where(t => t.CustomerCode == model.CustomerCode).ToList();
+                    }
+                    else
+                    {
+                        model.Items = statistics;
+                    }
+                    
+                    if (model.IsSuperAdmin)
+                    {
+                        model.Customers.Add("", "All");
+                        foreach (var item in statistics)
+                        {
+                            if (!model.Customers.ContainsKey(item.CustomerCode))
+                            {
+                                model.Customers.Add(item.CustomerCode, item.CustomerName);
+                            }
+                        }
+                    }
                 }
 
                 model.ETDFrom = from;
                 model.ETDTo = to;
                 model.BundleNo = bundlerNo;
                 model.ContainerNo = containerNo;
-                //model.CustomerCode = customerCode;
                 model.SetTotal();
                 return View(model);
 
@@ -101,19 +119,9 @@ namespace JonLong.CRM.Web.Controllers
                 else
                 {
                     model.IsSuperAdmin = true;
+                    model.CustomerCode = queryModel.CustomerCode;
+                    //customerCode = queryModel.CustomerCode;
                 }
-
-                /*
-                if (!String.IsNullOrEmpty(queryModel.CustomerName))
-                {
-                    customerCode = UserManager.Instance.LoadCustomerCodeByName(queryModel.CustomerName);
-                    if (String.IsNullOrEmpty(customerCode))
-                    {
-                        return View(model);
-                    }
-                }
-
-                */
 
                 string queryJson = JsonConvert.SerializeObject(queryModel);
                 HttpCookie queryCookie = new HttpCookie("query");
@@ -146,7 +154,25 @@ namespace JonLong.CRM.Web.Controllers
 
                 if (statistics != null && statistics.Any())
                 {
-                    model.Items = statistics;
+                    if (model.IsSuperAdmin && !String.IsNullOrEmpty(queryModel.CustomerCode))
+                    {
+                        model.Items = statistics.Where(t => t.CustomerCode == queryModel.CustomerCode).ToList();
+                    }
+                    else
+                    {
+                        model.Items = statistics;
+                    }
+                    if (model.IsSuperAdmin)
+                    {
+                        model.Customers.Add("", "All");
+                        foreach (var item in statistics)
+                        {
+                            if (!model.Customers.ContainsKey(item.CustomerCode))
+                            {
+                                model.Customers.Add(item.CustomerCode, item.CustomerName);
+                            }
+                        }
+                    }
                 }
 
                 model.SetTotal();
