@@ -11,7 +11,11 @@ namespace JonLong.CRM.Web.Models
         public OrderStatisticsListViewModel()
         {
             this.Items = new List<OrderStatistics>();
+            this.Customers = new Dictionary<string, string>();
         }
+
+        public Dictionary<string,string> Customers { get; set; }
+
         public List<OrderStatistics> Items
         {
             get;
@@ -28,8 +32,6 @@ namespace JonLong.CRM.Web.Models
         public string ContainerNo { get; set; }
 
         public string CustomerCode { get; set; }
-
-        public string CustomerName { get; set; }
 
         public void SetTotal()
         {

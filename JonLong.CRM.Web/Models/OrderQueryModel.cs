@@ -12,8 +12,6 @@ namespace JonLong.CRM.Web.Models
         public string BundleNo { get; set; }
         public string ContainerNo { get; set; }
 
-        public string CustomerName { get; set; }
-
         public string CustomerCode { get; set; }
     }
 }
