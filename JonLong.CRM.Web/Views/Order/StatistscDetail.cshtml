@@ -273,7 +273,7 @@
                     //$("#edittr"+oldIndex).toggle();
                     //$("#edit" + oldIndex).toggle();
                     $("#edittr" + parentIndex + "_" + oldIndex).hide();
-                    $("#edit" + parentIndex + "_" + oldIndex).html();
+                    $("#edit" + parentIndex + "_" + oldIndex).html("");
                 }
                 detailDiv.html('');
                 detailDiv.html(data);
@@ -291,7 +291,7 @@
     }
     function cancel() {
         $("#edittr" + parentIndex + "_" + oldIndex).hide();
-        $("#edit" + parentIndex + "_" + oldIndex).html();
+        $("#edit" + parentIndex + "_" + oldIndex).html("");
         oldIndex = -1;
         return false;
     }
