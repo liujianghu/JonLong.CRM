@@ -198,7 +198,7 @@
                 </select>
             </th>
             <th>Contract No:</th>
-            <th><input id="EContractNo" name="EContractNo" value="@Model.Order.ContractNo" /></th>
+            <th><input id="EContractNo" name="EContractNo" type="text" value="@Model.Order.ContractNo" /></th>
         </tr>
         <tr>
             <td colspan="8" style="background-color:yellow">
@@ -208,9 +208,9 @@
         </tr>
         <tr>
             <td>@Model.ShoeSizes[0]</td>
-            <td><input class="size" id="Size1" value="@Model.Order.Size1" /></td>
+            <td><input class="size " id="Size1" value="@Model.Order.Size1" /></td>
             <td>@Model.ShoeSizes[1]</td>
-            <td><input class="size" id="Size2" value="@Model.Order.Size2" /></td>
+            <td><input class="size " id="Size2" value="@Model.Order.Size2" /></td>
             <td>@Model.ShoeSizes[2]</td>
             <td><input class="size" id="Size3" value="@Model.Order.Size3" /></td>
             <td>@Model.ShoeSizes[3]</td>
@@ -277,11 +277,7 @@
 </div>
 
 <script type="text/javascript">
-    function cancel() {
-        $("#edittr" + oldIndex).toggle();
-        $("#edit" + oldIndex).toggle();
-        return false;
-    }
+
     function postData() {
         if (!validate()){
             return false;

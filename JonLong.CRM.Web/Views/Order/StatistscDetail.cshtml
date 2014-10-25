@@ -41,6 +41,8 @@
     @{
         int j = 0;
         string trclass = "";
+        Random rand = new Random();
+        int parentIndex = rand.Next(10000, 100000);
     }
     @foreach (var item in Model.Orders)
     {
@@ -176,9 +178,9 @@
             </td>
             <td>@item.OriginalETD.ToShortDateString()</td>
         </tr>
-        <tr id="@("edittr"+j)" style="display:none">
+        <tr id="@("edittr" + parentIndex + "_"+j)" style="display:none">
             <td colspan="22">
-                <div id="@("edit"+j)"></div>
+                <div id="@("edit" + parentIndex + "_" + j)"></div>
             </td>
         </tr>
                 j++;
@@ -217,6 +219,8 @@
     </tr>
 </table>
 <script>
+    var parentIndex = -1;
+    var oldIndex = -1;
     function deleteOrder(id) {
         if (!confirm("This will delete this model from this bundle, are you sure?")) {
             return;
@@ -256,24 +260,27 @@
             }
         });
     }
-    var oldIndex = -1;
+    
     function edit(index, id) {
-        var detailDiv = $("#edit" + index);
+        var detailDiv = $("#edit" + "@parentIndex" + "_" + index);
         $.ajax({
             cache: false,
             type: "GET",
             url: "@Url.Action("Edit")",
             data: { "id": id},
             success: function (data) {
-                if (oldIndex != -1){
-                    $("#edittr"+oldIndex).toggle();
-                    $("#edit" + oldIndex).toggle();
+                if (oldIndex != -1 && oldIndex != index){
+                    //$("#edittr"+oldIndex).toggle();
+                    //$("#edit" + oldIndex).toggle();
+                    $("#edittr" + parentIndex + "_" + oldIndex).hide();
+                    $("#edit" + parentIndex + "_" + oldIndex).html();
                 }
                 detailDiv.html('');
                 detailDiv.html(data);
-                $("#edittr"+index).show();
+                $("#edittr" + "@parentIndex" + "_" + index).show();
                 
                 oldIndex = index;
+                parentIndex = "@parentIndex";
                 //$("." + id).toggle();
 
             },
@@ -281,5 +288,11 @@
                 alert('Failed to retrieve detail.');
             }
         });
+    }
+    function cancel() {
+        $("#edittr" + parentIndex + "_" + oldIndex).hide();
+        $("#edit" + parentIndex + "_" + oldIndex).html();
+        oldIndex = -1;
+        return false;
     }
 </script>

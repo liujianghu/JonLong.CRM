@@ -517,6 +517,9 @@ form .wysiwyg {
 .small-input {
     width: 100% !important;
 }
+.small-input2 {
+    width: 30px !important;
+}
 form .small-input {
     width: 25% !important;
 }
