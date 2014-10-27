@@ -160,7 +160,7 @@
                     {
                         style += "color:red; font-weight:bold";
                     }
-                    else if (String.IsNullOrEmpty(item.HTBH))
+                    else if (!String.IsNullOrEmpty(item.HTBH))
                     {
                         style += "color:green; font-weight:bold";
                     }
@@ -213,20 +213,29 @@
                         j++;
                 }
                 <tr style="background: #f0f0f0">
-                    <td>
-                        @if (!Model.IsSuperAdmin)
-                        {
-                            <a href="@Url.Action("Create")" class="button">New Bundle</a>
-                        }
+                    <td colspan="11">
+                        <table >
+                            <tr>
+                                <td>
+                                    @if (!Model.IsSuperAdmin)
+                                    {
+                                        <a href="@Url.Action("Create")" class="button">New Bundle</a>
+                                    }
+                                </td>
+                                <td style="color: green; font-weight: 700">Green Zone Total: @Model.OrderTotalPairs Pairs</td>
+                                <td style="font-weight:700">Total: @Model.TotalPairs</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="color:blue; font-weight:700">
+                                    Please make sure you forecast up to (@DateTime.Now.AddMonths(4).ToString("yyyy/MM/dd")) is already put into the systems.
+                                </td>
+                            </tr>
+                        </table>
                     </td>
-                    <td style="color: green; font-weight: 700">Green Zone Total: @Model.OrderTotalPairs Pairs</td>
-                    <td colspan="8" style="font-weight:700">Total: @Model.TotalPairs</td>
+                    
                 </tr>
-                <tr>
-                    <td colspan="10" style="color:blue; font-weight:700">
-                        Please make sure you forecast up to (@DateTime.Now.AddMonths(4).ToString("yyyy/MM/dd")) is already put into the systems.
-                    </td>
-                </tr>
+                
+                
             </tbody>
         </table>
     </div>
@@ -245,6 +254,7 @@
             if ($(btn).text() == "-") {
                 $("." + id).toggle();
                 $(btn).html("+");
+                oldDetailId = -1;
                 return;
             }
             if (oldDetailId != -1) {

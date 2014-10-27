@@ -168,7 +168,7 @@ namespace JonLong.CRM.DAL
             SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
         }
 
-        public static decimal GetFilled(string customerCode, string guid, string containerNo)
+        public static float GetFilled(string customerCode, string guid, string containerNo)
         {
             SqlParameter[] parameters = new SqlParameter[5];
             parameters[0] = new SqlParameter("@khh", SqlDbType.VarChar);
@@ -178,7 +178,7 @@ namespace JonLong.CRM.DAL
             parameters[2] = new SqlParameter("@gzlx", SqlDbType.VarChar);
             parameters[2].Value = containerNo;
 
-            parameters[3] = new SqlParameter("@bfb", SqlDbType.Decimal);
+            parameters[3] = new SqlParameter("@bfb", SqlDbType.Float);
             parameters[3].Direction = ParameterDirection.InputOutput;
 
             parameters[4] = new SqlParameter("@message", SqlDbType.VarChar);
@@ -186,9 +186,10 @@ namespace JonLong.CRM.DAL
             parameters[4].Direction = ParameterDirection.InputOutput;
 
             SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.StoredProcedure, "spr_calc_yzkBfb", parameters);
-            decimal filled = 0;
+            float filled = 0;
 
-            decimal.TryParse(parameters[3].Value.ToString(), out filled);
+            float.TryParse(parameters[3].Value.ToString(), out filled);
+            filled = filled;
 
             return filled;
 
