@@ -68,7 +68,7 @@
                 </tr>
                 <tr style="background: #f0f0f0">
                     <td style="border: 1px solid #696969; background-color: #d5ffc2; border-right-color:green; border-right-width:medium; ">ORDER(0-45 days)</td>
-                    <td style="border: 1px solid #696969; background-color: #ffd6d6; border-right-color: red; border-right-width: medium">PRE_ORDER (45-75 days)</tdstyle>
+                    <td style="border: 1px solid #696969; background-color: #ffd6d6; border-right-color: red; border-right-width: medium">PRE_ORDER (45-75 days)</td>
                     <td style="border: 1px solid #696969; background-color: #fcf9db">FORECAST (75-120 days)</td>
                     <td></td>
                 </tr>
@@ -140,30 +140,34 @@
                     {
 
                         style = "background-color: #ffd6d6;border: 1px solid #D8BFD8;";
-                        if(type != 2)
+                        if (type != 2)
                         {
-                            style += "border-top-color:green;border-top-width:medium";
+                            style += "border-top-color:green;border-top-width:medium;";
                             type = 2;
                         }
                     }
                     else
                     {
-                        style = "background-color: #fcf9db;";
+                        style = "background-color: #fcf9db;border: 1px solid #D8BFD8;";
                         if (type != 3)
                         {
-                            style += "border-top-color:red;border-top-width:medium";
+                            style += "border-top-color:red;border-top-width:medium;";
                             type = 3;
                         }
                     }
 
-                    if (item.SendDate <= DateTime.Now.ToLocalTime() && item.Complete == 0)
+                    if (item.SendDate <= DateTime.Now.ToLocalTime().Date)
                     {
-                        style += "color:red; font-weight:900";
+                        style += "color:red; font-weight:bold";
+                    }
+                    else if (String.IsNullOrEmpty(item.HTBH))
+                    {
+                        style += "color:green; font-weight:bold";
                     }
                     <tr class="@trclass" style="@style">
                         <td>
                             <button onclick="loadDetail('@item.SendDate.ToString("yyyy-MM-dd")', '@item.CustomerCode','@item.BanderNo','@item.ContainerType','@item.ContainerNo','@item.Id', this);"
-                                    class="button" title="Detail">
+                                    class="button" id="@("btn"+item.Id)" title="Detail">
                                 +
                             </button>
                         </td>
@@ -230,6 +234,7 @@
 
 @section scripts{
     <script type="text/javascript">
+        var oldDetailId = -1;
         $(document).ready(function () {
             $('.datepicker').datepicker({
                 format: 'yyyy/mm/dd',
@@ -241,6 +246,10 @@
                 $("." + id).toggle();
                 $(btn).html("+");
                 return;
+            }
+            if (oldDetailId != -1) {
+                $("." + oldDetailId).toggle();
+                $("#btn" + oldDetailId).html("+");
             }
             var detailDiv = $("#" + id);
             $.ajax({
@@ -258,7 +267,7 @@
                     } else {
                         $(btn).text("-");
                     }
-
+                    oldDetailId = id;
                     //$('#myModal').modal({ keyboard: true });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

@@ -16,5 +16,6 @@ namespace JonLong.CRM.Web.Models
         public Dictionary<string,string> BundleNos { get; set; }
 
         public string Message { get; set; }
+
     }
 }

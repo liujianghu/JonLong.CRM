@@ -33,6 +33,7 @@ namespace JonLong.CRM.DAL
                     cabinet.XHB = reader.GetString(4);
                     cabinet.SendDate = reader.GetDateTime(1);
                     cabinet.BanderNo = reader.GetString(2);
+                    cabinet.XHB = reader.IsDBNull(4)?"":reader.GetString(4);
                     cabinet.Total = reader.GetInt32(5);
                     cabinet.Size1 = reader.GetInt32(6);
                     cabinet.Size2 = reader.GetInt32(7);
