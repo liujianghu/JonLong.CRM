@@ -30,6 +30,7 @@ namespace JonLong.CRM.DAL
                 {
                     var cabinet = new PreLoadCabinet();
                     cabinet.ModelNo = reader.GetString(3);
+                    cabinet.XHB = reader.GetString(4);
                     cabinet.SendDate = reader.GetDateTime(1);
                     cabinet.BanderNo = reader.GetString(2);
                     cabinet.Total = reader.GetInt32(5);
@@ -64,7 +65,7 @@ namespace JonLong.CRM.DAL
 
         public static int Insert(PreLoadCabinet cabinet)
         {
-            string sql = @"INSERT INTO [jncrm].[dbo].[t_sale_yzk]
+            string sql = @"INSERT INTO [dbo].[t_sale_yzk]
                            ([tGuid]
                            ,[fhrq]
                            ,[bn]
@@ -133,7 +134,7 @@ namespace JonLong.CRM.DAL
 
         public static void Update(PreLoadCabinet cabinet)
         {
-            string sql = @"UPDATE [jncrm].[dbo].[t_sale_yzk]
+            string sql = @"UPDATE [dbo].[t_sale_yzk]
                        SET [sumS] = "+cabinet.Total+@"
                           ,[s1] = "+cabinet.Size1+@"
                           ,[s2] = " + cabinet.Size2 + @"
@@ -162,7 +163,7 @@ namespace JonLong.CRM.DAL
 
         public static void Delete(int id)
         {
-            string sql = @"DELETE FROM [jncrm].[dbo].[t_sale_yzk] where [id]=" + id;
+            string sql = @"DELETE FROM [dbo].[t_sale_yzk] where [id]=" + id;
 
             SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
         }
