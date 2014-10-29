@@ -9,7 +9,7 @@ namespace JonLong.CRM.Web.Models
     {
         public int Id { get; set; }
 
-        public decimal Filled { get; set; }
+        public float Filled { get; set; }
 
         public bool IsSuccess { get; set; }
 
