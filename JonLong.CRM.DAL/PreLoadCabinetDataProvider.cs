@@ -181,6 +181,7 @@ namespace JonLong.CRM.DAL
 
             parameters[3] = new SqlParameter("@bfb", SqlDbType.Decimal);
             parameters[3].Direction = ParameterDirection.InputOutput;
+            parameters[3].Scale = 4;
 
             parameters[4] = new SqlParameter("@message", SqlDbType.VarChar);
             parameters[4].Size = 32;
