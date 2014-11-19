@@ -14,7 +14,7 @@ namespace JonLong.CRM.BLL
 
         public static readonly PreLoadCabinetManager Instance = new PreLoadCabinetManager();
 
-        public  List<PreLoadCabinet> LoadAviailable(string customerCode)
+        public Tuple<List<PreLoadCabinet>, List<PreLoadCabinet>> LoadAviailable(string customerCode)
         {
             return PreLoadCabinetDataProvider.LoadAviailable(customerCode);
         }
@@ -45,6 +45,11 @@ namespace JonLong.CRM.BLL
         public float GetFilled(string customerCode, string guid, string containerNo)
         {
             return PreLoadCabinetDataProvider.GetFilled(customerCode, guid, containerNo) ;
+        }
+
+        public CabinetTitle LoadTitle(string khbh)
+        {
+            return PreLoadCabinetDataProvider.LoadTitle(khbh);
         }
 
     }

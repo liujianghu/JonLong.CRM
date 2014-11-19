@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="ArrivedDetail.cs" />
     <Compile Include="ArrivedModel.cs" />
+    <Compile Include="CabinetTitle.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Enroute.cs" />
     <Compile Include="EnrouteDetail.cs" />
