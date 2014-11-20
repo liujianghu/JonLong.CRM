@@ -152,9 +152,9 @@ namespace JonLong.CRM.DAL
             }
             else
             {
-                sql += "'" + cabinet.SendDate + "'";
+                sql += "'" + cabinet.SendDate + "',";
             }
-            sql += @",'" + cabinet.BanderNo + @"'
+            sql += @"'" + cabinet.BanderNo + @"'
                            ,'" + cabinet.ModelNo + @"'
                            ,'" + cabinet.XHB + @"'
                            ," + cabinet.Total + @"
@@ -297,6 +297,47 @@ namespace JonLong.CRM.DAL
             }
 
             return null;
+        }
+
+        public static string Confirm(string tguid, string khh, DateTime? fhrq, string userName, string gz)
+        {
+            #region Populate Parameters
+
+            SqlParameter[] parameters = new SqlParameter[6];
+
+            parameters[0] = new SqlParameter("@tGuid", SqlDbType.VarChar);
+            parameters[0].Value = tguid;
+
+            parameters[1] = new SqlParameter("@khh", SqlDbType.VarChar);
+            parameters[1].Value = khh;
+
+            parameters[2] = new SqlParameter("@fhrq", SqlDbType.DateTime);
+            parameters[2].Value = fhrq;
+
+            parameters[3] = new SqlParameter("@userName", SqlDbType.VarChar);
+            parameters[3].Value = userName;
+
+            parameters[4] = new SqlParameter("@gz", SqlDbType.VarChar);
+            parameters[4].Value = gz;
+
+            parameters[5] = new SqlParameter("@message", SqlDbType.VarChar);
+            parameters[5].Direction = ParameterDirection.InputOutput;
+            parameters[5].Size = 500;
+
+            #endregion
+
+            SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString
+                                       , CommandType.StoredProcedure
+                                       , "[dbo].[spr_khys_qryzk]"
+                                       , parameters);
+
+            return parameters[5].Value.ToString();
+        }
+
+        public static void UpdateBfb(string guid, double bfb)
+        {
+            string sql= "UPDATE dbo.t_sale_yzkM SET bfb = "+bfb+" WHERE tGuid = '"+guid+"';";
+            SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
         }
     }
 }

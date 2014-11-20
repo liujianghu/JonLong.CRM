@@ -212,6 +212,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.spinner.js" />
     <Content Include="Scripts\simpla.jquery.configuration.js" />
+    <Content Include="Scripts\stickUp.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
