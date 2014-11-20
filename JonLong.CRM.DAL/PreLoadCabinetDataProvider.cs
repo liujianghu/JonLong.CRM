@@ -10,9 +10,10 @@ namespace JonLong.CRM.DAL
 {
     public class PreLoadCabinetDataProvider
     {
-        public static List<PreLoadCabinet> LoadAviailable(string customerCode)
+        public static Tuple<List<PreLoadCabinet>, List<PreLoadCabinet>> LoadAviailable(string customerCode)
         {
             var list = new List<PreLoadCabinet>();
+            var list2 = new List<PreLoadCabinet>();
             SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = new SqlParameter("@khh", SqlDbType.VarChar);
             parameters[0].Value = customerCode;
@@ -29,39 +30,116 @@ namespace JonLong.CRM.DAL
                 while (reader.Read())
                 {
                     var cabinet = new PreLoadCabinet();
-                    cabinet.ModelNo = reader.GetString(3);
-                    cabinet.XHB = reader.GetString(4);
-                    cabinet.SendDate = reader.GetDateTime(1);
-                    cabinet.BanderNo = reader.GetString(2);
-                    cabinet.XHB = reader.IsDBNull(4)?"":reader.GetString(4);
-                    cabinet.Total = reader.GetInt32(5);
-                    cabinet.Size1 = reader.GetInt32(6);
-                    cabinet.Size2 = reader.GetInt32(7);
-                    cabinet.Size3 = reader.GetInt32(8);
-                    cabinet.Size4 = reader.GetInt32(9);
-                    cabinet.Size5 = reader.GetInt32(10);
-                    cabinet.Size6 = reader.GetInt32(11);
-                    cabinet.Size7 = reader.GetInt32(12);
-                    cabinet.Size8 = reader.GetInt32(13);
-                    cabinet.Size9 = reader.GetInt32(14);
-                    cabinet.Size10 = reader.GetInt32(15);
-                    cabinet.Size11 = reader.GetInt32(16);
-                    cabinet.Size12 = reader.GetInt32(17);
-                    cabinet.Size13 = reader.GetInt32(18);
-                    cabinet.Size14 = reader.GetInt32(19);
-                    cabinet.Size15 = reader.GetInt32(20);
-                    cabinet.Size16 = reader.GetInt32(21);
-                    cabinet.Size17 = reader.GetInt32(22);
-                    cabinet.Size18 = reader.GetInt32(23);
-                    cabinet.Size19 = reader.GetInt32(24);
-                    cabinet.Size20 = reader.GetInt32(25);
+
+                    //cabinet.ModelNo = reader.GetString(3);
+                    //cabinet.XHB = reader.GetString(4);
+                    //cabinet.SendDate = reader.GetDateTime(1);
+                    //cabinet.BanderNo = reader.GetString(2);
+                    //cabinet.XHB = reader.IsDBNull(4)?"":reader.GetString(4);
+                    //cabinet.Total = reader.GetInt32(5);
+                    //cabinet.Size1 = reader.GetInt32(6);
+                    //cabinet.Size2 = reader.GetInt32(7);
+                    //cabinet.Size3 = reader.GetInt32(8);
+                    //cabinet.Size4 = reader.GetInt32(9);
+                    //cabinet.Size5 = reader.GetInt32(10);
+                    //cabinet.Size6 = reader.GetInt32(11);
+                    //cabinet.Size7 = reader.GetInt32(12);
+                    //cabinet.Size8 = reader.GetInt32(13);
+                    //cabinet.Size9 = reader.GetInt32(14);
+                    //cabinet.Size10 = reader.GetInt32(15);
+                    //cabinet.Size11 = reader.GetInt32(16);
+                    //cabinet.Size12 = reader.GetInt32(17);
+                    //cabinet.Size13 = reader.GetInt32(18);
+                    //cabinet.Size14 = reader.GetInt32(19);
+                    //cabinet.Size15 = reader.GetInt32(20);
+                    //cabinet.Size16 = reader.GetInt32(21);
+                    //cabinet.Size17 = reader.GetInt32(22);
+                    //cabinet.Size18 = reader.GetInt32(23);
+                    //cabinet.Size19 = reader.GetInt32(24);
+                    //cabinet.Size20 = reader.GetInt32(25);
+                    cabinet.Id = reader.GetInt32(0);
+                    cabinet.WcSta = reader.GetInt32(1);
+                    if (!reader.IsDBNull(2))
+                    {
+                        cabinet.SendDate = reader.GetDateTime(2);
+                    }
+
+                    cabinet.BanderNo = reader.GetString(3);
+                    cabinet.ModelNo = reader.GetString(4);
+                    cabinet.XHB = reader.IsDBNull(5) ? "" : reader.GetString(5);
+
+                    cabinet.Total = reader.GetInt32(8);
+
+                    cabinet.Size1 = reader.GetInt32(9);
+                    cabinet.Size2 = reader.GetInt32(10);
+                    cabinet.Size3 = reader.GetInt32(11);
+                    cabinet.Size4 = reader.GetInt32(12);
+                    cabinet.Size5 = reader.GetInt32(13);
+                    cabinet.Size6 = reader.GetInt32(14);
+                    cabinet.Size7 = reader.GetInt32(15);
+                    cabinet.Size8 = reader.GetInt32(16);
+                    cabinet.Size9 = reader.GetInt32(17);
+                    cabinet.Size10 = reader.GetInt32(18);
+                    cabinet.Size11 = reader.GetInt32(19);
+                    cabinet.Size12 = reader.GetInt32(20);
+                    cabinet.Size13 = reader.GetInt32(21);
+                    cabinet.Size14 = reader.GetInt32(22);
+                    cabinet.Size15 = reader.GetInt32(23);
+                    cabinet.Size16 = reader.GetInt32(24);
+                    cabinet.Size17 = reader.GetInt32(25);
+                    cabinet.Size18 = reader.GetInt32(26);
+                    cabinet.Size19 = reader.GetInt32(27);
+                    cabinet.Size20 = reader.GetInt32(28);
 
                     list.Add(cabinet);
                 }
 
-                return list;
-            }
+                if (reader.NextResult())
+                {
+                    while (reader.Read())
+                    {
+                        var cabinet = new PreLoadCabinet();
+                        cabinet.Id = reader.GetInt32(0);
+                        cabinet.WcSta = reader.GetInt32(1);
+                        if (!reader.IsDBNull(2))
+                        {
+                            cabinet.SendDate = reader.GetDateTime(2);
+                        }
 
+                        cabinet.BanderNo = reader.GetString(3);
+                        cabinet.ModelNo = reader.GetString(4);
+                        cabinet.XHB = reader.IsDBNull(5) ? "" : reader.GetString(5);
+
+                        cabinet.Total = reader.GetInt32(8);
+
+                        cabinet.Size1 = reader.GetInt32(9);
+                        cabinet.Size2 = reader.GetInt32(10);
+                        cabinet.Size3 = reader.GetInt32(11);
+                        cabinet.Size4 = reader.GetInt32(12);
+                        cabinet.Size5 = reader.GetInt32(13);
+                        cabinet.Size6 = reader.GetInt32(14);
+                        cabinet.Size7 = reader.GetInt32(15);
+                        cabinet.Size8 = reader.GetInt32(16);
+                        cabinet.Size9 = reader.GetInt32(17);
+                        cabinet.Size10 = reader.GetInt32(18);
+                        cabinet.Size11 = reader.GetInt32(19);
+                        cabinet.Size12 = reader.GetInt32(20);
+                        cabinet.Size13 = reader.GetInt32(21);
+                        cabinet.Size14 = reader.GetInt32(22);
+                        cabinet.Size15 = reader.GetInt32(23);
+                        cabinet.Size16 = reader.GetInt32(24);
+                        cabinet.Size17 = reader.GetInt32(25);
+                        cabinet.Size18 = reader.GetInt32(26);
+                        cabinet.Size19 = reader.GetInt32(27);
+                        cabinet.Size20 = reader.GetInt32(28);
+
+                        list2.Add(cabinet);
+                    }
+                }
+
+
+            }
+            return new Tuple<List<PreLoadCabinet>, List<PreLoadCabinet>>(list, list2);
         }
 
         public static int Insert(PreLoadCabinet cabinet)
@@ -94,9 +172,16 @@ namespace JonLong.CRM.DAL
                            ,[s19]
                            ,[s20])
                      VALUES
-                           ('"+cabinet.TGuid+@"'
-                           ,'" + cabinet.SendDate + @"'
-                           ,'" + cabinet.BanderNo + @"'
+                           ('" + cabinet.TGuid + @"',";
+            if (cabinet.SendDate <= DateTime.Now.AddYears(-10))
+            {
+                sql += "null,";
+            }
+            else
+            {
+                sql += "'" + cabinet.SendDate + "'";
+            }
+            sql += @",'" + cabinet.BanderNo + @"'
                            ,'" + cabinet.ModelNo + @"'
                            ,'" + cabinet.XHB + @"'
                            ," + cabinet.Total + @"
@@ -125,8 +210,8 @@ namespace JonLong.CRM.DAL
             SqlParameter[] parameters = new SqlParameter[1];
             parameters[0] = new SqlParameter("@Id", SqlDbType.Int);
             parameters[0].Direction = ParameterDirection.InputOutput;
-                
-            SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql,parameters);
+
+            SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql, parameters);
 
             int id = 0;
             int.TryParse(parameters[0].Value.ToString(), out id);
@@ -135,9 +220,15 @@ namespace JonLong.CRM.DAL
 
         public static void Update(PreLoadCabinet cabinet)
         {
+<<<<<<< HEAD
             string sql = @"UPDATE [dbo].[t_sale_yzk]
                        SET [sumS] = "+cabinet.Total+@"
                           ,[s1] = "+cabinet.Size1+@"
+=======
+            string sql = @"UPDATE [jncrm].[dbo].[t_sale_yzk]
+                       SET [sumS] = " + cabinet.Total + @"
+                          ,[s1] = " + cabinet.Size1 + @"
+>>>>>>> jncrm/master
                           ,[s2] = " + cabinet.Size2 + @"
                             ,[s3] = " + cabinet.Size3 + @"
                             ,[s4] = " + cabinet.Size4 + @"
@@ -157,7 +248,7 @@ namespace JonLong.CRM.DAL
                             ,[s18] = " + cabinet.Size18 + @"
                             ,[s19] = " + cabinet.Size19 + @"
                             ,[s20] = " + cabinet.Size20 + @"
-                     WHERE  id = " +cabinet.Id;
+                     WHERE  id = " + cabinet.Id;
 
             SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
         }
@@ -195,6 +286,51 @@ namespace JonLong.CRM.DAL
 
             return filled;
 
+        }
+
+        public static CabinetTitle LoadTitle(string khbh)
+        {
+            SqlParameter[] parameters = new SqlParameter[5];
+            string sql = "select top 1 * from t_sale_yzkM where khbh='" + khbh + "' order by id desc";
+            using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString, CommandType.Text, sql))
+            {
+                if (reader.Read())
+                {
+                    var entity = new CabinetTitle();
+                    if (!reader.IsDBNull(0))
+                    {
+                        entity.Id = reader.GetInt32(0);
+                    }
+                    if (!reader.IsDBNull(1))
+                    {
+                        entity.TGuid = reader.GetString(1);
+                    }
+                    if (!reader.IsDBNull(2))
+                    {
+                        entity.Khbh = reader.GetString(2);
+                    }
+                    if (!reader.IsDBNull(3))
+                    {
+                        entity.Fhrq = reader.GetDateTime(3);
+                    }
+                    if (!reader.IsDBNull(4))
+                    {
+                        entity.Bn = reader.GetString(4);
+                    }
+                    if (!reader.IsDBNull(5))
+                    {
+                        entity.Gzlx = reader.GetString(5);
+                    }
+                    if (!reader.IsDBNull(6))
+                    {
+                        entity.Bfb = reader.GetDecimal(6);
+                    }
+
+                    return entity;
+                }
+            }
+
+            return null;
         }
     }
 }

@@ -9,6 +9,10 @@ namespace JonLong.CRM.Models
     public class PreLoadCabinet
     {
         public int Id { get; set; }
+        /// <summary>
+        /// 3-原数据，6-loaded， 7- loading
+        /// </summary>
+        public int WcSta { get; set; }
         public string TGuid { get; set; }
 
         public string XHB { get; set; }

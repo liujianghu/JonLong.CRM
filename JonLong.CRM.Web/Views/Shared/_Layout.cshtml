@@ -13,10 +13,10 @@
     @RenderSection("head", required: false)
 </head>
 <body>
-    <div id="body-wrapper">
+    <div id="body-wrapper" >
         <!-- Wrapper for the radial gradient background -->
         <div id="sidebar">
-            <div id="sidebar-wrapper">
+            <div id="sidebar-wrapper" >
                 <!-- Sidebar with logo and menu -->
                 <h1 id="sidebar-title">
                     <a href="@Url.Action("index","home")">Jonlong CRM</a>
@@ -64,6 +64,10 @@
                                 {
                                     <li><a href="@Url.Action("index","Order")">Order & Forecast</a></li>
                                 }
+                                @if (AccountHelper.IsAllowed("PreLoadCabinet"))
+                                {
+                                    <li><a href="@Url.Action("index","PreLoadCabinet")">Cabinet Loading</a></li>
+                                }
                                 @if (AccountHelper.IsAllowed("Enroute"))
                                 {
                                     <li><a href="@Url.Action("index","Enroute")">En route</a></li>
@@ -103,15 +107,7 @@
                             </ul>
                         </li>
                     }
-                    @if (AccountHelper.IsAllowed("PreLoadCabinet"))
-                    {
-                        <li>
-                            <a href="javascript:;" class="nav-top-item">Pre load cabinet </a>
-                            <ul>
-                                <li><a href="@Url.Action("index","PreLoadCabinet")">Preload Cabinet</a></li>
-                            </ul>
-                        </li>
-                    }
+
 
                     <li>
                         <a href="javascript:;" class="nav-top-item">Settings </a>

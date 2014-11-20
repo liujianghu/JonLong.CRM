@@ -15,7 +15,7 @@
 </style>
 <div class="content-box-header">
     <h3>
-        Preload Cabinet
+        Cabinet Loading
     </h3>
 
     <div class="clear">
@@ -27,31 +27,41 @@
         <!-- This is the target div. id must match the href of this div's tab -->
         <div class="tab-content default-tab">
 
-            <div class="bulk-actions align-left">
-                Cabinet &nbsp;&nbsp;
-                <select id="Cabinet">
-                    <option value="20">20</option>
-                    <option value="40">40</option>
-                    <option value="40T">40T</option>
-                </select>
-                &nbsp;
-                Filled: <label id="filled" style="font-weight:600">0</label>
+            <div>
+                <table class="table_b" style="width:80%">
+                    <tr>
+                        <td>Bundler No.</td>
+                        <td>ETD</td>
+                        <td>Cabinet</td>
+                        <td>Filled:</td>
+                    </tr>
+                    <tr style="background-color: #d5ffc2;">
+                        <td>@Model.Title.Bn</td>
+                        <td>
+                            @if (Model.Title.Fhrq.HasValue)
+                            {
+                                @:Model.Title.Fhrq
+                        }
+                        </td>
+                        <td>
+                            <select id="Cabinet">
+                                <option value="20">20</option>
+                                <option value="40">40</option>
+                                <option value="40T">40T</option>
+                            </select>
+                        </td>
+                        <td><label id="filled" style="font-weight:600">0</label></td>
+                    </tr>
+                </table>
             </div>
 
             <div class="clear">
                 <p></p>
             </div>
         </div>
-
-    </div>
-    <div class="content-box-content">
         <div class="tab-content default-tab">
             <table class="table_b">
                 <tr class="alt-row">
-                    <th>
-
-                    </th>
-
                     @{
                         int sizeTypeCount = 18;
                         if (Model.ShoeSizes.Count < sizeTypeCount)
@@ -72,12 +82,118 @@
 
                 </tr>
                 @{
+                    int m = 0;
+                    string trclass1 = "";
+                }
+                @foreach (var item in Model.SavedItems)
+                {
+                    if (m % 2 == 0)
+                    {
+                        trclass1 = "";
+                    }
+                    else
+                    {
+                        trclass1 = "alt-row";
+                    }
+                    <tr class="@trclass1">
+
+                        <td style="width:150px">@item.ModelNo</td>
+                        <td>
+                            @item.Total
+                        </td>
+                        <td>
+                            @item.Size1
+                        </td>
+                        <td>@item.Size2</td>
+                        <td>@item.Size3</td>
+                        <td>@item.Size4</td>
+                        <td>@item.Size5</td>
+                        <td>
+                            @item.Size6
+                        </td>
+                        <td>
+                            @item.Size7
+                        </td>
+                        <td>
+                            @item.Size8
+                        </td>
+                        <td>
+                            @item.Size9
+                        </td>
+                        <td>
+                            @item.Size10
+                        </td>
+                        <td>
+                            @item.Size11
+                        </td>
+                        <td>
+                            @item.Size12
+                        </td>
+                        <td>
+                            @item.Size13
+                        </td>
+                        <td>
+                            @item.Size14
+                        </td>
+                        <td>
+                            @item.Size15
+                        </td>
+                        <td>
+                            @item.Size16
+                        </td>
+                        <td>
+                            @item.Size17
+                        </td>
+                        <td>
+                            @item.Size18
+                        </td>
+                        <td>@item.BanderNo</td>
+                        <td>@item.SendDate.ToShortDateString()</td>
+                    </tr>
+                    m++;
+                }
+
+            </table>
+        </div>
+
+        <div class="clear">
+            <p></p>
+        </div>
+        <div class="clear">
+            <p></p>
+        </div>
+        <div class="tab-content default-tab">
+            <table class="table_b">
+                <tr>
+                  
+                    @{
+                        sizeTypeCount = 18;
+                        if (Model.ShoeSizes.Count < sizeTypeCount)
+                        {
+                            sizeTypeCount = Model.ShoeSizes.Count;
+                        }
+                    }
+                    <th>Bundler No.</th>
+                    <th>ETD</th>
+                    <th>Model No.</th>
+                    <th style="width:50px">Total</th>
+                    @for (int i = 0; i < sizeTypeCount; i++)
+                    {
+                        <th style="font-weight:200;width:50px">
+                            @Model.ShoeSizes[i]
+                        </th>
+                    }
+                    <th>Bundle No</th>
+                    <th>Original ETD</th>
+
+                </tr>
+                @{
                     int j = 0;
                     string trclass = "";
                 }
-                @foreach (var item in Model.Items)
+                @foreach (var pair in Model.Items)
                 {
-                    if (j % 2 == 0)
+                    if (j % 2 == 1)
                     {
                         trclass = "";
                     }
@@ -85,16 +201,15 @@
                     {
                         trclass = "alt-row";
                     }
+                    var item = pair.Value.Origin;
                     <tr class="@trclass">
                         <td>
-                            <button onclick="preLoad('@j',this);"
-                                    class="button" title="Load">
-                                Load
-                            </button>
-                            <input type="hidden" value="@item.XHB" id="@("xhb"+j)" />
+                            @item.BanderNo
                         </td>
+                        <td>@item.SendDate</td>
                         <td id="@("modelNo"+j)" style="width:150px">@item.ModelNo</td>
-                        <td>@item.Total
+                        <td>
+                            @item.Total
                         </td>
                         <td id="@("td_pre"+j +"_size1")">
                             @item.Size1
@@ -103,56 +218,181 @@
                         <td id="@("td_pre"+j +"_size3")">@item.Size3</td>
                         <td id="@("td_pre"+j +"_size4")">@item.Size4</td>
                         <td id="@("td_pre"+j +"_size5")">@item.Size5</td>
-                        <td id="@("td_pre"+j +"_size6")">@item.Size6
+                        <td id="@("td_pre"+j +"_size6")">
+                            @item.Size6
                         </td>
                         <td id="@("td_pre"+j +"_size7")">
-                                @item.Size7
+                            @item.Size7
                         </td>
                         <td id="@("td_pre"+j +"_size8")">
-                                @item.Size8
+                            @item.Size8
                         </td>
                         <td id="@("td_pre"+j +"_size9")">
-                                @item.Size9
+                            @item.Size9
                         </td>
                         <td id="@("td_pre"+j +"_size10")">
-                                @item.Size10
+                            @item.Size10
                         </td>
                         <td id="@("td_pre"+j +"_size11")">
-                                @item.Size11
+                            @item.Size11
                         </td>
                         <td id="@("td_pre"+j +"_size12")">
-                                @item.Size12
+                            @item.Size12
                         </td>
                         <td id="@("td_pre"+j +"_size13")">
-                                @item.Size13
+                            @item.Size13
                         </td>
                         <td id="@("td_pre"+j +"_size14")">
-                                @item.Size14
+                            @item.Size14
                         </td>
                         <td id="@("td_pre"+j +"_size15")">
-                                @item.Size15
+                            @item.Size15
                         </td>
                         <td id="@("td_pre"+j +"_size16")">
-                                @item.Size16
+                            @item.Size16
                         </td>
                         <td id="@("td_pre"+j +"_size17")">
-                                @item.Size17
+                            @item.Size17
                         </td>
                         <td id="@("td_pre"+j +"_size18")">
-                                @item.Size18
+                            @item.Size18
                         </td>
                         <td id="@("banderno"+j)">@item.BanderNo</td>
                         <td id="@("sendDate"+j)">@item.SendDate.ToShortDateString()</td>
                     </tr>
-                    <tr id="@("loadDiv"+j)" style="display: none; background-color: #d5ffc2;">
-                        <td colspan="23"></td>
+                    item = pair.Value.Loading;
+                    <tr style="background-color: #d5ffc2;">
+                        <td>
+                            
+                        </td>
+                        <td></td>
+                        <td >Loading</td>
+                        <td>
+                            @item.Total
+                        </td>
+                        <td id="@("td_pre"+j +"_size1")">
+                            @item.Size1
+                        </td>
+                        <td id="@("td_pre"+j +"_size2")">@item.Size2</td>
+                        <td id="@("td_pre"+j +"_size3")">@item.Size3</td>
+                        <td id="@("td_pre"+j +"_size4")">@item.Size4</td>
+                        <td id="@("td_pre"+j +"_size5")">@item.Size5</td>
+                        <td id="@("td_pre"+j +"_size6")">
+                            @item.Size6
+                        </td>
+                        <td id="@("td_pre"+j +"_size7")">
+                            @item.Size7
+                        </td>
+                        <td id="@("td_pre"+j +"_size8")">
+                            @item.Size8
+                        </td>
+                        <td id="@("td_pre"+j +"_size9")">
+                            @item.Size9
+                        </td>
+                        <td id="@("td_pre"+j +"_size10")">
+                            @item.Size10
+                        </td>
+                        <td id="@("td_pre"+j +"_size11")">
+                            @item.Size11
+                        </td>
+                        <td id="@("td_pre"+j +"_size12")">
+                            @item.Size12
+                        </td>
+                        <td id="@("td_pre"+j +"_size13")">
+                            @item.Size13
+                        </td>
+                        <td id="@("td_pre"+j +"_size14")">
+                            @item.Size14
+                        </td>
+                        <td id="@("td_pre"+j +"_size15")">
+                            @item.Size15
+                        </td>
+                        <td id="@("td_pre"+j +"_size16")">
+                            @item.Size16
+                        </td>
+                        <td id="@("td_pre"+j +"_size17")">
+                            @item.Size17
+                        </td>
+                        <td id="@("td_pre"+j +"_size18")">
+                            @item.Size18
+                        </td>
+                        <td id="@("banderno"+j)"></td>
+                        <td id="@("sendDate"+j)"></td>
                     </tr>
-                            j++;
+                    var loadedItem = pair.Value.Loaded;
+                    <tr style="background-color: #fcf9db; ">
+                        <td colspan="2" style="text-align:center"><a href="javascript:;" class="button" onclick="save(@j)">Save</a></td>
+                        <td>Loaded</td>
+                        <td>
+                            <label id="@("pre" + j + "_total1")">@loadedItem.Total</label>
+                            <input type="hidden" value="@loadedItem.Total" id="@("pre" + j + "_total")" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size1" onchange="sizeChange(this)" id="@("pre"+j +"_size1")" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size2" onchange="sizeChange(this)" id="@("pre"+j +"_size2")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size3" onchange="sizeChange(this)" id="@("pre"+j +"_size3")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size4" onchange="sizeChange(this)" id="@("pre"+j +"_size4")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size5" onchange="sizeChange(this)" id="@("pre"+j +"_size5")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size6" onchange="sizeChange(this)" id="@("pre"+j +"_size6")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size7" onchange="sizeChange(this)" id="@("pre"+j +"_size7")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size8" onchange="sizeChange(this)" id="@("pre"+j +"_size8")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size9" onchange="sizeChange(this)" id="@("pre"+j +"_size9")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size10" onchange="sizeChange(this)" id="@("pre"+j +"_size10")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size11" onchange="sizeChange(this)" id="@("pre"+j +"_size11")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size12" onchange="sizeChange(this)" id="@("pre"+j +"_size12")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size13" onchange="sizeChange(this)" id="@("pre"+j +"_size13")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size14" onchange="sizeChange(this)" id="@("pre"+j +"_size14")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size15" onchange="sizeChange(this)" id="@("pre"+j +"_size15")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size16" onchange="sizeChange(this)" id="@("pre"+j +"_size16")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size17" onchange="sizeChange(this)" id="@("pre"+j +"_size17")" type="text" />
+                        </td>
+                        <td>
+                            <input class="small-input2" index="@j" value="@loadedItem.Size18" onchange="sizeChange(this)" id="@("pre"+j +"_size18")" type="text" />
+                        </td>
+                        <td >
+                            <input type="hidden" id="@("pre"+j +"_id")" value="0" />
+                        </td>
+                        
+                        <td></td>
+                        </tr>
+                    j++;
                 }
 
             </table>
         </div>
-        <!-- End #tab3 -->
+
     </div>
 
 </div>
@@ -186,7 +426,7 @@
             $("#pre" + index + "_total1").text(total);
             $("#pre" + index + "_total").val(total);
         }
-        function preLoad(index,btn) {
+        function preLoad(index, btn) {
             var detailDiv = $("#loadDiv" + index);
             $.ajax({
                 cache: false,
@@ -203,7 +443,7 @@
                     alert('Failed to retrieve detail.');
                 }
             });
-            
+
         }
 
         function save(index) {

@@ -132,11 +132,11 @@
                     {
                         trclass = "";
                     }
-                    if (item.SendDate <= DateTime.Now.AddDays(45).ToLocalTime())
+                    if (item.SendDate <= DateTime.Now.AddMonths(1).AddDays(15).ToLocalTime())
                     {
                         style = "background-color: #d5ffc2;border: 1px solid #D8BFD8;";
                     }
-                    else if (item.SendDate <= DateTime.Now.AddDays(75).ToLocalTime())
+                    else if (item.SendDate <= DateTime.Now.AddMonths(2).AddDays(15).ToLocalTime())
                     {
 
                         style = "background-color: #ffd6d6;border: 1px solid #D8BFD8;";
@@ -160,9 +160,9 @@
                     {
                         style += "color:red; font-weight:bold";
                     }
-                    else if (!String.IsNullOrEmpty(item.HTBH))
+                    else if (!String.IsNullOrEmpty(item.HTBH) && item.SendDate <= DateTime.Now.AddMonths(1).AddDays(15))
                     {
-                        style += "color:green; font-weight:bold";
+                        style += "color:green; ";
                     }
                     <tr class="@trclass" style="@style">
                         <td>

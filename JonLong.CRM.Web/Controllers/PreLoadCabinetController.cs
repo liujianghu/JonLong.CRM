@@ -21,7 +21,42 @@ namespace JonLong.CRM.Web.Controllers
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
                 var model = new PreLoadCabinetModel();
                 model.Guid = Guid.NewGuid().ToString();
-                model.Items = PreLoadCabinetManager.Instance.LoadAviailable(user.CustomerCode);
+                var tuple = PreLoadCabinetManager.Instance.LoadAviailable(user.CustomerCode);
+
+                model.Items = new Dictionary<string, PreLoadCabinetItemModel>();
+                foreach (var item in tuple.Item2)
+                {
+                    PreLoadCabinetItemModel itemModel = null;
+                    if (model.Items.ContainsKey(item.BanderNo))
+                    {
+                        itemModel = model.Items[item.BanderNo];
+                    }
+                    else
+                    {
+                        itemModel = new PreLoadCabinetItemModel();
+                    }
+                    if (item.WcSta == 3)
+                    {
+                        itemModel.Origin = item;
+                    }
+                    else if (item.WcSta == 6)
+                    {
+                        itemModel.Loaded = item;
+                    }
+                    else
+                    {
+                        itemModel.Loading = item;
+                    }
+                    model.Items[item.BanderNo] = itemModel;
+                }
+
+                model.SavedItems = tuple.Item1.Where(t => t.WcSta == 3).ToList();
+
+                model.Title = PreLoadCabinetManager.Instance.LoadTitle(user.CustomerCode);
+                if (model.Title == null)
+                {
+                    model.Title = new CabinetTitle();
+                }
                 
                 if (AccountHelper.IsSuperAdmin(user))
                 {
@@ -45,12 +80,8 @@ namespace JonLong.CRM.Web.Controllers
         [RoleAuthorize]
         public ActionResult PreLoad(int index)
         {
-            var model =  new PreLoadCabinetItemModel
-            {
-                Index = index
-            };
 
-            return PartialView(model);
+            return PartialView(null);
         }
 
         [RoleAuthorize]

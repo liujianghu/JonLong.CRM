@@ -141,13 +141,13 @@ a.remove-link {
 /********************************      Sidebar      ********************************/
 
 #sidebar {
-    background: url('../images/bg-sidebar.gif') top left no-repeat;
+    background: url('../images/bg-sidebar.gif') top left no-repeat; 
     width: 230px;
     height: 100%;
     position: absolute;
     left: 0;
     top: 0;
-    color: #888;
+    color: #888; 
     font-size: 11px;
 }
 
