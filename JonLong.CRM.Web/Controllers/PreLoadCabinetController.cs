@@ -27,9 +27,10 @@ namespace JonLong.CRM.Web.Controllers
                 foreach (var item in tuple.Item2)
                 {
                     PreLoadCabinetItemModel itemModel = null;
-                    if (model.Items.ContainsKey(item.BanderNo))
+                    string key = String.Format("{0}-{1}", item.BanderNo, item.ModelNo);
+                    if (model.Items.ContainsKey(key))
                     {
-                        itemModel = model.Items[item.BanderNo];
+                        itemModel = model.Items[key];
                     }
                     else
                     {
@@ -47,7 +48,7 @@ namespace JonLong.CRM.Web.Controllers
                     {
                         itemModel.Loading = item;
                     }
-                    model.Items[item.BanderNo] = itemModel;
+                    model.Items[key] = itemModel;
                 }
 
                 model.SavedItems = tuple.Item1.Where(t => t.WcSta == 3).ToList();
@@ -57,7 +58,7 @@ namespace JonLong.CRM.Web.Controllers
                 {
                     model.Title = new CabinetTitle();
                 }
-                
+
                 if (AccountHelper.IsSuperAdmin(user))
                 {
                     model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(Constants.SuperAdminDefaultCustomerCode);
@@ -74,7 +75,7 @@ namespace JonLong.CRM.Web.Controllers
                 TempData["Error"] = ex.ToString();
                 return View("Error");
             }
-            
+
         }
 
         [RoleAuthorize]
@@ -95,9 +96,9 @@ namespace JonLong.CRM.Web.Controllers
             {
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
                 model.CustomerCode = user.CustomerCode;
-                
+
                 int id = model.Id;
-                if (id >0)
+                if (id > 0)
                 {
                     PreLoadCabinetManager.Instance.Update(model);
                 }
@@ -109,7 +110,8 @@ namespace JonLong.CRM.Web.Controllers
                 result.Id = id;
 
                 result.Filled = PreLoadCabinetManager.Instance.GetFilled(user.CustomerCode, model.TGuid, model.ContainerType);
-                
+                PreLoadCabinetManager.Instance.UpdateBfb(model.TGuid, result.Filled);
+
             }
             catch (Exception ex)
             {
@@ -119,5 +121,31 @@ namespace JonLong.CRM.Web.Controllers
             return this.Json(result);
         }
 
-	}
+        [RoleAuthorize]
+        public JsonResult Confirm(string guid, DateTime? fhrq, string gz)
+        {
+            var result = new PreLoadCabinetEditModel
+            {
+                IsSuccess = true
+            };
+            try
+            {
+                var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
+                string message = PreLoadCabinetManager.Instance.Confirm(
+                    guid, user.CustomerCode, fhrq, user.LoginName, gz);
+                if (!String.IsNullOrEmpty(message))
+                { 
+                    result.Message = message; 
+                }
+            }
+            catch (Exception ex)
+            {
+                result.IsSuccess = false;
+                result.Message = ex.ToString();
+            }
+
+            return this.Json(result);
+        }
+
+    }
 }

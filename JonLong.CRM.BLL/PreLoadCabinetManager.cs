@@ -52,5 +52,14 @@ namespace JonLong.CRM.BLL
             return PreLoadCabinetDataProvider.LoadTitle(khbh);
         }
 
+        public string Confirm(string tguid, string khh, DateTime? fhrq, string userName, string gz)
+        {
+            return PreLoadCabinetDataProvider.Confirm(tguid, khh, fhrq, userName, gz);
+        }
+
+        public void UpdateBfb(string guid, double bfb)
+        {
+            PreLoadCabinetDataProvider.UpdateBfb(guid, bfb);
+        }
     }
 }
