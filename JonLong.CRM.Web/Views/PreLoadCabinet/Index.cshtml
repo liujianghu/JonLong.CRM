@@ -40,17 +40,20 @@
                         <td>
                             @if (Model.Title.Fhrq.HasValue)
                             {
-                                @:Model.Title.Fhrq
+                                @Model.Title.Fhrq.ToString().AsDateTime().ToShortDateString();
                         }
                         </td>
                         <td>
                             <select id="Cabinet">
-                                <option value="20">20</option>
-                                <option value="40">40</option>
-                                <option value="40T">40T</option>
+                                @*<option value="20" selected="@(Model.Title.Gzlx=="20" ? "selected":"")">20</option>
+                                <option value="40" selected=" @(Model.Title.Gzlx == "40" ? "selected" : "")">40</option>
+                                <option value="40T" selected="@(Model.Title.Gzlx=="40T" ? "selected":"")">40T</option>*@
+                                <option value="20" selected="">20</option>
+                                <option value="40" selected="selected">40</option>
+                                <option value="40T" selected="">40T</option>
                             </select>
                         </td>
-                        <td><label id="filled" style="font-weight:600">0</label></td>
+                        <td><label id="filled" style="font-weight:600">@Model.Title.Bfb %</label></td>
                     </tr>
                 </table>
             </div>
@@ -206,7 +209,7 @@
                         <td>
                             @item.BanderNo
                         </td>
-                        <td>@item.SendDate</td>
+                        <td>@item.SendDate.ToShortDateString()</td>
                         <td id="@("modelNo"+j)" style="width:150px">@item.ModelNo</td>
                         <td>
                             @item.Total

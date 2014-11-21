@@ -220,15 +220,9 @@ namespace JonLong.CRM.DAL
 
         public static void Update(PreLoadCabinet cabinet)
         {
-<<<<<<< HEAD
             string sql = @"UPDATE [dbo].[t_sale_yzk]
                        SET [sumS] = "+cabinet.Total+@"
                           ,[s1] = "+cabinet.Size1+@"
-=======
-            string sql = @"UPDATE [jncrm].[dbo].[t_sale_yzk]
-                       SET [sumS] = " + cabinet.Total + @"
-                          ,[s1] = " + cabinet.Size1 + @"
->>>>>>> jncrm/master
                           ,[s2] = " + cabinet.Size2 + @"
                             ,[s3] = " + cabinet.Size3 + @"
                             ,[s4] = " + cabinet.Size4 + @"
