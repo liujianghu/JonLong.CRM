@@ -8,7 +8,13 @@ namespace JonLong.CRM.Web.Models
 {
     public class PreLoadCabinetModel
     {
+        public PreLoadCabinetModel()
+        {
+            this.SavedTotal = new PreLoadCabinetTotalModel();
+            this.SavedItems = new List<PreLoadCabinet>();
+        }
         public List<PreLoadCabinet> SavedItems { get; set; }
+        public PreLoadCabinetTotalModel SavedTotal { get; set; }
         public Dictionary<string, PreLoadCabinetItemModel> Items { get; set; }
 
         public List<string> ShoeSizes { get; set; }

@@ -10,7 +10,7 @@ namespace JonLong.CRM.Models
     {
         public int Id { get; set; }
         /// <summary>
-        /// 3-原数据，6-loaded， 7- loading
+        /// 3-原数据，6-loaded， 8- loading
         /// </summary>
         public int WcSta { get; set; }
         public string TGuid { get; set; }
@@ -69,6 +69,8 @@ namespace JonLong.CRM.Models
         public int Size18 { get; set; }
         public int Size19 { get; set; }
         public int Size20 { get; set; }
+        public string Khdd { get; set; }
+        public DateTime? Khjq { get; set; }
 
     }
 }

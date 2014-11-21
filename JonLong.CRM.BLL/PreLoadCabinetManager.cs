@@ -19,9 +19,9 @@ namespace JonLong.CRM.BLL
             return PreLoadCabinetDataProvider.LoadAviailable(customerCode);
         }
 
-        public int Insert(PreLoadCabinet cabinet)
+        public void Save(PreLoadCabinet cabinet)
         {
-            return PreLoadCabinetDataProvider.Insert(cabinet);
+             PreLoadCabinetDataProvider.Save(cabinet);
         }
 
         public void Update(PreLoadCabinet cabinet)
