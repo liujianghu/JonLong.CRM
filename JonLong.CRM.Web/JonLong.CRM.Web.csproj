@@ -143,6 +143,7 @@
     <Compile Include="Models\PreLoadCabinetEditModel.cs" />
     <Compile Include="Models\PreLoadCabinetItemModel.cs" />
     <Compile Include="Models\PreLoadCabinetModel.cs" />
+    <Compile Include="Models\PreLoadCabinetTotalModel.cs" />
     <Compile Include="Models\WarehoseListViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderCreateModel.cs" />

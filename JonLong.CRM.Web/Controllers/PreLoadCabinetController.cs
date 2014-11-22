@@ -40,18 +40,44 @@ namespace JonLong.CRM.Web.Controllers
                     {
                         itemModel.Origin = item;
                     }
-                    else if (item.WcSta == 6)
+                    else if (item.WcSta == 8)
                     {
-                        itemModel.Loaded = item;
+                        itemModel.Loading = item;
                     }
                     else
                     {
-                        itemModel.Loading = item;
+                        itemModel.Loaded = item;
                     }
                     model.Items[key] = itemModel;
                 }
 
-                model.SavedItems = tuple.Item1.Where(t => t.WcSta == 3).ToList();
+                foreach (var item in tuple.Item1)
+                {
+                    if (item.WcSta != 6)
+                    {
+                        continue;
+                    }
+                    model.SavedItems.Add(item);
+                    model.SavedTotal.Total += item.Total;
+                    model.SavedTotal.Size1Total += item.Size1;
+                    model.SavedTotal.Size2Total += item.Size2;
+                    model.SavedTotal.Size3Total += item.Size3;
+                    model.SavedTotal.Size4Total += item.Size4;
+                    model.SavedTotal.Size5Total += item.Size5;
+                    model.SavedTotal.Size6Total += item.Size6;
+                    model.SavedTotal.Size7Total += item.Size7;
+                    model.SavedTotal.Size8Total += item.Size8;
+                    model.SavedTotal.Size9Total += item.Size9;
+                    model.SavedTotal.Size10Total += item.Size10;
+                    model.SavedTotal.Size11Total += item.Size11;
+                    model.SavedTotal.Size12Total += item.Size12;
+                    model.SavedTotal.Size13Total += item.Size13;
+                    model.SavedTotal.Size14Total += item.Size14;
+                    model.SavedTotal.Size15Total += item.Size15;
+                    model.SavedTotal.Size16Total += item.Size16;
+                    model.SavedTotal.Size17Total += item.Size17;
+                    model.SavedTotal.Size18Total += item.Size18;
+                }
 
                 model.Title = PreLoadCabinetManager.Instance.LoadTitle(user.CustomerCode);
                 if (model.Title == null)
@@ -97,18 +123,7 @@ namespace JonLong.CRM.Web.Controllers
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
                 model.CustomerCode = user.CustomerCode;
 
-                int id = model.Id;
-                if (id > 0)
-                {
-                    PreLoadCabinetManager.Instance.Update(model);
-                }
-                else
-                {
-                    id = PreLoadCabinetManager.Instance.Insert(model);
-                }
-
-                result.Id = id;
-
+                PreLoadCabinetManager.Instance.Save(model);
                 result.Filled = PreLoadCabinetManager.Instance.GetFilled(user.CustomerCode, model.TGuid, model.ContainerType);
                 PreLoadCabinetManager.Instance.UpdateBfb(model.TGuid, result.Filled);
 
