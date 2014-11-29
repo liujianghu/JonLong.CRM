@@ -10,16 +10,18 @@ namespace JonLong.CRM.DAL
 {
     public class PreLoadCabinetDataProvider
     {
-        public static Tuple<List<PreLoadCabinet>, List<PreLoadCabinet>> LoadAviailable(string customerCode)
+        public static Tuple<List<PreLoadCabinet>, List<PreLoadCabinet>> LoadAviailable(string customerCode, string mbn = "")
         {
             var list = new List<PreLoadCabinet>();
             var list2 = new List<PreLoadCabinet>();
-            SqlParameter[] parameters = new SqlParameter[2];
+            SqlParameter[] parameters = new SqlParameter[3];
             parameters[0] = new SqlParameter("@khh", SqlDbType.VarChar);
             parameters[0].Value = customerCode;
-            parameters[1] = new SqlParameter("@message", SqlDbType.VarChar);
-            parameters[1].Size = 32;
-            parameters[1].Direction = ParameterDirection.InputOutput;
+            parameters[1] = new SqlParameter("@mBn", SqlDbType.VarChar);
+            parameters[1].Value = customerCode;
+            parameters[2] = new SqlParameter("@message", SqlDbType.VarChar);
+            parameters[2].Size = 32;
+            parameters[2].Direction = ParameterDirection.InputOutput;
 
             using (var reader = SqlHelper.ExecuteReader(
                 ConnectionHelper.ConnectionString
@@ -286,8 +288,7 @@ namespace JonLong.CRM.DAL
 
         public static CabinetTitle LoadTitle(string khbh)
         {
-            SqlParameter[] parameters = new SqlParameter[5];
-            string sql = "select top 1 * from t_sale_yzkM where khbh='" + khbh + "' order by id desc";
+            string sql = "select top 1 * from t_sale_yzkM where khbh='" + khbh + "'  order by updateTime desc";
             using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString, CommandType.Text, sql))
             {
                 if (reader.Read())
@@ -368,6 +369,24 @@ namespace JonLong.CRM.DAL
         {
             string sql = "UPDATE dbo.t_sale_yzkM SET bfb = " + bfb + " WHERE tGuid = '" + guid + "';";
             SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
+        }
+
+        public static List<string> LoadBandno(string khbh)
+        {
+            var list = new List<string>();
+            string sql = "select top 3 banderNo from t_sale_khyslist where  khbh='" + khbh + "' ;";
+            using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        list.Add(reader.GetString(0));
+                    }
+                }
+            }
+
+            return list;
         }
     }
 }

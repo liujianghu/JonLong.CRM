@@ -14,14 +14,15 @@ namespace JonLong.CRM.Web.Controllers
     public class PreLoadCabinetController : Controller
     {
         [RoleAuthorize]
-        public ActionResult Index()
+        public ActionResult Index(string bno = "")
         {
             try
             {
                 var user = AccountHelper.GetLoginUserInfo(HttpContext.User.Identity);
                 var model = new PreLoadCabinetModel();
                 model.Guid = Guid.NewGuid().ToString();
-                var tuple = PreLoadCabinetManager.Instance.LoadAviailable(user.CustomerCode);
+                model.Bandnos = PreLoadCabinetManager.Instance.LoadBandno(user.CustomerCode);
+                var tuple = PreLoadCabinetManager.Instance.LoadAviailable(user.CustomerCode, bno);
 
                 model.Items = new Dictionary<string, PreLoadCabinetItemModel>();
                 foreach (var item in tuple.Item2)
