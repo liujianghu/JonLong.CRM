@@ -14,9 +14,9 @@ namespace JonLong.CRM.BLL
 
         public static readonly PreLoadCabinetManager Instance = new PreLoadCabinetManager();
 
-        public Tuple<List<PreLoadCabinet>, List<PreLoadCabinet>> LoadAviailable(string customerCode, string mbn)
+        public Tuple<List<PreLoadCabinet>, List<PreLoadCabinet>> LoadAviailable(string customerCode, string mbn, int lx)
         {
-            return PreLoadCabinetDataProvider.LoadAviailable(customerCode, mbn);
+            return PreLoadCabinetDataProvider.LoadAviailable(customerCode, mbn,lx);
         }
 
         public void Save(PreLoadCabinet cabinet)

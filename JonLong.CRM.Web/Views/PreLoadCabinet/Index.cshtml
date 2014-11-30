@@ -104,7 +104,14 @@
             <div class="clear">
                 <p></p>
             </div>
-            <div class="tab-content default-tab" style="overflow-y:auto; height: 300px;">
+            @{
+                string headeStyle = "";
+                if (Model.SavedItems.Count>=7)
+                {
+                    headeStyle = "overflow-y:auto; height: 300px;";
+                }
+            }
+            <div class="tab-content default-tab" style="@headeStyle">
                 <table class="table_b">
                     <tr class="alt-row">
                         @{
@@ -625,7 +632,7 @@
                 success: function (data) {
                     if (data.IsSuccess) {
                         alert("Success");
-                        location.href = "@Url.Action("Index")";
+                        location.href = "@Url.Action("Index")" + "?bno=\"\"&lx=1";
                     } else {
                         alert(data.Message);
                     }
