@@ -14,7 +14,7 @@ namespace JonLong.CRM.Web.Controllers
     public class PreLoadCabinetController : Controller
     {
         [RoleAuthorize]
-        public ActionResult Index(string bno = "")
+        public ActionResult Index(string bno = "", int lx = 0)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace JonLong.CRM.Web.Controllers
                 var model = new PreLoadCabinetModel();
                 model.Guid = Guid.NewGuid().ToString();
                 model.Bandnos = PreLoadCabinetManager.Instance.LoadBandno(user.CustomerCode);
-                var tuple = PreLoadCabinetManager.Instance.LoadAviailable(user.CustomerCode, bno);
+                var tuple = PreLoadCabinetManager.Instance.LoadAviailable(user.CustomerCode, bno, lx);
 
                 model.Items = new Dictionary<string, PreLoadCabinetItemModel>();
                 foreach (var item in tuple.Item2)

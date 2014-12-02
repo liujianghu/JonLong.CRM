@@ -1,4 +1,15 @@
-﻿﻿@{
+﻿Skip to content
+Sign up Sign in This repository
+Explore
+Features
+Enterprise
+Blog
+ Star 0  Fork 1 liujianghu/JonLong.CRM
+ branch: master  JonLong.CRM / JonLong.CRM.Web / Views / PreLoadCabinet / Index.cshtml
+Lake.liuliujianghu 2 days ago 添加参数
+1 contributor
+648 lines (624 sloc)  28.585 kb RawBlameHistory
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -76,7 +87,7 @@
                             {
                                 <option value="20">20</option>
                             }
-                            @if (Model.Title.Gzlx == "40T")
+                            @if (Model.Title.Gzlx == "40")
                             {
                                 <option value="40" selected="selected">40</option>
                             }
@@ -104,7 +115,14 @@
         <div class="clear">
             <p></p>
         </div>
-        <div class="tab-content default-tab" style="overflow-y:auto; height: 300px;">
+        @{
+            string headeStyle = "";
+            if (Model.SavedItems.Count >= 7)
+            {
+                headeStyle = "overflow-y:auto; height: 300px;";
+            }
+        }
+        <div class="tab-content default-tab" style="@headeStyle">
             <table class="table_b">
                 <tr class="alt-row">
                     @{
@@ -609,7 +627,7 @@
                 success: function (data) {
                     if (data.IsSuccess) {
                         alert("Success");
-                        location.href = "@Url.Action("Index")";
+                        location.href = "@Url.Action("Index")" + "?bno=\"\"&lx=1";
                     } else {
                         alert(data.Message);
                     }
@@ -621,3 +639,4 @@
         }
     </script>
 }
+

@@ -10,18 +10,20 @@ namespace JonLong.CRM.DAL
 {
     public class PreLoadCabinetDataProvider
     {
-        public static Tuple<List<PreLoadCabinet>, List<PreLoadCabinet>> LoadAviailable(string customerCode, string mbn = "")
+        public static Tuple<List<PreLoadCabinet>, List<PreLoadCabinet>> LoadAviailable(string customerCode, string mbn = "", int lx = 0)
         {
             var list = new List<PreLoadCabinet>();
             var list2 = new List<PreLoadCabinet>();
-            SqlParameter[] parameters = new SqlParameter[3];
+            SqlParameter[] parameters = new SqlParameter[4];
             parameters[0] = new SqlParameter("@khh", SqlDbType.VarChar);
             parameters[0].Value = customerCode;
-            parameters[1] = new SqlParameter("@mBn", SqlDbType.VarChar);
-            parameters[1].Value = customerCode;
-            parameters[2] = new SqlParameter("@message", SqlDbType.VarChar);
-            parameters[2].Size = 32;
-            parameters[2].Direction = ParameterDirection.InputOutput;
+            parameters[1] = new SqlParameter("@lx", SqlDbType.SmallInt);
+            parameters[1].Value = lx;
+            parameters[2] = new SqlParameter("@mBn", SqlDbType.VarChar);
+            parameters[2].Value = mbn;
+            parameters[3] = new SqlParameter("@message", SqlDbType.VarChar);
+            parameters[3].Size = 32;
+            parameters[3].Direction = ParameterDirection.InputOutput;
 
             using (var reader = SqlHelper.ExecuteReader(
                 ConnectionHelper.ConnectionString
