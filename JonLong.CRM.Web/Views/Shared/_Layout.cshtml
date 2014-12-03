@@ -15,8 +15,8 @@
 <body>
     <div id="body-wrapper" >
         <!-- Wrapper for the radial gradient background -->
-        <div id="sidebar">
-            <div id="sidebar-wrapper" >
+        <div id="sidebar" >
+            <div id="sidebar-wrapper">
                 <!-- Sidebar with logo and menu -->
                 <h1 id="sidebar-title">
                     <a href="@Url.Action("index","home")">Jonlong CRM</a>
@@ -44,7 +44,7 @@
                         Out
                     </a>
                 </div>
-                <ul id="main-nav">
+                <ul id="main-nav" style="overflow-y: auto; height: 600px; overflow-x:hidden">
                     <!-- Accordion Menu -->
                     <li>
                         <a href="@Url.Action("index","home")" class="nav-top-item no-submenu current">

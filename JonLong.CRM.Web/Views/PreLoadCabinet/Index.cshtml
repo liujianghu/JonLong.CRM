@@ -7,9 +7,12 @@
 @section head{
     <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
     <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-theme.min.css")" type="text/css" media="screen" />
+<link rel="stylesheet" href="@Url.Content("~/Content/css/component.css")" type="text/css" media="screen" />
     <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-datepicker.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/stickUp.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.stickyheader.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ba-throttle-debounce.min.js")"></script>
 }
 <style>
     .table_b td {
@@ -30,18 +33,18 @@
 </div>
 
 <div class="content-box-content">
-        <div class="tab-content default-tab" id="tab1">
-            <div class="tab-content default-tab"  style="width:1400px">
-                <table class="table_b">
-                    <tr>
-                        <td>Bundler No.</td>
-                        <td>ETD</td>
-                        <td>Cabinet</td>
-                        <td>Filled:</td>
-                        <td></td>
-                    </tr>
-                    <tr style="background-color: #d5ffc2;">
-                        <td>
+    <div class="tab-content default-tab" id="tab1">
+        <div class="tab-content default-tab">
+            <table class="table_b">
+                <tr>
+                    <td>Bundler No.</td>
+                    <td>ETD</td>
+                    <td>Cabinet</td>
+                    <td>Filled:</td>
+                    <td></td>
+                </tr>
+                <tr style="background-color: #d5ffc2;">
+                    <td>
                         <select id="bandno">
                             @foreach (var item in Model.Bandnos)
                             {
@@ -55,222 +58,216 @@
                                 }
                             }
                         </select>
-                        </td>
-                        <td>
-                            @if (Model.Title.Fhrq.HasValue)
-                            {
-                                <input id="fhrq" class="datepicker" data-provide="datepicker" value="@Model.Title.Fhrq.Value.ToString("yyyy-MM-dd")" />
-                            }
-                            else
-                            {
-                                <input id="fhrq" class="datepicker" data-provide="datepicker" />
-                            }
-                        </td>
-                        <td>
-                            <select id="Cabinet">
-                                @if (Model.Title.Gzlx == "20")
-                                {
-                                    <option value="20" selected="selected">20</option>
-                                }
-                                else
-                                {
-                                    <option value="20">20</option>
-                                }
-                                @if (Model.Title.Gzlx == "40T")
-                                {
-                                    <option value="40" selected="selected">40</option>
-                                }
-                                else
-                                {
-                                    <option value="40">40</option>
-                                }
-
-                                @if (Model.Title.Gzlx == "40T")
-                                {
-                                    <option value="40T" selected="selected">40T</option>
-                                }
-                                else
-                                {
-                                    <option value="40T">40T</option>
-                                }
-
-                            </select>
-                        </td>
-                        <td><label id="filled" style="font-weight:600">@Model.Title.Bfb%</label></td>
-                        <td><input class="button" type="button" onclick="finish();" value="Finish" /></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="clear">
-                <p></p>
-            </div>
-            @{
-                string headeStyle = "";
-                if (Model.SavedItems.Count>=7)
-                {
-                    headeStyle = "overflow-y:auto; height: 300px;";
-                }
-            }
-            <div class="tab-content default-tab" style="@headeStyle">
-                <table class="table_b">
-                    <tr class="alt-row">
-                        @{
-                            int sizeTypeCount = 18;
-                            if (Model.ShoeSizes.Count < sizeTypeCount)
-                            {
-                                sizeTypeCount = Model.ShoeSizes.Count;
-                            }
-                        }
-                        <th style="width:100px">Bundler No.</th>
-                        <th style="width:100px">ETD</th>
-                        <th ">Model No.</th>
-                        <th style="width:50px">Total</th>
-                        @for (int i = 0; i < sizeTypeCount; i++)
+                    </td>
+                    <td>
+                        @if (Model.Title.Fhrq.HasValue)
                         {
-                            <th style="font-weight:200;width:50px">
-                                @Model.ShoeSizes[i]
-                            </th>
-                        }
-                        <th>Bundle No</th>
-                        <th>Original ETD</th>
-
-                    </tr>
-                    @{
-                        int m = 0;
-                        string trclass1 = "";
-                    }
-                    @foreach (var item in Model.SavedItems)
-                    {
-                        if (m % 2 == 0)
-                        {
-                            trclass1 = "";
+                            <input id="fhrq" class="datepicker" data-provide="datepicker" value="@Model.Title.Fhrq.Value.ToString("yyyy-MM-dd")" />
                         }
                         else
                         {
-                            trclass1 = "alt-row";
+                            <input id="fhrq" class="datepicker" data-provide="datepicker" />
                         }
-                        <tr class="@trclass1">
-                            <td>@item.BanderNo</td>
-                            <td>@item.SendDate.ToString("yyyy-MM-dd")</td>
-                            <td>@item.ModelNo</td>
-                            <td>
-                                @item.Total
-                            </td>
-                            <td style="width:50px">
-                                @item.Size1
-                            </td>
-                            <td style="width:50px">@item.Size2</td>
-                            <td style="width:50px">@item.Size3</td>
-                            <td style="width:50px">@item.Size4</td>
-                            <td style="width:50px">@item.Size5</td>
-                            <td style="width:50px">
-                                @item.Size6
-                            </td>
-                            <td style="width:50px">
-                                @item.Size7
-                            </td>
-                            <td style="width:50px">
-                                @item.Size8
-                            </td>
-                            <td style="width:50px">
-                                @item.Size9
-                            </td>
-                            <td style="width:50px">
-                                @item.Size10
-                            </td>
-                            <td style="width:50px">
-                                @item.Size11
-                            </td>
-                            <td style="width:50px">
-                                @item.Size12
-                            </td>
-                            <td style="width:50px">
-                                @item.Size13
-                            </td>
-                            <td style="width:50px">
-                                @item.Size14
-                            </td>
-                            <td style="width:50px">
-                                @item.Size15
-                            </td>
-                            <td style="width:50px">
-                                @item.Size16
-                            </td>
-                            <td style="width:50px">
-                                @item.Size17
-                            </td>
-                            <td style="width:50px">
-                                @item.Size18
-                            </td>
-                            <td>@item.BanderNo</td>
-                            <td>@item.SendDate.ToShortDateString()</td>
-                        </tr>
-                        m++;
+                    </td>
+                    <td>
+                        <select id="Cabinet">
+                            @if (Model.Title.Gzlx == "20")
+                            {
+                                <option value="20" selected="selected">20</option>
+                            }
+                            else
+                            {
+                                <option value="20">20</option>
+                            }
+                            @if (Model.Title.Gzlx == "40T")
+                            {
+                                <option value="40" selected="selected">40</option>
+                            }
+                            else
+                            {
+                                <option value="40">40</option>
+                            }
+
+                            @if (Model.Title.Gzlx == "40T")
+                            {
+                                <option value="40T" selected="selected">40T</option>
+                            }
+                            else
+                            {
+                                <option value="40T">40T</option>
+                            }
+
+                        </select>
+                    </td>
+                    <td><label id="filled" style="font-weight:600">@Model.Title.Bfb%</label></td>
+                    <td><input class="button" type="button" onclick="finish();" value="Finish" /></td>
+                </tr>
+            </table>
+        </div>
+        @{
+            string headeStyle = "";
+            if (Model.SavedItems.Count >= 7)
+            {
+                headeStyle = "overflow-y:auto; height: 300px;";
+            }
+        }
+        <div class="tab-content default-tab" style="@headeStyle">
+            <table class="table_b">
+                <tr class="alt-row">
+                    @{
+                        int sizeTypeCount = 18;
+                        if (Model.ShoeSizes.Count < sizeTypeCount)
+                        {
+                            sizeTypeCount = Model.ShoeSizes.Count;
+                        }
                     }
-                    <tr>
-                        <td colspan="3">Total</td>
+                    <th style="width:100px">Bundler No.</th>
+                    <th style="width:100px">ETD</th>
+                    <th>Model No.</th>
+                    <th style="width:50px">Total</th>
+                    @for (int i = 0; i < sizeTypeCount; i++)
+                    {
+                        <th style="font-weight:200;width:50px">
+                            @Model.ShoeSizes[i]
+                        </th>
+                    }
+                    <th>Bundle No</th>
+                    <th>Original ETD</th>
+
+                </tr>
+                @{
+                    int m = 0;
+                    string trclass1 = "";
+                }
+                @foreach (var item in Model.SavedItems)
+                {
+                    if (m % 2 == 0)
+                    {
+                        trclass1 = "";
+                    }
+                    else
+                    {
+                        trclass1 = "alt-row";
+                    }
+                    <tr class="@trclass1">
+                        <td>@item.BanderNo</td>
+                        <td>@item.SendDate.ToString("yyyy-MM-dd")</td>
+                        <td>@item.ModelNo</td>
                         <td>
-                            @Model.SavedTotal.Total
+                            @item.Total
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size1Total
+                        <td style="width:50px">
+                            @item.Size1
                         </td>
-                        <td>@Model.SavedTotal.Size2Total</td>
-                        <td>@Model.SavedTotal.Size3Total</td>
-                        <td>@Model.SavedTotal.Size4Total</td>
-                        <td>@Model.SavedTotal.Size5Total</td>
-                        <td>
-                            @Model.SavedTotal.Size6Total
+                        <td style="width:50px">@item.Size2</td>
+                        <td style="width:50px">@item.Size3</td>
+                        <td style="width:50px">@item.Size4</td>
+                        <td style="width:50px">@item.Size5</td>
+                        <td style="width:50px">
+                            @item.Size6
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size7Total
+                        <td style="width:50px">
+                            @item.Size7
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size8Total
+                        <td style="width:50px">
+                            @item.Size8
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size9Total
+                        <td style="width:50px">
+                            @item.Size9
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size10Total
+                        <td style="width:50px">
+                            @item.Size10
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size11Total
+                        <td style="width:50px">
+                            @item.Size11
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size12Total
+                        <td style="width:50px">
+                            @item.Size12
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size13Total
+                        <td style="width:50px">
+                            @item.Size13
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size14Total
+                        <td style="width:50px">
+                            @item.Size14
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size15Total
+                        <td style="width:50px">
+                            @item.Size15
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size16Total
+                        <td style="width:50px">
+                            @item.Size16
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size17Total
+                        <td style="width:50px">
+                            @item.Size17
                         </td>
-                        <td>
-                            @Model.SavedTotal.Size18Total
+                        <td style="width:50px">
+                            @item.Size18
                         </td>
-                        <td></td>
-                        <td></td>
+                        <td>@item.BanderNo</td>
+                        <td>@item.SendDate.ToShortDateString()</td>
                     </tr>
-                </table>
-            </div>
+                    m++;
+                }
+                <tr>
+                    <td colspan="3">Total</td>
+                    <td>
+                        @Model.SavedTotal.Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size1Total
+                    </td>
+                    <td>@Model.SavedTotal.Size2Total</td>
+                    <td>@Model.SavedTotal.Size3Total</td>
+                    <td>@Model.SavedTotal.Size4Total</td>
+                    <td>@Model.SavedTotal.Size5Total</td>
+                    <td>
+                        @Model.SavedTotal.Size6Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size7Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size8Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size9Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size10Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size11Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size12Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size13Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size14Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size15Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size16Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size17Total
+                    </td>
+                    <td>
+                        @Model.SavedTotal.Size18Total
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
 
-            <div class="clear">
-                <p></p>
-            </div>
-            <div class="tab-content default-tab" style="overflow-y: auto; height: 600px;">
-                <table class="table_b">
-                    <tr style="background-color: #ffd6d6">
-
+        <div class="tab-content default-tab component" >
+            <table class="table_b overflow-y">
+                <thead>
+                    <tr style="background-color: #ffd6d6; ">
                         @{
                             sizeTypeCount = 18;
                             if (Model.ShoeSizes.Count < sizeTypeCount)
@@ -292,6 +289,8 @@
                         <th>Original ETD</th>
 
                     </tr>
+                </thead>
+                <tbody>
                     @{
                         int j = 0;
                         string trclass = "";
@@ -497,18 +496,14 @@
                         </tr>
                         j++;
                     }
-
-                </table>
-            </div>
-            <div class="clear">
-                <p></p>
-            </div>
-
+                </tbody>
+            </table>
         </div>
 
     </div>
-<div class="clear">
+
 </div>
+
 @section scripts{
     <script type="text/javascript">
         var guid = '@Model.Title.TGuid';
@@ -522,7 +517,7 @@
         $(document).ready(function () {
             $('.datepicker').datepicker({
                 format: 'yyyy/mm/dd',
-                min:true
+                min: true
             });
             $("#bandno").change(function () {
                 window.location.href = "@Url.Action("index")" + "?bno=" + this.value;
@@ -598,7 +593,7 @@
                 Size3: size3, Size4: size4, Size5: size5, Size6: size6, Size7: size7,
                 Size8: size8, Size9: size9, Size10: size10, Size11: size11, Size12: size12,
                 Size13: size13, Size14: size14, Size15: size15, Size16: size16, Size17: size17,
-                Size18: size18,Khdd:khdd,Khjq:khjq
+                Size18: size18, Khdd: khdd, Khjq: khjq
             };
             $.ajax({
                 type: "POST",
