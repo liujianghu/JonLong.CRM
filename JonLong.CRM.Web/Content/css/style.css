@@ -165,15 +165,15 @@ a.remove-link {
         }
 
     #sidebar #sidebar-title {
-        margin: 40px 0 40px 15px;
+        margin: 40px 0 10px 15px;
     }
 
     #sidebar #logo {
-        margin: 40px 0 20px 110px;
+        margin: 10px 0 10px 110px;
     }
 
     #sidebar #profile-links {
-        padding: 0 15px 20px 15px;
+        padding: 0 15px 5px 15px;
         text-align: right;
         line-height: 1.5em;
     }
@@ -189,7 +189,7 @@ a.remove-link {
 
         #sidebar #main-nav li {
             list-style: none;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
             text-align: right;
         }
 
@@ -404,7 +404,7 @@ ul.content-box-tabs {
 
 #main-content table td,
 #main-content table th {
-    padding: 10px;
+    padding: 10px 0px 10px 0px; 
     line-height: 1.3em;
 }
 
@@ -519,6 +519,7 @@ form .wysiwyg {
 }
 .small-input2 {
     width: 30px !important;
+    padding:0px 0px;
 }
 form .small-input {
     width: 25% !important;
