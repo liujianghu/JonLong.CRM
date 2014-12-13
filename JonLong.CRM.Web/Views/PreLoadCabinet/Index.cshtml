@@ -1,4 +1,4 @@
-﻿@{
+﻿﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -7,12 +7,12 @@
 @section head{
     <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
     <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-theme.min.css")" type="text/css" media="screen" />
-<link rel="stylesheet" href="@Url.Content("~/Content/css/component.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/component.css")" type="text/css" media="screen" />
     <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-datepicker.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/stickUp.min.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.stickyheader.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ba-throttle-debounce.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.stickyheader.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.ba-throttle-debounce.min.js")"></script>
 }
 <style>
     .table_b td {
@@ -79,7 +79,7 @@
                             {
                                 <option value="20">20</option>
                             }
-                            @if (Model.Title.Gzlx == "40T")
+                            @if (Model.Title.Gzlx == "40")
                             {
                                 <option value="40" selected="selected">40</option>
                             }
@@ -106,35 +106,96 @@
         </div>
         @{
             string headeStyle = "";
-            if (Model.SavedItems.Count >= 7)
+            if (Model.SavedItems.Count >= 4)
             {
-                headeStyle = "overflow-y:auto; height: 300px;";
+                //headeStyle = "overflow-y:auto;height:190px;";
+                headeStyle = "table_b overflow-y";
             }
-        }
-        <div class="tab-content default-tab" style="@headeStyle">
-            <table class="table_b">
-                <tr class="alt-row">
-                    @{
-                        int sizeTypeCount = 18;
-                        if (Model.ShoeSizes.Count < sizeTypeCount)
-                        {
-                            sizeTypeCount = Model.ShoeSizes.Count;
-                        }
-                    }
-                    <th style="width:100px">Bundler No.</th>
-                    <th style="width:100px">ETD</th>
-                    <th>Model No.</th>
-                    <th style="width:50px">Total</th>
-                    @for (int i = 0; i < sizeTypeCount; i++)
-                    {
-                        <th style="font-weight:200;width:50px">
-                            @Model.ShoeSizes[i]
-                        </th>
-                    }
-                    <th>Bundle No</th>
-                    <th>Original ETD</th>
+            else
+            { headeStyle = "table_b"; }
 
-                </tr>
+        }
+        <div class="tab-content default-tab component">
+            @*<table class="table_b overflow-y">*@
+            <table class="@headeStyle">
+                <thead>
+                    <tr class="alt-row">
+                        @{
+                            int sizeTypeCount = 18;
+                            if (Model.ShoeSizes.Count < sizeTypeCount)
+                            {
+                                sizeTypeCount = Model.ShoeSizes.Count;
+                            }
+                        }
+                        <th style="width:100px">Bundler No.</th>
+                        <th style="width:100px">ETD</th>
+                        <th>Model No.</th>
+                        <th style="width:50px">Total</th>
+                        @for (int i = 0; i < sizeTypeCount; i++)
+                        {
+                            <th style="font-weight:200;width:50px">
+                                @Model.ShoeSizes[i]
+                            </th>
+                        }
+                        <th>Bundle No</th>
+                        <th>Original ETD</th>
+
+                    </tr>
+                    <tr class="tr-total">
+                        <td colspan="3">Total</td>
+                        <td>
+                            @Model.SavedTotal.Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size1Total
+                        </td>
+                        <td>@Model.SavedTotal.Size2Total</td>
+                        <td>@Model.SavedTotal.Size3Total</td>
+                        <td>@Model.SavedTotal.Size4Total</td>
+                        <td>@Model.SavedTotal.Size5Total</td>
+                        <td>
+                            @Model.SavedTotal.Size6Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size7Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size8Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size9Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size10Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size11Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size12Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size13Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size14Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size15Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size16Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size17Total
+                        </td>
+                        <td>
+                            @Model.SavedTotal.Size18Total
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
                 @{
                     int m = 0;
                     string trclass1 = "";
@@ -207,65 +268,22 @@
                     </tr>
                     m++;
                 }
-                <tr>
-                    <td colspan="3">Total</td>
-                    <td>
-                        @Model.SavedTotal.Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size1Total
-                    </td>
-                    <td>@Model.SavedTotal.Size2Total</td>
-                    <td>@Model.SavedTotal.Size3Total</td>
-                    <td>@Model.SavedTotal.Size4Total</td>
-                    <td>@Model.SavedTotal.Size5Total</td>
-                    <td>
-                        @Model.SavedTotal.Size6Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size7Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size8Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size9Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size10Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size11Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size12Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size13Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size14Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size15Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size16Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size17Total
-                    </td>
-                    <td>
-                        @Model.SavedTotal.Size18Total
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
+
             </table>
         </div>
 
-        <div class="tab-content default-tab component" >
-            <table class="table_b overflow-y">
+        @{
+            string headeStyle1 = "";
+            if (Model.Items.Count >= 4)
+            {
+                //headeStyle1 = "overflow-y:auto;max-height:180px;";
+                headeStyle1 = "table_b overflow-y";
+            }
+            else { headeStyle1 = "table_b"; }
+        }
+        <div class="tab-content default-tab component">
+            @*<table class="table_b overflow-y" style="@headeStyle1">*@
+            <table class="@headeStyle1">
                 <thead>
                     <tr style="background-color: #ffd6d6; ">
                         @{
@@ -581,8 +599,8 @@
             var size17 = $(prefix + "17").val();
             var size18 = $(prefix + "18").val();
 
-            if (total <= 0) {
-                alert("The total must be more than 0.");
+            if (total < 0) {
+                alert("The total must be equal or more than 0.");
                 return;
             }
 
@@ -606,7 +624,7 @@
                         alert("Success");
                         location.href = "@Url.Action("Index")";
                     } else {
-                        alert(data.Message);
+                        alert(data.Message);                       
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -639,4 +657,3 @@
         }
     </script>
 }
-

@@ -122,17 +122,19 @@ namespace JonLong.CRM.DAL
                         COUNT(CASE WHEN b.ms_id = 20 THEN 20
                                    ELSE NULL
                               END) AS s20
-                FROM    dbo.tab_cp_barcode b
+                FROM    zrdb.dbo.tab_cp_barcode b
                         INNER JOIN ( SELECT xh_bh ,
                                             xh_khxh AS khxh
                                      FROM   t_bas_xt t
-                                            INNER JOIN t_Bas_xh h ON xt_xt = xh_xt";
+   INNER JOIN t_Bas_xh h ON xt_xt = xh_xt"; 
+
                         if (!String.IsNullOrEmpty(customerCode))
                         {
                             sql += " AND xt_khh = '" + customerCode + "' ";
                         }
                         sql += @") xh ON b.xh = xh.xh_bh
                 WHERE   state IN ( '入库', '备货' )";
+
             if (!String.IsNullOrEmpty(shoe) && shoe != "ALL")
             {
                 sql += " and xh.khxh = '" + shoe + "' ";
@@ -276,7 +278,7 @@ namespace JonLong.CRM.DAL
                         ISNULL(khkc_s19, 0) AS khkc_s19 ,
                         ISNULL(khkc_s20, 0) AS khkc_s20,
                         khkc_xhb
-                    FROM [jncrm].[dbo].[t_sale_khkc]
+                    FROM [dbo].[t_sale_khkc]
                     where id = " + id;
             using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString, CommandType.Text, sql))
             {
@@ -317,7 +319,7 @@ namespace JonLong.CRM.DAL
 
         public static void Insert(Warehouse info, string customerCode)
         {
-            string sql = @"INSERT INTO [jncrm].[dbo].[t_sale_khkc]
+            string sql = @"INSERT INTO [dbo].[t_sale_khkc]
                        ([khkc_xh]
                        ,[khkc_sumS]
                        ,[khkc_s1]
@@ -373,7 +375,7 @@ namespace JonLong.CRM.DAL
 
         public static void Update(Warehouse info, string customerCode)
         {
-            string sql = @"UPDATE [jncrm].[dbo].[t_sale_khkc]
+            string sql = @"UPDATE [dbo].[t_sale_khkc]
                SET [khkc_xh] = '" + info.ModelNo + @"'
                   ,[khkc_sumS] = '" + info.Total + @"'
                   ,[khkc_s1] = " + info.Size1 + @"
@@ -405,7 +407,7 @@ namespace JonLong.CRM.DAL
 
         public static void Delete(int id)
         {
-            string sql = "DELETE FROM [jncrm].[dbo].[t_sale_khkc] WHERE id=" + id;
+            string sql = "DELETE FROM [dbo].[t_sale_khkc] WHERE id=" + id;
             SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
         }
     }

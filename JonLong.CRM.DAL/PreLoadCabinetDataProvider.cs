@@ -34,6 +34,33 @@ namespace JonLong.CRM.DAL
                 while (reader.Read())
                 {
                     var cabinet = new PreLoadCabinet();
+
+                    //cabinet.ModelNo = reader.GetString(3);
+                    //cabinet.XHB = reader.GetString(4);
+                    //cabinet.SendDate = reader.GetDateTime(1);
+                    //cabinet.BanderNo = reader.GetString(2);
+                    //cabinet.XHB = reader.IsDBNull(4)?"":reader.GetString(4);
+                    //cabinet.Total = reader.GetInt32(5);
+                    //cabinet.Size1 = reader.GetInt32(6);
+                    //cabinet.Size2 = reader.GetInt32(7);
+                    //cabinet.Size3 = reader.GetInt32(8);
+                    //cabinet.Size4 = reader.GetInt32(9);
+                    //cabinet.Size5 = reader.GetInt32(10);
+                    //cabinet.Size6 = reader.GetInt32(11);
+                    //cabinet.Size7 = reader.GetInt32(12);
+                    //cabinet.Size8 = reader.GetInt32(13);
+                    //cabinet.Size9 = reader.GetInt32(14);
+                    //cabinet.Size10 = reader.GetInt32(15);
+                    //cabinet.Size11 = reader.GetInt32(16);
+                    //cabinet.Size12 = reader.GetInt32(17);
+                    //cabinet.Size13 = reader.GetInt32(18);
+                    //cabinet.Size14 = reader.GetInt32(19);
+                    //cabinet.Size15 = reader.GetInt32(20);
+                    //cabinet.Size16 = reader.GetInt32(21);
+                    //cabinet.Size17 = reader.GetInt32(22);
+                    //cabinet.Size18 = reader.GetInt32(23);
+                    //cabinet.Size19 = reader.GetInt32(24);
+                    //cabinet.Size20 = reader.GetInt32(25);
                     cabinet.Id = reader.GetInt32(0);
                     cabinet.WcSta = reader.GetInt32(1);
                     if (!reader.IsDBNull(2))
@@ -121,7 +148,6 @@ namespace JonLong.CRM.DAL
 
         public static void Save(PreLoadCabinet info)
         {
-
             #region Populate Parameters
 
             SqlParameter[] parameters = new SqlParameter[28];
@@ -227,9 +253,9 @@ namespace JonLong.CRM.DAL
 
         public static void Update(PreLoadCabinet cabinet)
         {
-            string sql = @"UPDATE [jncrm].[dbo].[t_sale_yzk]
-                       SET [sumS] = " + cabinet.Total + @"
-                          ,[s1] = " + cabinet.Size1 + @"
+            string sql = @"UPDATE [dbo].[t_sale_yzk]
+                       SET [sumS] = "+cabinet.Total+@"
+                          ,[s1] = "+cabinet.Size1+@"
                           ,[s2] = " + cabinet.Size2 + @"
                             ,[s3] = " + cabinet.Size3 + @"
                             ,[s4] = " + cabinet.Size4 + @"
@@ -256,7 +282,7 @@ namespace JonLong.CRM.DAL
 
         public static void Delete(int id)
         {
-            string sql = @"DELETE FROM [jncrm].[dbo].[t_sale_yzk] where [id]=" + id;
+            string sql = @"DELETE FROM [dbo].[t_sale_yzk] where [id]=" + id;
 
             SqlHelper.ExecuteNonQuery(ConnectionHelper.ConnectionString, CommandType.Text, sql);
         }
@@ -273,6 +299,7 @@ namespace JonLong.CRM.DAL
 
             parameters[3] = new SqlParameter("@bfb", SqlDbType.Float);
             parameters[3].Direction = ParameterDirection.InputOutput;
+            parameters[3].Scale = 4;
 
             parameters[4] = new SqlParameter("@message", SqlDbType.VarChar);
             parameters[4].Size = 32;

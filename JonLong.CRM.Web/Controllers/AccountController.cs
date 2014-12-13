@@ -52,7 +52,9 @@ namespace JonLong.CRM.Web.Controllers
                     return Redirect(returnUrl);
                 }
 
-                return RedirectToAction("index", "home");
+                //return RedirectToAction("index", "home");
+                //暂时不启用首页，登录后访问ORDER 20140917 by duan
+                return RedirectToAction("index", "Order");
             }
             catch (Exception)
             {

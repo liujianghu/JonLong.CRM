@@ -170,7 +170,7 @@ namespace JonLong.CRM.Web.Controllers
             grid.DataSource = table;
             grid.DataBind();
             Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment; filename=Exported_Diners.xls");
+            Response.AddHeader("content-disposition", "attachment; filename=JONLONG Warehouse.xls");
             Response.ContentType = "application/excel";
             Response.ContentEncoding = Encoding.GetEncoding("GB2312");
             

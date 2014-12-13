@@ -48,26 +48,15 @@ namespace JonLong.CRM.DAL
                                             z.fhzs_dh ,
                                             z.fhzs_invoiceNo ,
                                             CASE WHEN ISNULL(fhzs_invoiceF, '') = '' THEN ''
-                                                 ELSE '~/Base_Form/KhDownLoading.aspx?Fhdh='
-                                                      + fhzs_dh + '&'
-                                                      + 'lxmc=Invoice&Invoice='
-                                                      + fhzs_invoiceNo + '&path='
-                                                      + REPLACE(fhzs_invoiceF,
+                                                 ELSE REPLACE(fhzs_invoiceF,
                                                                 '\\10.10.10.6\DownImage\', '')
                                             END AS fhzs_invoiceF ,
                                             CASE WHEN ISNULL(fhzs_plF, '') = '' THEN ''
-                                                 ELSE '~/Base_Form/KhDownLoading.aspx?Fhdh='
-                                                      + fhzs_dh + '&'
-                                                      + 'lxmc=PackingList&Invoice='
-                                                      + fhzs_invoiceNo + '&path='
-                                                      + REPLACE(fhzs_plF,
+                                                 ELSE  REPLACE(fhzs_plF,
                                                                 '\\10.10.10.6\DownImage\', '')
                                             END AS fhzs_plF ,
                                             CASE WHEN ISNULL(fhzs_blF, '') = '' THEN ''
-                                                 ELSE '~/Base_Form/KhDownLoading.aspx?Fhdh='
-                                                      + fhzs_dh + '&' + 'lxmc=BL&Invoice='
-                                                      + fhzs_invoiceNo + '&path='
-                                                      + REPLACE(fhzs_blF,
+                                                 ELSE REPLACE(fhzs_blF,
                                                                 '\\10.10.10.6\DownImage\', '')
                                             END AS fhzs_blF ,
                                             ISNULL(fhzs_shqr, 0) AS shqr ,
