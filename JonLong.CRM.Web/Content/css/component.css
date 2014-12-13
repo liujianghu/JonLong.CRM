@@ -5,7 +5,7 @@ td, th {
     text-align:center;
 }
 
-th {
+th,.tr-total {
     background-color: #31bc86;
     font-weight: bold;
     color: #fff;
@@ -74,5 +74,5 @@ td.user-name {
 
 .sticky-wrap.overflow-y {
     overflow-y: auto;
-    max-height: 600px;
+    max-height: 220px;
 }
