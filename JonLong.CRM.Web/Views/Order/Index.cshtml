@@ -244,6 +244,7 @@
 @section scripts{
     <script type="text/javascript">
         var oldDetailId = -1;
+        var editDivId = "";
         $(document).ready(function () {
             $('.datepicker').datepicker({
                 format: 'yyyy/mm/dd',
@@ -258,15 +259,15 @@
                 return;
             }
             if (oldDetailId != -1) {
-                $("." + oldDetailId).toggle();
-                $("#btn" + oldDetailId).html("+");
+                //$("." + oldDetailId).toggle();
+                //$("#btn" + oldDetailId).html("+");
             }
             var detailDiv = $("#" + id);
             $.ajax({
                 cache: false,
                 type: "GET",
                 url: "@Url.Action("StatistscDetail")",
-                data: { "sendDate": sendDate, customerCode: customerCode, bundlerNo: bundlerNo, containerNo: containerNo, container: container },
+                data: { "sendDate": sendDate, customerCode: customerCode, bundlerNo: bundlerNo, containerNo: containerNo, container: container,id:id },
                 success: function (data) {
                     detailDiv.html('');
                     detailDiv.html(data);

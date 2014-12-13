@@ -193,7 +193,8 @@ namespace JonLong.CRM.Web.Controllers
             , string customerCode
             , string bundlerNo
             , string containerNo
-            , string container)
+            , string container
+            , int id)
         {
             try
             {
@@ -251,6 +252,8 @@ namespace JonLong.CRM.Web.Controllers
                 {
                     model.ShoeSizes = ShoeManager.Instance.LoadShoeSize(user.CustomerCode);
                 }
+
+                TempData["orderid"] = id;
 
                 return PartialView(model);
             }

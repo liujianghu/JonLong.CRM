@@ -27,22 +27,21 @@
                 sizeTypeCount = Model.ShoeSizes.Count;
             }
         }
-        <th>Model No.</th>
-        <th>Total</th>
+        <th style="width:90px">Model No.</th>
+        <th style="width:50px">Total</th>
         @for (int i = 0; i < sizeTypeCount; i++)
         {
-            <th style="font-weight:200">
+            <th style="font-weight:200; width:40px; text-align:center">
                 @Model.ShoeSizes[i]
             </th>
         }
-        <th>Original ETD</th>
+        <th style="text-align:center">Original ETD</th>
 
     </tr>
     @{
         int j = 0;
         string trclass = "";
-        Random rand = new Random();
-        int parentIndex = rand.Next(10000, 100000);
+        int parentIndex = Convert.ToInt32(TempData["orderid"]);
     }
     @foreach (var item in Model.Orders)
     {
@@ -58,7 +57,7 @@
             @if (!Model.IsSuperAdmin)
             {
                 <td>
-                    <a href="javascript:;" onclick="edit(@j,@item.Id)">Edit</a>&nbsp;&nbsp;
+                    <a href="javascript:;" onclick="edit(@j,@item.Id,@parentIndex)">Edit</a>&nbsp;&nbsp;
                     <a href="javascript:;" onclick="deleteOrder(@item.Id)" title="Delete">
                         Delete
                     </a>
@@ -67,116 +66,116 @@
             }
             <td>@item.ModelNo</td>
             <td>@item.Total</td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size1 > 0)
                 {
                     @item.Size1
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size2 > 0)
                 {
                     @item.Size2
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size3 > 0)
                 {
                     @item.Size3
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size4 > 0)
                 {
                     @item.Size4
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size5 > 0)
                 {
                     @item.Size5
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size6 > 0)
                 {
                     @item.Size6
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size7 > 0)
                 {
                     @item.Size7
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size8 > 0)
                 {
                     @item.Size8
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size9 > 0)
                 {
                     @item.Size9
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size10 > 0)
                 {
                     @item.Size10
 
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size11 > 0)
                 {
                     @item.Size11
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size12 > 0)
                 {
                     @item.Size12
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size13 > 0)
                 {
                     @item.Size13
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size14 > 0)
                 {
                     @item.Size14
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size15 > 0)
                 {
                     @item.Size15
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size16 > 0)
                 {
                     @item.Size16
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size17 > 0)
                 {
                     @item.Size17
                 }
             </td>
-            <td>
+            <td style="text-align:center">
                 @if (item.Size18 > 0)
                 {
                     @item.Size18
                 }
             </td>
-            <td>@item.OriginalETD.ToShortDateString()</td>
+            <td style="text-align:center">@item.OriginalETD.ToShortDateString()</td>
         </tr>
         <tr id="@("edittr" + parentIndex + "_"+j)" style="display:none">
             <td colspan="22">
@@ -190,26 +189,26 @@
         {
             <td><a href="@Url.Action("Create", new { etd = @Model.SendDate, bundleNo = @Model.BundleNo, containerType =@Model.ContainerType})">Add model</a></td>
         }
-        <td id="orderCount">@Model.OrderCount</td>
-        <td id="total">@Model.Total</td>
-        <td id="size1total">@Model.Size1Total</td>
-        <td id="size2total">@Model.Size2Total</td>
-        <td id="size3total">@Model.Size3Total</td>
-        <td id="size4total">@Model.Size4Total</td>
-        <td id="size5total">@Model.Size5Total</td>
-        <td id="size6total">@Model.Size6Total</td>
-        <td id="size7total">@Model.Size7Total</td>
-        <td id="size8total">@Model.Size8Total</td>
-        <td id="size9total">@Model.Size9Total</td>
-        <td id="size10total">@Model.Size10Total</td>
-        <td id="size11total">@Model.Size11Total</td>
-        <td id="size12total">@Model.Size12Total</td>
-        <td id="size13total">@Model.Size13Total</td>
-        <td id="size14total">@Model.Size14Total</td>
-        <td id="size15total">@Model.Size15Total</td>
-        <td id="size16total">@Model.Size16Total</td>
-        <td id="size17total">@Model.Size17Total</td>
-        <td id="size18total">@Model.Size18Total</td>
+        <td style="text-align:center" id="orderCount">@Model.OrderCount</td>
+        <td style="text-align:center" id="total">@Model.Total</td>
+        <td style="text-align:center" id="size1total">@Model.Size1Total</td>
+        <td style="text-align:center" id="size2total">@Model.Size2Total</td>
+        <td style="text-align:center" id="size3total">@Model.Size3Total</td>
+        <td style="text-align:center" id="size4total">@Model.Size4Total</td>
+        <td style="text-align:center" id="size5total">@Model.Size5Total</td>
+        <td style="text-align:center" id="size6total">@Model.Size6Total</td>
+        <td id="size7total" style="text-align:center">@Model.Size7Total</td>
+        <td id="size8total" style="text-align:center">@Model.Size8Total</td>
+        <td id="size9total" style="text-align:center">@Model.Size9Total</td>
+        <td id="size10total" style="text-align:center">@Model.Size10Total</td>
+        <td id="size11total" style="text-align:center">@Model.Size11Total</td>
+        <td id="size12total" style="text-align:center">@Model.Size12Total</td>
+        <td id="size13total" style="text-align:center">@Model.Size13Total</td>
+        <td id="size14total" style="text-align:center">@Model.Size14Total</td>
+        <td id="size15total" style="text-align:center">@Model.Size15Total</td>
+        <td id="size16total" style="text-align:center">@Model.Size16Total</td>
+        <td id="size17total" style="text-align:center">@Model.Size17Total</td>
+        <td id="size18total" style="text-align:center">@Model.Size18Total</td>
         <td>
             @if (!Model.IsSuperAdmin)
             {
@@ -260,27 +259,23 @@
             }
         });
     }
-    
-    function edit(index, id) {
-        var detailDiv = $("#edit" + "@parentIndex" + "_" + index);
+
+    function edit(index, id, pIndex) {
+        var detailDiv = $("#edit" + pIndex + "_" + index);
         $.ajax({
             cache: false,
             type: "GET",
             url: "@Url.Action("Edit")",
-            data: { "id": id},
+            data: { "id": id },
             success: function (data) {
-                if (oldIndex != -1 && oldIndex != index){
-                    //$("#edittr"+oldIndex).toggle();
-                    //$("#edit" + oldIndex).toggle();
-                    $("#edittr" + parentIndex + "_" + oldIndex).hide();
-                    $("#edit" + parentIndex + "_" + oldIndex).html("");
+                if (editDivId != "") {
+                    $("#edittr" + editDivId).hide();
+                    $("#edit" + editDivId).html("");
                 }
                 detailDiv.html('');
                 detailDiv.html(data);
-                $("#edittr" + "@parentIndex" + "_" + index).show();
-                
-                oldIndex = index;
-                parentIndex = "@parentIndex";
+                $("#edittr" + pIndex + "_" + index).show();
+                editDivId = pIndex + "_" + index;
                 //$("." + id).toggle();
 
             },
@@ -290,9 +285,8 @@
         });
     }
     function cancel() {
-        $("#edittr" + parentIndex + "_" + oldIndex).hide();
-        $("#edit" + parentIndex + "_" + oldIndex).html("");
-        oldIndex = -1;
+        $("#edittr" + editDivId).hide();
+        $("#edit" + editDivId).html("");
         return false;
     }
 </script>
