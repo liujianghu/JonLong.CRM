@@ -30,11 +30,11 @@
                 sizeTypeCount = Model.ShoeSizes.Count;
             }
         }
-        <th>Model No.</th>
+        <th style="width:90px">Model No.</th>
         <th>Total</th>
         @for (int i = 0; i < sizeTypeCount; i++)
         {
-            <th style="font-weight:200">
+            <th style="font-weight:200;width:40px">
                 @Model.ShoeSizes[i]
             </th>
         }
