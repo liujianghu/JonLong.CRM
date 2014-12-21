@@ -66,11 +66,11 @@
                     }
                 }
                 <th></th>
-                <th>Model No.</th>
-                <th>Stock</th>
+                <th style="text-align: center">Model No.</th>
+                <th style="text-align: center">Stock</th>
                 @for (int i = 0; i < sizeTypeCount; i++)
                 {
-                    <th style="font-weight:200">
+                    <th style="font-weight:200; width:40px; text-align:center">
                         @Model.ShoeSizes[i]
                     </th>
                 }
@@ -91,117 +91,118 @@
                     trclass = "alt-row";
                 }
                 <tr class="@trclass">
-                    <td><a href="@Url.Action("Edit", "CustomerWarehouse", new { id= @item.Id})">Edit</a>&nbsp;&nbsp;
+                    <td style="text-align: center">
+                        <a href="@Url.Action("Edit", "CustomerWarehouse", new { id= @item.Id})">Edit</a>&nbsp;&nbsp;
                         <a href="javascript:;" onclick="deleteWarehouse(@item.Id)" title="Delete">
                             Delete
                         </a>
                     </td>
-                    <td>@item.ModelNo</td>
-                    <td>@item.Total</td>
-                    <td>
+                    <td style="text-align: center">@item.ModelNo</td>
+                    <td style="text-align: center">@item.Total</td>
+                    <td style="text-align: center">
                         @if (item.Size1 > 0)
                         {
                             @item.Size1
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size2 > 0)
                         {
                             @item.Size2
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size3 > 0)
                         {
                             @item.Size3
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size4 > 0)
                         {
                             @item.Size4
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size5 > 0)
                         {
                             @item.Size5
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size6 > 0)
                         {
                             @item.Size6
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size7 > 0)
                         {
                             @item.Size7
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size8 > 0)
                         {
                             @item.Size8
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size9 > 0)
                         {
                             @item.Size9
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size10 > 0)
                         {
                             @item.Size10
 
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size11 > 0)
                         {
                             @item.Size11
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size12 > 0)
                         {
                             @item.Size12
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size13 > 0)
                         {
                             @item.Size13
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size14 > 0)
                         {
                             @item.Size14
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size15 > 0)
                         {
                             @item.Size15
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size16 > 0)
                         {
                             @item.Size16
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size17 > 0)
                         {
                             @item.Size17
                         }
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         @if (item.Size18 > 0)
                         {
                             @item.Size18
@@ -212,26 +213,26 @@
             }
             <tr style="background-color:#D3D3D3">
                 <td></td>
-                <td id="orderCount">@Model.WarehouseCount</td>
-                <td id="total">@Model.Total</td>
-                <td id="size1total">@Model.Size1Total</td>
-                <td id="size2total">@Model.Size2Total</td>
-                <td id="size3total">@Model.Size3Total</td>
-                <td id="size4total">@Model.Size4Total</td>
-                <td id="size5total">@Model.Size5Total</td>
-                <td id="size6total">@Model.Size6Total</td>
-                <td id="size7total">@Model.Size7Total</td>
-                <td id="size8total">@Model.Size8Total</td>
-                <td id="size9total">@Model.Size9Total</td>
-                <td id="size10total">@Model.Size10Total</td>
-                <td id="size11total">@Model.Size11Total</td>
-                <td id="size12total">@Model.Size12Total</td>
-                <td id="size13total">@Model.Size13Total</td>
-                <td id="size14total">@Model.Size14Total</td>
-                <td id="size15total">@Model.Size15Total</td>
-                <td id="size16total">@Model.Size16Total</td>
-                <td id="size17total">@Model.Size17Total</td>
-                <td id="size18total">@Model.Size18Total</td>
+                <td style="text-align: center" id="orderCount">@Model.WarehouseCount</td>
+                <td style="text-align: center" id="total">@Model.Total</td>
+                <td style="text-align: center" id="size1total">@Model.Size1Total</td>
+                <td style="text-align: center" id="size2total">@Model.Size2Total</td>
+                <td style="text-align: center" id="size3total">@Model.Size3Total</td>
+                <td style="text-align: center" id="size4total">@Model.Size4Total</td>
+                <td style="text-align: center" id="size5total">@Model.Size5Total</td>
+                <td style="text-align: center" id="size6total">@Model.Size6Total</td>
+                <td style="text-align: center" id="size7total">@Model.Size7Total</td>
+                <td style="text-align: center" id="size8total">@Model.Size8Total</td>
+                <td style="text-align: center" id="size9total">@Model.Size9Total</td>
+                <td style="text-align: center" id="size10total">@Model.Size10Total</td>
+                <td style="text-align: center" id="size11total">@Model.Size11Total</td>
+                <td style="text-align: center" id="size12total">@Model.Size12Total</td>
+                <td style="text-align: center" id="size13total">@Model.Size13Total</td>
+                <td style="text-align: center" id="size14total">@Model.Size14Total</td>
+                <td style="text-align: center" id="size15total">@Model.Size15Total</td>
+                <td style="text-align: center" id="size16total">@Model.Size16Total</td>
+                <td style="text-align: center" id="size17total">@Model.Size17Total</td>
+                <td style="text-align: center" id="size18total">@Model.Size18Total</td>
 
             </tr>
         </table>

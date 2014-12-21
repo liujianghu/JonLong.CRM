@@ -7,7 +7,7 @@
     <title>Jon Long CRM</title>
     <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap.css")" type="text/css" media="screen" />
     <link rel="stylesheet" href="@Url.Content("~/Content/css/reset.css")" type="text/css" media="screen" />
-    <link rel="stylesheet" href="@Url.Content("~/Content/css/style.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/style.css?v=1")" type="text/css" media="screen" />
     <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
 
     @RenderSection("head", required: false)
@@ -128,34 +128,12 @@
 
             </div>
         </div>
-        <!-- End #sidebar -->
+
         <div id="main-content">
-            <!-- Main Content Section with everything -->
-            <noscript>
-                <!-- Show a notification if the user has disabled javascript -->
-                <div class="notification error png_bg">
-                    <div>
-                        Javascript is disabled or is not supported by your browser. Please <a href="http://browsehappy.com/"
-                                                                                              title="Upgrade to a better browser">upgrade</a> your browser or <a href="http://www.google.com/support/bin/answer.py?answer=23852"
-                                                                                                                                                                 title="Enable Javascript in your browser">enable</a> Javascript to navigate
-                        the interface properly.
-                    </div>
-                </div>
-            </noscript>
             <!-- Page Head -->
             @RenderBody()
-            <!-- End Notifications -->
-            <div id="footer">
-                <small>
-                    <!-- Remove this notice or replace it with whatever you want -->
-                    &#169; Copyright 2014 JON LONG | Powered by <a href="#">
-                        JON LONG
-                    </a>
-                </small>
-            </div>
-            <!-- End #footer -->
+           
         </div>
-        <!-- End #main-content -->
     </div>
 
     @RenderSection("scripts", required: false)

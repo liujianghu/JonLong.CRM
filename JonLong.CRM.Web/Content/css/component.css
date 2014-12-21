@@ -72,7 +72,10 @@ td.user-name {
     text-transform: capitalize;
 }
 
+
 .sticky-wrap.overflow-y {
     overflow-y: auto;
-    max-height: 220px;
+    max-height: 400px;
 }
+
+

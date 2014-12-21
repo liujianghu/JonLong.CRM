@@ -30,130 +30,130 @@
                 sizeTypeCount = Model.ShoeSizes.Count;
             }
         }
-        <th style="width:90px">Model No.</th>
+        <th style="width:90px;text-align:center">Model No.</th>
         <th>Total</th>
         @for (int i = 0; i < sizeTypeCount; i++)
         {
-            <th style="font-weight:200;width:40px">
+            <th style="font-weight:200;width:40px; text-align:center">
                 @Model.ShoeSizes[i]
             </th>
         }
-        <th>Original ETD</th>
+        <th style="text-align: center">Original ETD</th>
 
     </tr>
     <tr>
-        <td>@Model.Order.ModelNo</td>
-        <td>@Model.Order.Total</td>
-        <td>
+        <td style="text-align: center">@Model.Order.ModelNo</td>
+        <td style="text-align: center">@Model.Order.Total</td>
+        <td style="text-align: center">
             @if (Model.Order.Size1 > 0)
             {
                 @Model.Order.Size1
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size2 > 0)
             {
                 @Model.Order.Size2
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size3 > 0)
             {
                 @Model.Order.Size3
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size4 > 0)
             {
                 @Model.Order.Size4
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size5 > 0)
             {
                 @Model.Order.Size5
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size6 > 0)
             {
                 @Model.Order.Size6
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size7 > 0)
             {
                 @Model.Order.Size7
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size8 > 0)
             {
                 @Model.Order.Size8
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size9 > 0)
             {
                 @Model.Order.Size9
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size10 > 0)
             {
                 @Model.Order.Size10
 
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size11 > 0)
             {
                 @Model.Order.Size11
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size12 > 0)
             {
                 @Model.Order.Size12
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size13 > 0)
             {
                 @Model.Order.Size13
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size14 > 0)
             {
                 @Model.Order.Size14
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size15 > 0)
             {
                 @Model.Order.Size15
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size16 > 0)
             {
                 @Model.Order.Size16
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size17 > 0)
             {
                 @Model.Order.Size17
             }
         </td>
-        <td>
+        <td style="text-align: center">
             @if (Model.Order.Size18 > 0)
             {
                 @Model.Order.Size18
             }
         </td>
-        <td>@Model.Order.OriginalETD.ToShortDateString()</td>
+        <td style="text-align: center">@Model.Order.OriginalETD.ToShortDateString()</td>
     </tr>
 </table>
 <div class="tab-content default-tab" id="tab2">
@@ -207,52 +207,52 @@
             </td>
         </tr>
         <tr>
-            <td>@Model.ShoeSizes[0]</td>
-            <td><input class="size " id="Size1" value="@Model.Order.Size1" /></td>
-            <td>@Model.ShoeSizes[1]</td>
-            <td><input class="size " id="Size2" value="@Model.Order.Size2" /></td>
-            <td>@Model.ShoeSizes[2]</td>
+            <td style="text-align: center">@Model.ShoeSizes[0]</td>
+            <td ><input class="size " id="Size1" value="@Model.Order.Size1" /></td>
+            <td style="text-align: center">@Model.ShoeSizes[1]</td>
+            <td ><input class="size " id="Size2" value="@Model.Order.Size2" /></td>
+            <td style="text-align: center">@Model.ShoeSizes[2]</td>
             <td><input class="size" id="Size3" value="@Model.Order.Size3" /></td>
-            <td>@Model.ShoeSizes[3]</td>
+            <td >@Model.ShoeSizes[3]</td>
             <td><input class="size" id="Size4" value="@Model.Order.Size4" /></td>
         </tr>
         <tr class="alt-row">
-            <td>@Model.ShoeSizes[4]</td>
+            <td style="text-align: center">@Model.ShoeSizes[4]</td>
             <td><input class="size" id="Size5" value="@Model.Order.Size5" /></td>
-            <td>@Model.ShoeSizes[5]</td>
+            <td style="text-align: center">@Model.ShoeSizes[5]</td>
             <td><input class="size" id="Size6" value="@Model.Order.Size6" /></td>
-            <td>@Model.ShoeSizes[6]</td>
+            <td style="text-align: center">@Model.ShoeSizes[6]</td>
             <td><input class="size" id="Size7" value="@Model.Order.Size7" /></td>
-            <td>@Model.ShoeSizes[7]</td>
+            <td style="text-align: center">@Model.ShoeSizes[7]</td>
             <td><input class="size" id="Size8" value="@Model.Order.Size8" /></td>
         </tr>
         <tr class="alt-row">
-            <td>@Model.ShoeSizes[8]</td>
+            <td style="text-align: center">@Model.ShoeSizes[8]</td>
             <td><input class="size" id="Size9" value="@Model.Order.Size9" /></td>
-            <td>@Model.ShoeSizes[9]</td>
+            <td style="text-align: center">@Model.ShoeSizes[9]</td>
             <td><input class="size" id="Size10" value="@Model.Order.Size10" /></td>
-            <td>@Model.ShoeSizes[10]</td>
+            <td style="text-align: center">@Model.ShoeSizes[10]</td>
             <td><input class="size" id="Size11" value="@Model.Order.Size11" /></td>
-            <td>@Model.ShoeSizes[11]</td>
+            <td style="text-align: center">@Model.ShoeSizes[11]</td>
             <td><input class="size" id="Size12" value="@Model.Order.Size12" /></td>
         </tr>
         <tr class="alt-row">
-            <td>@Model.ShoeSizes[12]</td>
+            <td style="text-align: center">@Model.ShoeSizes[12]</td>
             <td><input class="size" id="Size13" value="@Model.Order.Size13" /></td>
-            <td>@Model.ShoeSizes[13]</td>
+            <td style="text-align: center">@Model.ShoeSizes[13]</td>
             <td><input class="size" id="Size14" value="@Model.Order.Size14" /></td>
-            <td>@Model.ShoeSizes[14]</td>
+            <td style="text-align: center">@Model.ShoeSizes[14]</td>
             <td><input class="size" id="Size15" value="@Model.Order.Size15" /></td>
-            <td>@Model.ShoeSizes[15]</td>
+            <td style="text-align: center">@Model.ShoeSizes[15]</td>
             <td><input class="size" id="Size16" value="@Model.Order.Size16" /></td>
         </tr>
         <tr class="alt-row">
-            <td>@Model.ShoeSizes[16]</td>
+            <td style="text-align: center">@Model.ShoeSizes[16]</td>
             <td><input class="size" id="Size17" value="@Model.Order.Size17" /></td>
-            <td>@Model.ShoeSizes[17]</td>
+            <td style="text-align: center">@Model.ShoeSizes[17]</td>
             <td><input class="size" id="Size18" value="@Model.Order.Size18" /></td>
-            <td>Total</td>
-            <td>
+            <td style ="text-align: center">Total</tdstyle>
+            <td style="text-align: center">
                 <label id="Total1">@Model.Order.Total</label>
                 <input type="hidden" id="Total" name="Total" value="@Model.Order.Total" />
             </td>
