@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using JonLong.CRM.Web.Common
 @model JonLong.CRM.Web.Models.OrderStatisticsListViewModel
 @section head{
     <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
@@ -217,7 +218,7 @@
                         <table >
                             <tr>
                                 <td>
-                                    @if (!Model.IsSuperAdmin)
+                                    @if (!Model.IsSuperAdmin && AccountHelper.IsAllowed("order", "create"))
                                     {
                                         <a href="@Url.Action("Create")" class="button">New Bundle</a>
                                     }

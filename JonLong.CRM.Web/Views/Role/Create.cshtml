@@ -31,26 +31,21 @@
                         <label>
                             Permissions
                         </label>
-                        @{
-                int i = 1;
-                        }
-
                         @foreach (var pair in Model.Permissions)
                         {
-                            if (Model.SelectedPermissions.Contains(pair.Key))
+                            foreach (var item in pair.Value)
                             {
-                                <input type="checkbox" name="SelectedPermissions" checked="checked" value="@pair.Key" /> @:&nbsp;@pair.Value
+                                int i = 1;
+
+                                <input type="checkbox" name="SelectedPermissions" value="@item.PermissionId" />@:&nbsp;@item.PermissionName
+                                @:&nbsp;&nbsp;
+                                if (i % 6 == 0)
+                                {
+                                    <br />
+                                }
+                                i++;
                             }
-                            else
-                            {
-                                <input type="checkbox" name="SelectedPermissions" value="@pair.Key" /> @:&nbsp;@pair.Value
-                            }
-                            @:&nbsp;&nbsp;
-                            if (i % 8 == 0)
-                            {
-                                <br />
-                            }
-                            i++;
+                            <br />
                         }
                     </p>
 

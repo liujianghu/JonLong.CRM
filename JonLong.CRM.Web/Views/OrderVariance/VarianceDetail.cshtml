@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
+@using JonLong.CRM.Web.Common
 @model JonLong.CRM.Web.Models.VarianceDetailViewModel
 <style>
     .table_b td {
@@ -12,7 +12,9 @@
         border: 1px solid #696969;
     }
 </style>
-
+@{
+    var user = AccountHelper.GetCurrentUser();
+}
 <table class="table_b">
     <tr class="alt-row">
         <th>
@@ -54,19 +56,29 @@
         }
         <tr class="@trclass">
             <td>
-                @if(item.CYLX ==1){
-                    <a href="@Url.Action("Confirm", "OrderVariance", new { id = @item.Id, guid=@Model.Guid, bundleno = @Model.BundleNo })">Confirm</a>
+                @if (item.CYLX == 1)
+                {
+                    if (AccountHelper.IsAllowed(user.Permissions, "OrderVariance", "Confirm"))
+                    {
+                        <a href="@Url.Action("Confirm", "OrderVariance", new { id = @item.Id, guid=@Model.Guid, bundleno = @Model.BundleNo })">Confirm</a>
+                    }
                     fontColor = "";
                 }
                 else
                 {
                     fontColor = "color:red";
-                    <a href="@Url.Action("Edit", "OrderVariance", new { id = @item.Id, guid=@Model.Guid, bundleno = @Model.BundleNo })">Deplay</a>@:&nbsp;&nbsp;
-                    <a href="@Url.Action("Cancel", "OrderVariance", new { id = @item.Id, guid = @Model.Guid, bundleno = @Model.BundleNo })">Cancel</a>
+                    if (AccountHelper.IsAllowed(user.Permissions, "OrderVariance", "Edit"))
+                    {
+                        <a href="@Url.Action("Edit", "OrderVariance", new { id = @item.Id, guid=@Model.Guid, bundleno = @Model.BundleNo })">Deplay</a>@:&nbsp;&nbsp;
+                        }
+                    if (AccountHelper.IsAllowed(user.Permissions, "OrderVariance", "Cancel"))
+                    {
+                        <a href="@Url.Action("Cancel", "OrderVariance", new { id = @item.Id, guid = @Model.Guid, bundleno = @Model.BundleNo })">Cancel</a>
+                    }
                 }
-                   
+
             </td>
-            
+
             <td>@item.ModelNo</td>
             <td style="@fontColor">@item.Total</td>
             <td style="@fontColor">

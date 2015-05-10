@@ -45,6 +45,7 @@
     <Compile Include="Customer.cs" />
     <Compile Include="Enroute.cs" />
     <Compile Include="EnrouteDetail.cs" />
+    <Compile Include="Permission.cs" />
     <Compile Include="PreLoadCabinet.cs" />
     <Compile Include="UserRoleInfo.cs" />
     <Compile Include="Warehouse.cs" />

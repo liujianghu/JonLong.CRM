@@ -26,7 +26,6 @@ namespace JonLong.CRM.Web.Controllers
                 }
                 model.LoginName = loginName;
                 return View(model);
-
             }
             catch (Exception ex)
             {

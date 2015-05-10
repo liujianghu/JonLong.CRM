@@ -130,9 +130,9 @@ namespace JonLong.CRM.DAL
             return list;
         }
 
-        public static List<string> LoadUserPermissions(int userId)
+        public static List<Permission> LoadUserPermissions(int userId)
         {
-            var list = new List<string>();
+            var list = new List<Permission>();
             SqlParameter[] parameters = new SqlParameter[1];
             parameters[0] = new SqlParameter("@UserId", SqlDbType.Int);
             parameters[0].Value = userId;
@@ -144,7 +144,41 @@ namespace JonLong.CRM.DAL
             {
                 while (reader.Read())
                 {
-                    list.Add(reader.GetString(0));
+                    var p = new Permission();
+                    p.PermissionId = reader.GetInt32(0);
+                    p.Controller = reader.GetString(1).ToLower();
+                    if (!reader.IsDBNull(2))
+                    {
+                        p.Action = reader.GetString(2).ToLower();
+                    }
+                    
+                    list.Add(p);
+                }
+            }
+
+            return list;
+        }
+
+        public static List<Permission> LoadAllPermissions()
+        {
+            var list = new List<Permission>();
+
+            using (var reader = SqlHelper.ExecuteReader(ConnectionHelper.ConnectionString
+               , CommandType.StoredProcedure
+               , "dbo.t_Permission_LoadAll"))
+            {
+                while (reader.Read())
+                {
+                    var p = new Permission();
+                    p.PermissionId = reader.GetInt32(0);
+                    p.PermissionName = reader.GetString(1);
+                    p.Controller = reader.GetString(2);
+                    if (!reader.IsDBNull(3))
+                    {
+                        p.Action = reader.GetString(3);
+                    }
+
+                    list.Add(p);
                 }
             }
 

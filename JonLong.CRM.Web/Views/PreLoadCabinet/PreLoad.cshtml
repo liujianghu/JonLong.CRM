@@ -2,7 +2,12 @@
     Layout = null;
 }
 @model JonLong.CRM.Web.Models.PreLoadCabinetItemModel
-<td colspan="2" style="text-align:center"><a href="javascript:;" class="button" onclick="save(@Model.Index)">Save</a></td>
+<td colspan="2" style="text-align:center">
+@if (JonLong.CRM.Web.Common.AccountHelper.IsAllowed("PreLoadCabinet", "Save"))
+{
+    <a href="javascript:;" class="button" onclick="save(@Model.Index)">Save</a>
+}
+</td>
 <td>
     <label id="@("pre" + Model.Index + "_total1")">0</label>
         <input type="hidden" value="0" id="@("pre" + Model.Index + "_total")" />

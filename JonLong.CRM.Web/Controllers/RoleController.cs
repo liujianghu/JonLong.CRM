@@ -32,6 +32,19 @@ namespace JonLong.CRM.Web.Controllers
         public ActionResult Create()
         {
             var model = new RoleModel();
+            var permissions = RoleManager.Instance.LoadAllPermissions();
+            foreach (var item in permissions)
+            {
+                if (model.Permissions.ContainsKey(item.Controller))
+                {
+                    model.Permissions[item.Controller].Add(item);
+                }
+                else
+                {
+                    model.Permissions[item.Controller] = new List<Permission> { item};
+                }
+                
+            }
             return View(model);
         }
 
@@ -92,6 +105,19 @@ namespace JonLong.CRM.Web.Controllers
                    SelectedPermissions = role.Permissions
                 };
 
+                var permissions = RoleManager.Instance.LoadAllPermissions();
+                foreach (var item in permissions)
+                {
+                    if (model.Permissions.ContainsKey(item.Controller))
+                    {
+                        model.Permissions[item.Controller].Add(item);
+                    }
+                    else
+                    {
+                        model.Permissions[item.Controller] = new List<Permission> { item };
+                    }
+
+                }
                 return View(model);
             }
             catch (Exception ex)

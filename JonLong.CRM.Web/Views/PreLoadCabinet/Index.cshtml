@@ -2,7 +2,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@using JonLong.CRM.Web.Common
 @model JonLong.CRM.Web.Models.PreLoadCabinetModel
 @section head{
     <link rel="stylesheet" href="@Url.Content("~/Content/css/datepicker.css")" type="text/css" media="screen" />
@@ -23,6 +23,9 @@
         border: 1px solid #696969;
     }
 </style>
+@{
+    var user = AccountHelper.GetCurrentUser();
+}
 <div class="content-box-content">
     <div class="tab-content default-tab" id="tab1">
         <div class="tab-content default-tab">
@@ -88,7 +91,13 @@
                     </td>
                     <td>Filled:</td>
                     <td><label id="filled" style="font-weight:600">@Model.Title.Bfb%</label></td>
-                    <td><input class="button" type="button" onclick="finish();" value="Finish" /></td>
+                    <td>
+                        @if (AccountHelper.IsAllowed(user.Permissions, "PreLoadCabinet", "confirm"))
+                        {
+                            <input class="button" type="button" onclick="finish();" value="Finish" />
+                        }
+                    
+                    </td>
                 </tr>
             </table>
         </div>

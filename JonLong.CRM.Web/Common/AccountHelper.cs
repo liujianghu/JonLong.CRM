@@ -7,6 +7,7 @@ using JonLong.CRM.Utilities;
 using System.Linq;
 using System.Web;
 using System.Collections.Generic;
+using System;
 
 namespace JonLong.CRM.Web.Common
 {
@@ -19,12 +20,56 @@ namespace JonLong.CRM.Web.Common
             {
                 return null;
             }
-            return JsonConvert.DeserializeObject<User>(identity.Ticket.Name);
+            var user = JsonConvert.DeserializeObject<User>(identity.Ticket.Name);
+            user.Permissions = CookieHelper.Get<List<Permission>>("permission");
+            return user;
         }
         public static User GetLoginUserInfo(IIdentity identity)
         {
             var ticket = (identity as FormsIdentity).Ticket;
             return JsonConvert.DeserializeObject<User>(ticket.Name);
+        }
+
+        public static HashSet<string> commonActions = new HashSet<string>
+        {
+            "loadcontainer","loadsizebyshoe", "statistscdetail", "updatepassword"
+            , "editprofile","preload","variancedetail","shipment","order",// variance order
+            "exportdata"
+        };
+
+        public static bool IsAllowed(List<Permission> permissions, string controllerName, string actionName = "")
+        {
+            var user = GetCurrentUser();
+            if (user == null || user.UserId <= 0)
+            {
+                return false;
+            }
+            controllerName = controllerName.ToLower();
+            if (!String.IsNullOrEmpty(actionName))
+            {
+                actionName = actionName.ToLower();
+            }
+            if (controllerName == "home" || controllerName == "download")
+            {
+                return true;
+            }
+            if (permissions == null || !permissions.Any())
+            {
+                return false;
+            }
+            if (permissions.Exists(t => t.Controller == Constants.SuperAdminPermission))
+            {
+                return true;
+            }
+            if (permissions.Exists(t => t.Controller == controllerName
+                && (String.IsNullOrEmpty(actionName) || t.Action == actionName 
+                || commonActions.Contains(actionName))))
+            {
+                return true;
+            }
+
+            return false;
+
         }
 
         /// <summary>
@@ -39,28 +84,31 @@ namespace JonLong.CRM.Web.Common
             {
                 return false;
             }
-
-            if (controllerName.ToLower() == "home" || controllerName.ToLower() == "download"
-                || actionName.ToLower() == "updatepassword" || actionName.ToLower() == "editprofile")
+            controllerName = controllerName.ToLower();
+            if (!String.IsNullOrEmpty(actionName))
+            {
+                actionName = actionName.ToLower();
+            }
+            if (controllerName == "home" || controllerName == "download")
             {
                 return true;
             }
 
-            var permissions = UserManager.Instance.LoadUserPermissions(user.UserId);
+            var permissions = user.Permissions;
             if (permissions == null || !permissions.Any())
             {
                 return false;
             }
-
-            if (permissions.Contains(Constants.SuperAdminPermission))
+            if (permissions.Exists(t => t.Controller == Constants.SuperAdminPermission))
+            {
+                return true;
+            }
+            if (permissions.Exists(t => t.Controller == controllerName
+                && (String.IsNullOrEmpty(actionName) || t.Action == actionName || commonActions.Contains(actionName))))
             {
                 return true;
             }
 
-            if (permissions.Contains(controllerName.ToLower()))
-            {
-                return true;
-            }
             return false;
 
         }
@@ -78,11 +126,10 @@ namespace JonLong.CRM.Web.Common
             {
                 return false;
             }
-            var permissions = UserManager.Instance.LoadUserPermissions(user.UserId);
-            return IsSuperAdmin(permissions);
+            return IsSuperAdmin(user.Permissions);
         }
 
-       
+
         /// <summary>
         /// 验证用户是否是超级管理
         /// </summary>
@@ -90,12 +137,11 @@ namespace JonLong.CRM.Web.Common
         /// <returns></returns>
         public static bool IsSuperAdmin(User user)
         {
-            if (user == null || user.UserId <=0)
+            if (user == null || user.UserId <= 0)
             {
                 return false;
             }
-            var permissions = UserManager.Instance.LoadUserPermissions(user.UserId);
-            return IsSuperAdmin(permissions);
+            return IsSuperAdmin(user.Permissions);
         }
 
         /// <summary>
@@ -118,13 +164,13 @@ namespace JonLong.CRM.Web.Common
         /// </summary>
         /// <param name="permissions"></param>
         /// <returns></returns>
-        public static bool IsSuperAdmin(List<string> permissions)
+        public static bool IsSuperAdmin(List<Permission> permissions)
         {
             if (permissions == null || !permissions.Any())
             {
                 return false;
             }
-            if (permissions.Contains(Constants.SuperAdminPermission))
+            if (permissions.Exists(t => t.Controller == Constants.SuperAdminPermission.ToLower()))
             {
                 return true;
             }
@@ -135,8 +181,8 @@ namespace JonLong.CRM.Web.Common
         {
             if (customerCode.ToUpper() == "U0034"
                 || customerCode.ToUpper() == "U0035"
-                || customerCode.ToUpper() =="U0036"
-                || customerCode.ToUpper() =="U0037")
+                || customerCode.ToUpper() == "U0036"
+                || customerCode.ToUpper() == "U0037")
             {
                 return "U0005";
             }

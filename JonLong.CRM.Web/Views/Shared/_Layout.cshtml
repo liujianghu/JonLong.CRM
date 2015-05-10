@@ -13,9 +13,12 @@
     @RenderSection("head", required: false)
 </head>
 <body>
-    <div id="body-wrapper" >
+    @{
+        var user = AccountHelper.GetCurrentUser();
+    }
+    <div id="body-wrapper">
         <!-- Wrapper for the radial gradient background -->
-        <div id="sidebar" >
+        <div id="sidebar">
             <div id="sidebar-wrapper">
                 <!-- Sidebar with logo and menu -->
                 <h1 id="sidebar-title">
@@ -28,13 +31,6 @@
                 <!-- Sidebar Profile links -->
                 <div id="profile-links">
                     Hello, <a href="@Url.Action("EditProfile","User")" title="Edit your profile">
-                        @{
-                            var user = AccountHelper.GetCurrentUser();
-                            if (user == null)
-                            {
-                                user = new JonLong.CRM.Models.User();
-                            }
-                        }
                         @user.CustomerName (@user.LoginName)
                     </a><br />
                     <br />
@@ -52,7 +48,9 @@
                             Index
                         </a>
                     </li>
-                    @if (AccountHelper.IsAllowed("order") || AccountHelper.IsAllowed("Enroute") || AccountHelper.IsAllowed("Arrived"))
+                    @if (AccountHelper.IsAllowed(user.Permissions, "order")
+                        || AccountHelper.IsAllowed(user.Permissions, "Enroute")
+                        || AccountHelper.IsAllowed(user.Permissions, "Arrived"))
                     {
                         <li>
                             <a href="javascript:;" class="nav-top-item">
@@ -60,19 +58,19 @@
                                 Daily Operation
                             </a>
                             <ul>
-                                @if (AccountHelper.IsAllowed("order"))
+                                @if (AccountHelper.IsAllowed(user.Permissions, "order"))
                                 {
                                     <li><a href="@Url.Action("index","Order")">Order & Forecast</a></li>
                                 }
-                                @if (AccountHelper.IsAllowed("PreLoadCabinet"))
+                                @if (AccountHelper.IsAllowed(user.Permissions, "PreLoadCabinet"))
                                 {
-                                    <li><a href="@Url.Action("index","PreLoadCabinet")">Container Preload</a></li>
+                                    <li><a href="@Url.Action("index", "PreLoadCabinet")">Container Preload</a></li>
                                 }
-                                @if (AccountHelper.IsAllowed("Enroute"))
+                                @if (AccountHelper.IsAllowed(user.Permissions, "Enroute"))
                                 {
                                     <li><a href="@Url.Action("index","Enroute")">En route</a></li>
                                 }
-                                @if (AccountHelper.IsAllowed("Arrived"))
+                                @if (AccountHelper.IsAllowed(user.Permissions, "Arrived"))
                                 {
                                     <li><a href="@Url.Action("index","Arrived")">Arrived</a></li>
                                 }
@@ -80,7 +78,7 @@
                             </ul>
                         </li>
                     }
-                    @if (AccountHelper.IsAllowed("OrderVariance"))
+                    @if (AccountHelper.IsAllowed(user.Permissions, "OrderVariance"))
                     {
                         <li>
                             <a href="javascript:;" class="nav-top-item">Customer Reconciliation </a>
@@ -90,16 +88,17 @@
                         </li>
                     }
 
-                    @if (AccountHelper.IsAllowed("JLWarehouse") || AccountHelper.IsAllowed("CustomerWarehouse"))
+                    @if (AccountHelper.IsAllowed(user.Permissions, "JLWarehouse") 
+                        || AccountHelper.IsAllowed(user.Permissions, "CustomerWarehouse"))
                     {
                         <li>
                             <a href="javascript:;" class="nav-top-item">Logistics </a>
                             <ul>
-                                @if (AccountHelper.IsAllowed("JLWarehouse"))
+                                @if (AccountHelper.IsAllowed(user.Permissions, "JLWarehouse"))
                                 {
                                     <li><a href="@Url.Action("index","JLWarehouse")">JONLONG warehouse</a></li>
                                 }
-                                @if (AccountHelper.IsAllowed("CustomerWarehouse"))
+                                @if (AccountHelper.IsAllowed(user.Permissions, "CustomerWarehouse"))
                                 {
                                     <li><a href="@Url.Action("index","CustomerWarehouse")">Customer warehouse</a></li>
                                 }
@@ -112,11 +111,11 @@
                     <li>
                         <a href="javascript:;" class="nav-top-item">Settings </a>
                         <ul>
-                            @if (AccountHelper.IsAllowed("Role"))
+                            @if (AccountHelper.IsAllowed(user.Permissions, "Role"))
                             {
                                 <li><a href="@Url.Action("index","Role")">Role</a></li>
                             }
-                            @if (AccountHelper.IsAllowed("User"))
+                            @if (AccountHelper.IsAllowed(user.Permissions, "User"))
                             {
                                 <li><a href="@Url.Action("index","User")">User</a></li>
                             }
@@ -132,7 +131,7 @@
         <div id="main-content">
             <!-- Page Head -->
             @RenderBody()
-           
+
         </div>
     </div>
 

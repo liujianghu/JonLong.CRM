@@ -2,6 +2,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using JonLong.CRM.Web.Common
 @model JonLong.CRM.Web.Models.WarehoseListViewModel
 <style>
     .table_b td {
@@ -12,7 +13,9 @@
         border: 1px solid #696969;
     }
 </style>
-
+@{
+    var user = AccountHelper.GetCurrentUser();
+}
 <div class="content-box-header">
     <h3>
         JONLONG Warehouse
@@ -47,9 +50,12 @@
                     &nbsp;&nbsp;
                     <input id="btnExport" type="button" class="button" value="Export" />
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="@Url.Action("Create")" class="button">Create</a>
+                    @if (AccountHelper.IsAllowed(user.Permissions, "CustomerWarehouse", "Create"))
+                    {
+                        <a href="@Url.Action("Create")" class="button">Create</a>
+                    }
                 </div>
-                
+
             }
 
             <div class="clear">
@@ -92,10 +98,17 @@
                 }
                 <tr class="@trclass">
                     <td style="text-align: center">
-                        <a href="@Url.Action("Edit", "CustomerWarehouse", new { id= @item.Id})">Edit</a>&nbsp;&nbsp;
-                        <a href="javascript:;" onclick="deleteWarehouse(@item.Id)" title="Delete">
-                            Delete
-                        </a>
+                        @if (AccountHelper.IsAllowed(user.Permissions, "CustomerWarehouse", "Edit"))
+                        {
+                            <a href="@Url.Action("Edit", "CustomerWarehouse", new { id= @item.Id})">Edit</a>
+                        }
+                        &nbsp;&nbsp;
+                        @if (AccountHelper.IsAllowed(user.Permissions, "CustomerWarehouse", "Delete"))
+                        {
+                            <a href="javascript:;" onclick="deleteWarehouse(@item.Id)" title="Delete">
+                                Delete
+                            </a>
+                        }
                     </td>
                     <td style="text-align: center">@item.ModelNo</td>
                     <td style="text-align: center">@item.Total</td>
@@ -258,13 +271,13 @@
                 data: ({ id: id }),
                 datatype: 'json',
                 success: function (data) {
-                    if(data != 1){
+                    if (data != 1) {
                         alert(data);
                         return;
                     } else {
                         window.location.href = '@Url.Action("Index")';
                     }
-                
+
                 }
             });
         }

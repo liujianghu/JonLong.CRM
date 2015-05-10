@@ -107,10 +107,14 @@
 
                     <tr class="@trclass" style="@style">
                         <td>
-                            <button onclick="loadDetail('@item.SendDate.ToString("yyyy-MM-dd")','@item.BundleNo','@item.ContainerNo','@item.Container','@item.Id', this);"
-                                    class="button" title="Detail">
-                                +
-                            </button>
+                            @if (JonLong.CRM.Web.Common.AccountHelper.IsAllowed("Arrived", "Detail"))
+                            {
+                                <button onclick="loadDetail('@item.SendDate.ToString("yyyy-MM-dd")','@item.BundleNo','@item.ContainerNo','@item.Container','@item.Id', this);"
+                                        class="button" title="Detail">
+                                    +
+                                </button>
+                            }
+
                         </td>
                         <td>
                             @item.SendDate.ToShortDateString()

@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
+@using JonLong.CRM.Web.Common
 @model JonLong.CRM.Web.Models.OrderStatisticsViewModel
 <style>
     .table_b td {
@@ -12,6 +12,9 @@
         border: 1px solid #696969;
     }
 </style>
+@{
+    var user = AccountHelper.GetCurrentUser();
+}
 
 <table class="table_b">
     <tr class="alt-row">
@@ -57,11 +60,17 @@
             @if (!Model.IsSuperAdmin)
             {
                 <td>
-                    <a href="javascript:;" onclick="edit(@j,@item.Id,@parentIndex)">Edit</a>&nbsp;&nbsp;
-                    <a href="javascript:;" onclick="deleteOrder(@item.Id)" title="Delete">
-                        Delete
-                    </a>
-
+                    @if (AccountHelper.IsAllowed(user.Permissions, "order", "edit"))
+                    {
+                        <a href="javascript:;" onclick="edit(@j,@item.Id,@parentIndex)">Edit</a>
+                    }
+                    &nbsp;&nbsp;
+                    @if (AccountHelper.IsAllowed(user.Permissions, "order", "delete"))
+                    {
+                        <a href="javascript:;" onclick="deleteOrder(@item.Id)" title="Delete">
+                            Delete
+                        </a>
+                    }
                 </td>
             }
             <td>@item.ModelNo</td>
@@ -185,7 +194,7 @@
                 j++;
     }
     <tr style="background-color:#D3D3D3">
-        @if (!Model.IsSuperAdmin)
+        @if (!Model.IsSuperAdmin && AccountHelper.IsAllowed(user.Permissions, "order","create"))
         {
             <td><a href="@Url.Action("Create", new { etd = @Model.SendDate, bundleNo = @Model.BundleNo, containerType =@Model.ContainerType})">Add model</a></td>
         }
@@ -210,7 +219,7 @@
         <td id="size17total" style="text-align:center">@Model.Size17Total</td>
         <td id="size18total" style="text-align:center">@Model.Size18Total</td>
         <td>
-            @if (!Model.IsSuperAdmin)
+            @if (!Model.IsSuperAdmin && AccountHelper.IsAllowed(user.Permissions, "order", "ConvertToOrder"))
             {
                 <button class="button" onclick="convertToOrder()">Convert to order</button>
             }

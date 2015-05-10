@@ -15,6 +15,8 @@ namespace JonLong.CRM.Models
 
         public List<string> Permissions { get; set; }
 
+        public List<int> PermissionIds { get; set; }
+
         public DateTime InsertDate { get; set; }
     }
 }

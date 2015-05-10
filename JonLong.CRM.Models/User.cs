@@ -39,5 +39,7 @@ namespace JonLong.CRM.Models
         /// </summary>
         public int State { get; set; }
 
+        public List<Permission> Permissions { get; set; }
+
     }
 }

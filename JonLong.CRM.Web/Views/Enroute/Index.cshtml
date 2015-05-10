@@ -2,12 +2,14 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@using JonLong.CRM.Web.Common
 @model JonLong.CRM.Web.Models.EnrouteListViewModel
 @section head{
-
     <link rel="stylesheet" href="@Url.Content("~/Content/css/bootstrap-theme.min.css")" type="text/css" media="screen" />
     <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+}
+@{
+    var user = AccountHelper.GetCurrentUser();
 }
 <div class="content-box-header">
     <h3>
@@ -79,10 +81,14 @@
                     }
                     <tr class="@trclass" style="@style">
                         <td>
-                            <button onclick="loadDetail('@item.ETD.ToString("yyyy-MM-dd")','@item.BundleNo','@item.ContainerNo','@item.Container','@item.Id', this);"
-                                    class="button" title="Detail">
-                                +
-                            </button>
+                            @if (AccountHelper.IsAllowed(user.Permissions, "Detail"))
+                            {
+                                <button onclick="loadDetail('@item.ETD.ToString("yyyy-MM-dd")','@item.BundleNo','@item.ContainerNo','@item.Container','@item.Id', this);"
+                                        class="button" title="Detail">
+                                    +
+                                </button>
+                            }
+
                         </td>
                         <td>
                             @item.ETD.ToShortDateString()
@@ -103,9 +109,12 @@
                             @item.SumPairs
                         </td>
                         <td>
-                            <a href="javascript:;" onclick="received(@item.Id,'@item.BundleNo')" title="Received">
-                                Received
-                            </a>
+                            @if (AccountHelper.IsAllowed(user.Permissions, "Detail"))
+                            {
+                                <a href="javascript:;" onclick="received(@item.Id,'@item.BundleNo')" title="Received">
+                                    Received
+                                </a>
+                            }
                         </td>
                         <td>
                             @item.ContractNo

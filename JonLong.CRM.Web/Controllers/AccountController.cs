@@ -34,14 +34,16 @@ namespace JonLong.CRM.Web.Controllers
             {
                 string pwd = FormsAuthentication.HashPasswordForStoringInConfigFile(model.Password, "SHA1");
                 var user = UserManager.Instance.Login(model.UserName, pwd);
-                if (user == null || user.UserId ==0)
+                if (user == null || user.UserId == 0)
                 {
                     ModelState.AddModelError("", "Username or password incorrect！");
                     return View(model);
                 }
 
-                string userJson = JsonConvert.SerializeObject(user);
 
+                string userJson = JsonConvert.SerializeObject(user);
+                var permissions = UserManager.Instance.LoadUserPermissions(user.UserId);
+                CookieHelper.Set("permission", permissions, 100);
                 //AuthorizationManager.SetTicket(Response, model.RememberMe, identity, name, roleId);
                 FormsAuthentication.SetAuthCookie(userJson, model.RememberMe);
 
@@ -54,7 +56,7 @@ namespace JonLong.CRM.Web.Controllers
 
                 //return RedirectToAction("index", "home");
                 //暂时不启用首页，登录后访问ORDER 20140917 by duan
-                return RedirectToAction("index", "Order");
+                return RedirectToAction("index", "Home");
             }
             catch (Exception)
             {
@@ -62,7 +64,7 @@ namespace JonLong.CRM.Web.Controllers
                 return View(model);
             }
 
-            
+
         }
 
         public ActionResult LogOff()

@@ -115,7 +115,7 @@ namespace JonLong.CRM.DAL
                         {
                             continue;
                         }
-                        role.Permissions.Add(reader.GetString(0));
+                        role.Permissions.Add(reader.GetInt32(0).ToString());
                     }
                 }
 

@@ -69,5 +69,10 @@ namespace JonLong.CRM.BLL
             return RoleDataProvider.LoadById(roleId);
         }
 
+        public List<Permission> LoadAllPermissions()
+        {
+            return UserDataProvider.LoadAllPermissions();
+        }
+
     }
 }
